@@ -2,7 +2,11 @@
 <resources>
 
     <string name="app_name">Lime</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <!-- Strings for authentication screen -->
+    <string name="button_local">Local</string>
+    <string name="title_activity_auth_page">AuthPage</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
