@@ -14,6 +14,7 @@ import android.net.Uri;
 public class CustomCP extends ContentProvider {
 
     public static final Uri CONTENT_URI_MESSAGES = Uri.parse("content://com.nabass.lime.provider/messages");
+    public static final Uri CONTENT_URI_PROFILE = Uri.parse("content://com.nabass.lime.provider/profile");
     public static final String CONTENT_PROVIDER = "com.nabass.lime.provider";
 
     public static final String COL_ID = "_id";
@@ -37,18 +38,26 @@ public class CustomCP extends ContentProvider {
     public static final String COL_MESSAGE 			= "message";
     public static final String COL_TIME 			= "time";
 
+    // TABLE PROFILE
+    public static final String TABLE_PROFILE = "profile";
+    public static final String COL_NAME = "name";
+    public static final String COL_EMAIL = "email";
+    public static final String COL_COUNT = "count";
 
     private DbHelper dbHelper;
 
     private static final int MESSAGES_ALLROWS = 1;
     private static final int MESSAGES_SINGLE_ROW = 2;
+    private static final int PROFILE_ALLROWS = 3;
+    private static final int PROFILE_SINGLE_ROW = 4;
 
     private static final UriMatcher uriMatcher;
     static {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(CONTENT_PROVIDER, "messages", MESSAGES_ALLROWS);
         uriMatcher.addURI(CONTENT_PROVIDER, "messages/#", MESSAGES_SINGLE_ROW);
-
+        uriMatcher.addURI(CONTENT_PROVIDER, "profile", PROFILE_ALLROWS);
+        uriMatcher.addURI(CONTENT_PROVIDER, "profile/#", PROFILE_SINGLE_ROW);
     }
 
     @Override
@@ -72,6 +81,14 @@ public class CustomCP extends ContentProvider {
                 qb.appendWhere("_id = " + uri.getLastPathSegment());
                 break;
 
+            case PROFILE_ALLROWS:
+                qb.setTables(TABLE_PROFILE);
+                break;
+
+            case PROFILE_SINGLE_ROW:
+                qb.setTables(TABLE_PROFILE);
+                qb.appendWhere("_id = " + uri.getLastPathSegment());
+                break;
 
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
@@ -92,11 +109,13 @@ public class CustomCP extends ContentProvider {
                 id = db.insertOrThrow(TABLE_MESSAGES, null, values);
                 if (values.get(COL_RECEIVER_EMAIL) == null) {
                     db.execSQL("update profile set count = count+1 where email = ?", new Object[]{values.get(COL_SENDER_EMAIL)});
-                    //TODO Notify person
+                    getContext().getContentResolver().notifyChange(CONTENT_URI_PROFILE, null);
                 }
                 break;
 
-
+            case PROFILE_ALLROWS:
+                id = db.insertOrThrow(TABLE_PROFILE, null, values);
+                break;
 
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
@@ -121,6 +140,13 @@ public class CustomCP extends ContentProvider {
                 count = db.update(TABLE_MESSAGES, values, "_id = ?", new String[]{uri.getLastPathSegment()});
                 break;
 
+            case PROFILE_ALLROWS:
+                count = db.update(TABLE_PROFILE, values, selection, selectionArgs);
+                break;
+
+            case PROFILE_SINGLE_ROW:
+                count = db.update(TABLE_PROFILE, values, "_id = ?", new String[]{uri.getLastPathSegment()});
+                break;
 
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
@@ -144,6 +170,13 @@ public class CustomCP extends ContentProvider {
                 count = db.delete(TABLE_MESSAGES, "_id = ?", new String[]{uri.getLastPathSegment()});
                 break;
 
+            case PROFILE_ALLROWS:
+                count = db.delete(TABLE_PROFILE, selection, selectionArgs);
+                break;
+
+            case PROFILE_SINGLE_ROW:
+                count = db.delete(TABLE_PROFILE, "_id = ?", new String[]{uri.getLastPathSegment()});
+                break;
 
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
@@ -176,6 +209,11 @@ public class CustomCP extends ContentProvider {
                     + COL_RECEIVER_EMAIL  +" text, "
                     + COL_TIME 			  +" datetime default current_timestamp);");
 
+            db.execSQL("create table profile("
+                    + "_id integer primary key autoincrement, "
+                    + COL_NAME 	  +" text, "
+                    + COL_EMAIL   +" text unique, "
+                    + COL_COUNT   +" integer default 0);");
         }
 
         @Override
@@ -183,4 +221,3 @@ public class CustomCP extends ContentProvider {
         }
     }
 }
-
