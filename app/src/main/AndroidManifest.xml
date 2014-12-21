@@ -39,6 +39,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+            android:name="com.nabass.lime.db.CustomCP"
+            android:authorities="com.nabass.lime.provider"
+            android:exported="false" >
+        </provider>
     </application>
 
 </manifest>
