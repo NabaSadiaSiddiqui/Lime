@@ -1,20 +1,26 @@
 package com.nabass.lime;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.MediaController;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
-import com.nabass.lime.R;
+import com.nabass.lime.network.Constants;
 
 public class AuthPage extends Activity implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -36,6 +42,13 @@ public class AuthPage extends Activity implements View.OnClickListener, GoogleAp
      */
     private ConnectionResult mConnectionResult;
 
+    /* Variables for intro video */
+    private VideoView mVideo;
+    private MediaController mediaControls;
+    private ProgressDialog progressDialog;
+    private int positionVideo = 0;
+    private final String POSITION_VIDEO = "position_video";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +67,53 @@ public class AuthPage extends Activity implements View.OnClickListener, GoogleAp
         Button localMode = (Button) findViewById(R.id.local_mode_button);
         remoteMode.setOnClickListener(this);
         localMode.setOnClickListener(this);
+
+        // Set media controller buttons
+        if(mediaControls == null) {
+            mediaControls = new MediaController(this);
+        }
+
+        // Initialize the VideoView
+        mVideo = (VideoView) findViewById(R.id.videoView);
+        // Create progress bar while video file is loading
+        progressDialog = new ProgressDialog(this);
+        // Set a title for the progress bar
+        //progressDialog.setTitle(Constants.TITLE_VIDEO);
+        // Set a message for the progress bar
+        //progressDialog.setMessage(Constants.STATUS_LOADING);
+        // Set the progress bar not cancelable on user's touch
+        progressDialog.setCancelable(false);
+        // Show the progress bar
+        progressDialog.show();
+
+        try {
+            // Set the media controller in the VideoView
+            mVideo.setMediaController(mediaControls);
+            // Set the URI of the video to be played
+            String URI_VIDEO = "android.resource://" + getPackageName() + "/" + R.raw.intro;
+            mVideo.setVideoURI(Uri.parse(URI_VIDEO));
+        } catch(Exception e) {
+            Log.e("Error", e.getMessage());
+            e.printStackTrace();
+        }
+
+        mVideo.requestFocus();
+        // Set an setOnPreparedListener to know when video is ready to be played
+        mVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mediaPlayer) {
+                // Close the progress bar and play the video
+                progressDialog.dismiss();
+                // If we have a position on savedInstanceState, the video should start from there
+                mVideo.seekTo(positionVideo);
+                if(positionVideo==0) {
+                    mVideo.start();
+                } else {
+                    // Pause video playback if we have come from a resumed position
+                    mVideo.pause();
+                }
+            }
+        });
     }
 
     @Override
@@ -72,6 +132,22 @@ public class AuthPage extends Activity implements View.OnClickListener, GoogleAp
         if (mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        // Store the video playback position for orientation change
+        savedInstanceState.putInt(POSITION_VIDEO, mVideo.getCurrentPosition());
+        mVideo.pause();
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        // Get video playback position to resume from previous state
+        positionVideo = savedInstanceState.getInt(POSITION_VIDEO);
+        mVideo.seekTo(positionVideo);
     }
 
     /* A helper method to resolve the current ConnectionResult error. */
@@ -114,7 +190,6 @@ public class AuthPage extends Activity implements View.OnClickListener, GoogleAp
     // Capture result returned from starting the intent in onConnectionFailed
     @Override
     protected void onActivityResult(int requestCode, int responseCode, Intent intent) {
-        Toast.makeText(getApplicationContext(), "in onActivityResult", Toast.LENGTH_SHORT);
         if (requestCode == RC_SIGN_IN) {
             if (responseCode != RESULT_OK) {
                 mSignInClicked = false;

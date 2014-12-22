@@ -44,7 +44,9 @@
 
         <activity
             android:name=".AuthPage"
-            android:label="@string/title_activity_auth_page" >
+            android:label="@string/title_activity_auth_page"
+            android:theme="@android:style/Theme.Light.NoTitleBar">
+            <!-- Specified android:theme property removes top bar at activity level -->
         </activity>
 
         <provider
