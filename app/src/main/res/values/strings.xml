@@ -8,5 +8,6 @@
     <string name="button_local">Local</string>
     <string name="title_activity_auth_page">AuthPage</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_main">MainActivity</string>
 
 </resources>

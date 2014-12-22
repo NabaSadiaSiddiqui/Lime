@@ -20,30 +20,32 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <!--<activity
-            android:name=".HomePage"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>-->
-
         <activity
-            android:name=".AuthPage"
-            android:label="@string/title_activity_auth_page" >
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".AuthPage"
+            android:label="@string/title_activity_auth_page" >
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+
         <provider
-            android:name="com.nabass.lime.db.CustomCP"
+            android:name=".db.CustomCP"
             android:authorities="com.nabass.lime.provider"
             android:exported="false" >
         </provider>
+
     </application>
 
 </manifest>

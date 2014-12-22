@@ -149,15 +149,15 @@ public class AuthPage extends Activity implements View.OnClickListener, GoogleAp
     public void onClick(View view) {
         if (view.getId() == R.id.sign_in_button
                 && !mGoogleApiClient.isConnecting()) {
-            Toast.makeText(view.getContext(), "Remote mode", Toast.LENGTH_SHORT)
-                    .show();
             mSignInClicked = true;
             resolveSignInError();
-            //TODO: set mode to SERVER and start application flow
+            Common.setModeRemote();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         } else if(view.getId() == R.id.local_mode_button) {
-            Toast.makeText(view.getContext(), "Local Mode", Toast.LENGTH_SHORT)
-                    .show();
-            //TODO: set mode to LOCAL and start application flow
+            Common.setModeLocal();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         }
     }
 
