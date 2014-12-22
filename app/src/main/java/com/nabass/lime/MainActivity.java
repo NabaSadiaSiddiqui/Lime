@@ -8,10 +8,6 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-//import android.support.v4.app.LoaderManager;
-//import android.support.v4.content.CursorLoader;
-//import android.support.v4.content.Loader;
-//import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,7 +38,6 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
             listView.setOnItemClickListener(this);
             ContactCursorAdapter = new ContactCursorAdapter(this, null);
             listView.setAdapter(ContactCursorAdapter);
-            //getSupportLoaderManager().initLoader(0, null, this);
             getLoaderManager().initLoader(0, null, this);
         }
     }
@@ -51,9 +46,6 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        /*getMenuInflater().inflate(R.menu.main, menu);
-        return true;*/
-
         getMenuInflater().inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
@@ -63,15 +55,10 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        /*int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);*/
-
         switch (item.getItemId()) {
             case R.id.action_add:
-                //TODO: implement add contact
+                AddContactDialog addContact = AddContactDialog.newInstance();
+                addContact.show(getFragmentManager(), "Add Contact");
                 return true;
             case R.id.action_settings:
                 //TODO: implement settings
@@ -105,16 +92,6 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
         ContactCursorAdapter.swapCursor(null);
     }
-
-    /*@Override
-    public void onLoadFinished(android.support.v4.content.Loader<Cursor> arg0, Cursor arg1) {
-        ContactCursorAdapter.swapCursor(arg1);
-    }
-
-    @Override
-    public void onLoaderReset(android.support.v4.content.Loader<Cursor> arg0) {
-        ContactCursorAdapter.swapCursor(null);
-    }*/
 
     public class ContactCursorAdapter extends CursorAdapter {
 
