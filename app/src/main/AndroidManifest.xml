@@ -9,6 +9,18 @@
     <!-- To retrieve and/or invalidate tokens -->
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
+    <!-- Components needed to work with GCM -->
+    <uses-sdk
+        android:minSdkVersion="9"
+        android:targetSdkVersion="18" />
+    <permission
+        android:name="com.nabass.lime.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.nabass.lime.permission.C2D_MESSAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -33,11 +45,6 @@
         <activity
             android:name=".AuthPage"
             android:label="@string/title_activity_auth_page" >
-            <!--<intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
         </activity>
 
         <provider
@@ -45,6 +52,15 @@
             android:authorities="com.nabass.lime.provider"
             android:exported="false" >
         </provider>
+
+        <receiver
+            android:name="com.nabass.lime.network.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.nabass.lime" />
+            </intent-filter>
+        </receiver>
 
     </application>
 
