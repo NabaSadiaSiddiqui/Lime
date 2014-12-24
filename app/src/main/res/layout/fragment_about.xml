@@ -1,0 +1,41 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.Help">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <Gallery
+            android:id="@+id/gallery"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="5"/>
+
+        <ImageView
+            android:id="@+id/member_img"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="4"
+            android:contentDescription="@string/about_desc"
+            android:src="@drawable/team"/>
+
+        <TextView
+            android:id="@+id/member_tag"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="5"
+            android:gravity="center"
+            android:paddingLeft="@dimen/about_tag_horizontal_padding"
+            android:paddingRight="@dimen/about_tag_horizontal_padding"
+            android:includeFontPadding="true"
+            android:text="@string/team_220"
+            android:textSize="@dimen/about_tag_text_size"
+            android:textStyle="bold"
+            android:textAllCaps="true" />
+    </LinearLayout>
+
+</FrameLayout>

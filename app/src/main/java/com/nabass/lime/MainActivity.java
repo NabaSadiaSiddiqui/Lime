@@ -18,10 +18,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.nabass.lime.fragments.About;
 import com.nabass.lime.fragments.AddContact;
 import com.nabass.lime.fragments.Chat;
 import com.nabass.lime.fragments.Contacts;
-import com.nabass.lime.fragments.Help;
 import com.nabass.lime.fragments.Profile;
 import com.nabass.lime.fragments.Settings;
 import com.nabass.lime.nav.drawer.adapter.NavDrawerListAdapter;
@@ -216,7 +216,7 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
                 fragment = new Settings();
                 break;
             case 4:
-                fragment = new Help();
+                fragment = new About();
                 break;
             default:
                 break;

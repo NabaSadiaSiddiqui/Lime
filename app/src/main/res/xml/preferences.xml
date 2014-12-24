@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/pref_notifications_title_main">
+        <!--
+             A 'parent' preference, which enables/disables child preferences (below)
+             when checked/unchecked.
+        -->
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/pref_notifications_new_msg_key"
+            android:title="@string/pref_notifications_new_msg" />
+        <RingtonePreference
+            android:defaultValue="content://settings/system/notification_sound"
+            android:dependency="@string/pref_notifications_new_msg_key"
+            android:key="@string/pref_notifications_ringtone_key"
+            android:ringtoneType="notification"
+            android:title="@string/pref_notifications_ringtone" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:dependency="@string/pref_notifications_new_msg_key"
+            android:key="@string/pref_notifications_vibrate_key"
+            android:title="@string/pref_notifications_vibrate" />
+    </PreferenceCategory>
+
+    <!-- TODO: add more preference category as needed (e.g. switching modes between local and remote or sharing with friends) -->
+</PreferenceScreen>

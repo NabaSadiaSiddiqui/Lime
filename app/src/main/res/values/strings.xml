@@ -19,7 +19,7 @@
         <item>Profile</item>
         <item>Add Contact</item>
         <item>Settings</item>
-        <item>Help</item>
+        <item>About</item>
     </string-array>
     <!-- Nav Drawer List Item Icons -->
     <!-- Keep them in order as the titles are in -->
@@ -31,7 +31,7 @@
         <!-- TODO: get a drawable specific to contact -->
         <item>@drawable/ic_action_add_person</item>
         <item>@drawable/ic_settings</item>
-        <item>@drawable/ic_help</item>
+        <item>@drawable/ic_action_about</item>
     </array>
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
@@ -39,5 +39,26 @@
     <string name="title_activity_message">MessageActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <!-- Settings -->
+    <!-- Notifications -->
+    <string name="pref_notifications_title_main">Notifications</string>
+    <string name="pref_notifications_new_msg">New messages</string>
+    <string name="pref_notifications_ringtone">Ringtone</string>
+    <string name="pref_notifications_vibrate">Vibrate</string>
+    <string name="pref_notifications_new_msg_key">new messages key</string>
+    <string name="pref_notifications_ringtone_key">ringtone key</string>
+    <string name="pref_notifications_vibrate_key">vibrate key</string>
+
+    <!-- About -->
+    <string name="team_220">We are team 220!</string>
+    <string name="about_desc">Team member</string>
+    <string-array name="about_tag">
+        <item>We are team 220!</item>
+        <item>Member 1</item>
+        <item>Member 2</item>
+        <item>Member 3</item>
+        <item>Member 4</item>
+    </string-array>
 
 </resources>
