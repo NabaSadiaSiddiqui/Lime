@@ -7,8 +7,10 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-import com.nabass.lime.Common;
+
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.nabass.lime.Init;
+
 import java.io.IOException;
 import java.util.Random;
 
@@ -137,11 +139,11 @@ public class GcmUtil {
 		                if (gcm == null) {
 		                    gcm = GoogleCloudMessaging.getInstance(ctx);
 		                }
-		                String regid = gcm.register(Common.getSenderId());
+		                String regid = gcm.register(Init.getSenderId());
 	
 		                // You should send the registration ID to your server over HTTP,
 		                // so it can use GCM/HTTP or CCS to send messages to your app.
-		                ServerUtilities.register(Common.getPreferredEmail(), regid);
+		                ServerUtilities.register(Init.getPreferredEmail(), regid);
 	
 		                // Save the regid - no need to register again.
 		                setRegistrationId(regid);
@@ -175,8 +177,8 @@ public class GcmUtil {
 	}
 	
 	private void broadcastStatus(boolean status) {
-    	Intent intent = new Intent(Common.ACTION_REGISTER);
-        intent.putExtra(Common.EXTRA_STATUS, status ? Common.STATUS_SUCCESS : Common.STATUS_FAILED);
+    	Intent intent = new Intent(Init.ACTION_REGISTER);
+        intent.putExtra(Init.EXTRA_STATUS, status ? Init.STATUS_SUCCESS : Init.STATUS_FAILED);
         ctx.sendBroadcast(intent);		
 	}
 	

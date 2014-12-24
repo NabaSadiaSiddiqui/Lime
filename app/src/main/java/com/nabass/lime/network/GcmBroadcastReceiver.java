@@ -12,12 +12,13 @@ import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
-import com.nabass.lime.Common;
+
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.nabass.lime.Init;
+import com.nabass.lime.MainActivity;
 import com.nabass.lime.R;
 import com.nabass.lime.db.CustomCP;
 import com.nabass.lime.db.CustomCP.MessageType;
-import com.nabass.lime.MainActivity;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 public class GcmBroadcastReceiver extends BroadcastReceiver {
 	
@@ -48,7 +49,7 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
 				values.put(CustomCP.COL_RECEIVER_EMAIL, receiverEmail);
 				context.getContentResolver().insert(CustomCP.CONTENT_URI_MESSAGES, values);
 				
-				if (Common.isNotify()) {
+				if (Init.isNotify()) {
 					sendNotification("New message", true);
 				}
 			}
@@ -65,8 +66,8 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
 		notification.setContentText(text);
 		notification.setAutoCancel(true);
 		notification.setSmallIcon(R.drawable.ic_launcher);
-		if (!TextUtils.isEmpty(Common.getRingtone())) {
-			notification.setSound(Uri.parse(Common.getRingtone()));
+		if (!TextUtils.isEmpty(Init.getRingtone())) {
+			notification.setSound(Uri.parse(Init.getRingtone()));
 		}
 		
 		if (launchApp) {

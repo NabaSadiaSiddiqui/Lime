@@ -1,141 +1,267 @@
 package com.nabass.lime;
 
 import android.app.Activity;
-import android.app.LoaderManager;
-import android.content.Context;
-import android.content.CursorLoader;
+
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
-import android.content.Loader;
-import android.database.Cursor;
+import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.CursorAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
-import com.nabass.lime.db.CustomCP;
+import android.widget.Toast;
 
-public class MainActivity extends Activity implements LoaderManager.LoaderCallbacks<Cursor>, AdapterView.OnItemClickListener {
-    ListView listView;
-    private ContactCursorAdapter ContactCursorAdapter;
+import com.nabass.lime.fragments.AddContact;
+import com.nabass.lime.fragments.Chat;
+import com.nabass.lime.fragments.Contacts;
+import com.nabass.lime.fragments.Help;
+import com.nabass.lime.fragments.Profile;
+import com.nabass.lime.fragments.Settings;
+import com.nabass.lime.nav.drawer.adapter.NavDrawerListAdapter;
+import com.nabass.lime.nav.drawer.model.NavDrawerItem;
+
+import java.util.ArrayList;
+
+
+public class MainActivity extends Activity implements Chat.OnFragmentInteractionListener, Contacts.OnFragmentInteractionListener {
+
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
+
+    // nav drawer title
+    private CharSequence mDrawerTitle;
+
+    // used to store app title
+    private CharSequence mTitle;
+
+    // slide menu items
+    private String[] navMenuTitles;
+    private TypedArray navMenuIcons;
+
+    private ArrayList<NavDrawerItem> navDrawerItems;
+    private NavDrawerListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        // Check if user is logged in remote/local model and redirect appropriately
-        if(Common.MODE==null) {
-            Intent intent = new Intent(this, AuthPage.class);
+        mTitle = mDrawerTitle = getTitle();
+
+        // load slide menu items from resources
+        navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
+
+        // nav drawer icons from resources
+        navMenuIcons = getResources()
+                .obtainTypedArray(R.array.nav_drawer_icons);
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
+
+        navDrawerItems = new ArrayList<NavDrawerItem>();
+
+        // adding nav drawer items to array
+        // Home -- 0
+        // Profile -- 1
+        // etc.
+        for (int i = 0; i < navMenuTitles.length; i++) {
+            navDrawerItems.add(new NavDrawerItem(navMenuTitles[i], navMenuIcons.getResourceId(i, -1)));
+        }
+
+        // Recycle the typed array
+        navMenuIcons.recycle();
+
+        mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
+
+        // setting the nav drawer list adapter
+        adapter = new NavDrawerListAdapter(getApplicationContext(), navDrawerItems);
+        mDrawerList.setAdapter(adapter);
+
+        // enabling action bar app icon and behaving it as toggle button
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                R.drawable.ic_drawer, //nav menu toggle icon
+                R.string.app_name, // nav drawer open - description for accessibility
+                R.string.app_name // nav drawer close - description for accessibility
+        ) {
+            public void onDrawerClosed(View view) {
+                getActionBar().setTitle(mTitle);
+                // calling onPrepareOptionsMenu() to show action bar icons
+                invalidateOptionsMenu();
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                getActionBar().setTitle(mDrawerTitle);
+                // calling onPrepareOptionsMenu() to hide action bar icons
+                invalidateOptionsMenu();
+            }
+        };
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        // Load fragment intro video and auth
+        if(Init.MODE==null) {
+            Intent intent = new Intent(this, AuthActivity.class);
             startActivity(intent);
-        } else {
-            setContentView(R.layout.activity_main);
-            listView = (ListView) findViewById(R.id.contactslist);
-            listView.setOnItemClickListener(this);
-            ContactCursorAdapter = new ContactCursorAdapter(this, null);
-            listView.setAdapter(ContactCursorAdapter);
-            getLoaderManager().initLoader(0, null, this);
+            finish();
+            return;
+        }
+
+        // Load fragment with recent conversations
+        Fragment fragment = new Chat();
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.frame_container, fragment).commit();
+    }
+
+    @Override
+    public void onFragmentInteraction(String frag, Bundle bundle) {
+        if(frag == Constants.FRAG_CHAT || frag == Constants.FRAG_CONTACTS) {
+            // TODO: open the conversation
+            String profile_id = bundle.getString(Init.PROFILE_ID);
+            Intent intent = new Intent(this, MessageActivity.class);
+            intent.putExtra(Init.PROFILE_ID, profile_id);
+            startActivity(intent);
         }
     }
 
+    /**
+     * Slide menu item click listener
+     */
+    private class SlideMenuClickListener implements
+            ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position,
+                                long id) {
+            // display view for selected nav drawer item
+            displayView(position);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        // toggle nav drawer on selecting action bar app icon/title
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        // Handle action bar actions click
+        Fragment fragment = null;
         switch (item.getItemId()) {
-            case R.id.action_add:
-                AddContactDialog addContact = AddContactDialog.newInstance();
-                addContact.show(getFragmentManager(), "Add Contact");
+            case R.id.action_search:
+                Toast.makeText(getApplicationContext(), "Search", Toast.LENGTH_LONG)
+                        .show();
                 return true;
-            case R.id.action_settings:
-                //TODO: implement settings
-                return true;
+            case R.id.action_chat:
+                fragment = new Contacts();
+                break;
+            default:
+                break;
         }
-        return super.onOptionsItemSelected(item);
+        if (fragment != null) {
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.frame_container, fragment).commit();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+    /**
+     * Called when invalidateOptionsMenu() is triggered
+     */
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // if nav drawer is opened, hide the action items
+        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+        menu.findItem(R.id.action_search).setVisible(!drawerOpen);
+        menu.findItem(R.id.action_chat).setVisible(!drawerOpen);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    /**
+     * Displaying fragment view for selected nav drawer list item
+     */
+    private void displayView(int position) {
+        // update the main content by replacing fragments
+        Fragment fragment = null;
+        AddContact addContact = null;
+        switch (position) {
+            case 0:
+                fragment = new Chat();  // Home
+                break;
+            case 1:
+                fragment = new Profile();
+                break;
+            case 2:
+                addContact = AddContact.newInstance();
+                break;
+            case 3:
+                fragment = new Settings();
+                break;
+            case 4:
+                fragment = new Help();
+                break;
+            default:
+                break;
+        }
+
+        if (fragment != null) {
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.frame_container, fragment).commit();
+
+            // update selected item and title, then close the drawer
+            mDrawerList.setItemChecked(position, true);
+            mDrawerList.setSelection(position);
+            setTitle(navMenuTitles[position]);
+            mDrawerLayout.closeDrawer(mDrawerList);
+        } else if (addContact != null) {
+            addContact.show(getFragmentManager(), "Add Contact");
+        } else {
+            // error in creating fragment
+            Log.e("MainActivity", "Error in creating fragment");
+        }
     }
 
     @Override
-    public void onItemClick(AdapterView<?> arg0, View view, int arg2, long arg3) {
-        //TODO: open conversation activity
+    public void setTitle(CharSequence title) {
+        mTitle = title;
+        getActionBar().setTitle(mTitle);
+    }
+
+    /**
+     * When using the ActionBarDrawerToggle, you must call it during
+     * onPostCreate() and onConfigurationChanged()...
+     */
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        CursorLoader loader = new CursorLoader(this,
-                CustomCP.CONTENT_URI_PROFILE,
-                new String[]{CustomCP.COL_ID, CustomCP.COL_NAME, CustomCP.COL_EMAIL, CustomCP.COL_COUNT},
-                null,
-                null,
-                CustomCP.COL_ID + " DESC");
-        return loader;
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        ContactCursorAdapter.swapCursor(cursor);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> cursorLoader) {
-        ContactCursorAdapter.swapCursor(null);
-    }
-
-    public class ContactCursorAdapter extends CursorAdapter {
-
-        private LayoutInflater mInflater;
-
-        public ContactCursorAdapter(Context context, Cursor c) {
-            super(context, c, 0);
-            this.mInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
-
-        @Override public int getCount() {
-            return getCursor() == null ? 0 : super.getCount();
-        }
-
-        @Override
-        public View newView(Context context, Cursor cursor, ViewGroup parent) {
-            View itemLayout = mInflater.inflate(R.layout.main_list_item, parent, false);
-            ViewHolder holder = new ViewHolder();
-            itemLayout.setTag(holder);
-            holder.text1 = (TextView) itemLayout.findViewById(R.id.text1);
-            holder.text2 = (TextView) itemLayout.findViewById(R.id.text2);
-            holder.textEmail = (TextView) itemLayout.findViewById(R.id.textEmail);
-            holder.avatar = (ImageView) itemLayout.findViewById(R.id.avatar);
-            return itemLayout;
-        }
-
-        @Override
-        public void bindView(View view, Context context, Cursor cursor) {
-            ViewHolder holder = (ViewHolder) view.getTag();
-            holder.text1.setText(cursor.getString(cursor.getColumnIndex(CustomCP.COL_NAME)));
-            holder.textEmail.setText(cursor.getString(cursor.getColumnIndex(CustomCP.COL_EMAIL)));
-            int count = cursor.getInt(cursor.getColumnIndex(CustomCP.COL_COUNT));
-            if (count > 0){
-                holder.text2.setVisibility(View.VISIBLE);
-                holder.text2.setText(String.format("%d new message%s", count, count==1 ? "" : "s"));
-            }else
-                holder.text2.setVisibility(View.GONE);
-        }
-    }
-
-    private static class ViewHolder {
-        TextView text1;
-        TextView text2;
-        TextView textEmail;
-        ImageView avatar;
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggles
+        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 }

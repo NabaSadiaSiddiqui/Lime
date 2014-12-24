@@ -15,6 +15,9 @@
  */
 package com.nabass.lime.network;
 
+import com.nabass.lime.Init;
+import com.nabass.lime.db.CustomCP;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -25,8 +28,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
-import com.nabass.lime.Common;
-import com.nabass.lime.db.CustomCP;
 
 /**
  * Helper class used to communicate with the demo server.
@@ -44,7 +45,7 @@ public final class ServerUtilities {
 	 */
 	public static void register(final String email, final String regId) {
 		//Log.i(TAG, "registering device (regId = " + regId + ")");
-		String serverUrl = Common.getServerUrl() + "/register";
+		String serverUrl = Init.getServerUrl() + "/register";
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(CustomCP.SENDER_EMAIL, email);
 		params.put(CustomCP.REG_ID, regId);
@@ -62,7 +63,7 @@ public final class ServerUtilities {
 	 */
 	public static void unregister(final String email) {
 		//Log.i(TAG, "unregistering device (email = " + email + ")");
-		String serverUrl = Common.getServerUrl() + "/unregister";
+		String serverUrl = Init.getServerUrl() + "/unregister";
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(CustomCP.SENDER_EMAIL, email);
 		try {
@@ -81,10 +82,10 @@ public final class ServerUtilities {
 	 */
 	public static void send(String msg, String to) throws IOException {
 		//Log.i(TAG, "sending message (msg = " + msg + ")");
-		String serverUrl = Common.getServerUrl() + "/send";
+		String serverUrl = Init.getServerUrl() + "/send";
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(CustomCP.MESSAGE, msg);
-		params.put(CustomCP.SENDER_EMAIL, Common.getPreferredEmail());
+		params.put(CustomCP.SENDER_EMAIL, Init.getPreferredEmail());
 		params.put(CustomCP.RECEIVER_EMAIL, to);
 		post(serverUrl, params, MAX_ATTEMPTS);
 	}

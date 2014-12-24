@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="nav_list_bg">#111777</color>
+    <color name="nav_list_bg_pressed">#777AAA</color>
+    <color name="nav_list_item_title">#FFFFFF</color>
+    <color name="nav_list_divider">#FFFFFF</color>
+
+    <color name="chat_text">#000000</color>
+    <color name="chat_bg">#987654</color>
+
+    <color name="contact_text">#111888</color>
+    <color name="contact_bg">#6578</color>
+</resources>
