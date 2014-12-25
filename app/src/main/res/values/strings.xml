@@ -40,6 +40,17 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <!-- Add Contact -->
+    <string name="add_contact_title">Choose one of the following methods to add a contact</string>
+    <string name="add_contact_email_hint">hello.world@foo.com</string>
+    <string name="add_contact_email_desc">Email address</string>
+    <string name="add_contact_pin_hint">12345</string>
+    <string name="add_contact_pin_desc">PIN</string>
+    <string name="add_contact_phone_hint">416-111-1111</string>
+    <string name="add_contact_phone_desc">Phone Number</string>
+    <string name="add_contact_button_ok">Add</string>
+    <string name="add_contact_button_cancel">Cancel</string>
+
     <!-- Settings -->
     <!-- Notifications -->
     <string name="pref_notifications_title_main">Notifications</string>

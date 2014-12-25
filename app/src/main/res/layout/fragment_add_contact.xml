@@ -1,0 +1,84 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/add_horizontal_margin"
+    android:layout_marginRight="@dimen/add_horizontal_margin"
+    android:layout_marginTop="@dimen/add_vertical_margin"
+    android:layout_marginBottom="@dimen/add_vertical_margin"
+    tools:context=".fragments.AddContact">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/add_contact_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/add_vertical_space"
+            android:text="@string/add_contact_title"
+            android:textSize="20sp"/>
+
+        <EditText
+            android:id="@+id/add_email_address"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/add_contact_email_hint"
+            android:inputType="textEmailAddress" />
+
+        <TextView
+            android:id="@+id/add_email_address_desc"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/add_vertical_space"
+            android:paddingLeft="@dimen/add_horizontal_padding_desc"
+            android:text="@string/add_contact_email_desc"/>
+
+        <EditText
+            android:id="@+id/add_pin"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/add_contact_pin_hint"
+            android:inputType="number"/>
+
+        <TextView
+            android:id="@+id/add_pin_desc"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/add_vertical_space"
+            android:paddingLeft="@dimen/add_horizontal_padding_desc"
+            android:text="@string/add_contact_pin_desc"/>
+
+        <EditText
+            android:id="@+id/add_phone"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/add_contact_phone_hint"
+            android:inputType="phone"/>
+
+        <TextView
+            android:id="@+id/add_phone_desc"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/add_vertical_space"
+            android:paddingLeft="@dimen/add_horizontal_padding_desc"
+            android:text="@string/add_contact_phone_desc"/>
+
+        <Button
+            android:id="@+id/button_add_contact_ok"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/add_vertical_space"
+            android:text="@string/add_contact_button_ok" />
+
+        <Button
+            android:id="@+id/button_add_contact_cancel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_contact_button_cancel" />
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -14,6 +14,12 @@
     <!-- Vertical spacing between buttons -->
     <dimen name="buttons_vertical_space">25dp</dimen>
 
+    <!-- Add Contact page -->
+    <dimen name="add_horizontal_margin">25dp</dimen>
+    <dimen name="add_vertical_margin">40dp</dimen>
+    <dimen name="add_vertical_space">20dp</dimen>
+    <dimen name="add_horizontal_padding_desc">10dp</dimen>
+
     <!-- About page -->
     <dimen name="about_tag_horizontal_padding">15dp</dimen>
     <dimen name="about_tag_text_size">25sp</dimen>

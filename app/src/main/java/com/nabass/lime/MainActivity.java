@@ -30,7 +30,7 @@ import com.nabass.lime.nav.drawer.model.NavDrawerItem;
 import java.util.ArrayList;
 
 
-public class MainActivity extends Activity implements Chat.OnFragmentInteractionListener, Contacts.OnFragmentInteractionListener {
+public class MainActivity extends Activity implements Chat.OnFragmentInteractionListener, Contacts.OnFragmentInteractionListener, AddContact.OnFragmentInteractionListener {
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -134,6 +134,15 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
         }
     }
 
+    @Override
+    public void goToHome() {    // AddContact.OnFragmentInteractionListener which opens home fragment that contains all the recent chats
+        setTitle("Home");
+        Fragment fragment = new Chat();
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.frame_container, fragment).commit();
+    }
+
     /**
      * Slide menu item click listener
      */
@@ -201,7 +210,7 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
     private void displayView(int position) {
         // update the main content by replacing fragments
         Fragment fragment = null;
-        AddContact addContact = null;
+        //AddContact addContact = null;
         switch (position) {
             case 0:
                 fragment = new Chat();  // Home
@@ -210,7 +219,8 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
                 fragment = new Profile();
                 break;
             case 2:
-                addContact = AddContact.newInstance();
+                //addContact = AddContact.newInstance();
+                fragment = new AddContact();
                 break;
             case 3:
                 fragment = new Settings();
@@ -232,9 +242,9 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
             mDrawerList.setSelection(position);
             setTitle(navMenuTitles[position]);
             mDrawerLayout.closeDrawer(mDrawerList);
-        } else if (addContact != null) {
+        } /*else if (addContact != null) {
             addContact.show(getFragmentManager(), "Add Contact");
-        } else {
+        }*/ else {
             // error in creating fragment
             Log.e("MainActivity", "Error in creating fragment");
         }
