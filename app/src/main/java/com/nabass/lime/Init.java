@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Init extends Application {
-    public static String MODE = null;
     public static final String PROFILE_ID = "profile_id";
     public static final String ACTION_REGISTER = "com.nabass.lime.REGISTER";
     public static final String EXTRA_STATUS = "status";
@@ -49,20 +48,31 @@ public class Init extends Application {
     public static String getRingtone() {
         return prefs.getString("notifications_new_message_ringtone", android.provider.Settings.System.DEFAULT_NOTIFICATION_URI.toString());
     }
+
     public static String getServerUrl() {
         return prefs.getString("server_url_pref", Constants.SERVER_URL);
     }
+
     public static String getSenderId() {
         return prefs.getString("sender_id_pref", Constants.SENDER_ID);
     }
+
     public static void setModeLocal() {
-        Init.MODE = Constants.MODE_LOCAL;
+        setSharedPref(Constants.MODE_USER, Constants.MODE_LOCAL);
     }
+
     public static void setModeRemote() {
-        Init.MODE = Constants.MODE_REMOTE;
+        setSharedPref(Constants.MODE_USER, Constants.MODE_REMOTE);
     }
-    public static void unsetMode() {
-        Init.MODE = null;
+
+    public static String getMode() {
+        return prefs.getString(Constants.MODE_USER, null);
+    }
+
+    public static void setSharedPref(String key, String val) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(key, val);
+        editor.commit();
     }
 
 }

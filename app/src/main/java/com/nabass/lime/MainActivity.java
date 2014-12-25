@@ -29,6 +29,8 @@ import com.nabass.lime.nav.drawer.model.NavDrawerItem;
 
 import java.util.ArrayList;
 
+import static com.nabass.lime.Init.getMode;
+
 
 public class MainActivity extends Activity implements Chat.OnFragmentInteractionListener, Contacts.OnFragmentInteractionListener, AddContact.OnFragmentInteractionListener {
 
@@ -48,6 +50,8 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
 
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
+
+    public static int AUTH_DONE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,20 +112,35 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-        // Load fragment intro video and auth
-        if(Init.MODE==null) {
+        // Load fragment intro video and auth if mode is not set
+        if(getMode()==null) {
             Intent intent = new Intent(this, AuthActivity.class);
-            startActivity(intent);
-            finish();
-            return;
+            startActivityForResult(intent, AUTH_DONE);
+        } else {
+            loadFrags();
         }
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == AUTH_DONE) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                loadFrags();
+            }
+        }
+    }
+
+
+    private void loadFrags() {
         // Load fragment with recent conversations
         Fragment fragment = new Chat();
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.frame_container, fragment).commit();
     }
+
 
     @Override
     public void onFragmentInteraction(String frag, Bundle bundle) {
@@ -210,7 +229,6 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
     private void displayView(int position) {
         // update the main content by replacing fragments
         Fragment fragment = null;
-        //AddContact addContact = null;
         switch (position) {
             case 0:
                 fragment = new Chat();  // Home
@@ -219,7 +237,6 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
                 fragment = new Profile();
                 break;
             case 2:
-                //addContact = AddContact.newInstance();
                 fragment = new AddContact();
                 break;
             case 3:
@@ -242,9 +259,7 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
             mDrawerList.setSelection(position);
             setTitle(navMenuTitles[position]);
             mDrawerLayout.closeDrawer(mDrawerList);
-        } /*else if (addContact != null) {
-            addContact.show(getFragmentManager(), "Add Contact");
-        }*/ else {
+        } else {
             // error in creating fragment
             Log.e("MainActivity", "Error in creating fragment");
         }

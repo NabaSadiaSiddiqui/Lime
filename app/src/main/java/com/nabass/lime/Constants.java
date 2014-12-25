@@ -15,6 +15,7 @@ public interface Constants {
 
     public static final String STR_NULL = "";
 
+    public static final String MODE_USER = "mode_user";
     public static final String MODE_REMOTE = "mode_remote";
     public static final String MODE_LOCAL = "mode_local";
 

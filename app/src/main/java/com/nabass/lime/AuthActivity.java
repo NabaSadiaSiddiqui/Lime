@@ -76,10 +76,6 @@ public class AuthActivity extends Activity implements View.OnClickListener, Goog
         mVideo = (VideoView) findViewById(R.id.videoView);
         // Create progress bar while video file is loading
         progressDialog = new ProgressDialog(this);
-        // Set a title for the progress bar
-        //progressDialog.setTitle(Constants.TITLE_VIDEO);
-        // Set a message for the progress bar
-        //progressDialog.setMessage(Constants.STATUS_LOADING);
         // Set the progress bar not cancelable on user's touch
         progressDialog.setCancelable(false);
         // Show the progress bar
@@ -221,17 +217,16 @@ public class AuthActivity extends Activity implements View.OnClickListener, Goog
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.sign_in_button
-                && !mGoogleApiClient.isConnecting()) {
+        if (view.getId() == R.id.sign_in_button && !mGoogleApiClient.isConnecting()) {
             mSignInClicked = true;
             resolveSignInError();
             Init.setModeRemote();
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            setResult(RESULT_OK);
+            finish();
         } else if(view.getId() == R.id.local_mode_button) {
             Init.setModeLocal();
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            setResult(RESULT_OK);
+            finish();
         }
     }
 
