@@ -23,6 +23,9 @@
     <!-- About page -->
     <dimen name="about_tag_horizontal_padding">15dp</dimen>
     <dimen name="about_tag_text_size">25sp</dimen>
+    <dimen name="about_gallery_space">10dp</dimen>
+    <dimen name="about_member_padding">30dp</dimen>
+    <dimen name="about_member_padding_horizontal">30dp</dimen>
 
     <!-- Profile page -->
     <dimen name="profile_img_padding">30dp</dimen>

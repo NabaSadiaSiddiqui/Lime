@@ -11,6 +11,16 @@
     <color name="contact_text">#111888</color>
     <color name="contact_bg">#6578</color>
 
-    <color name="profile_bg">#84ffff</color>
+    <color name="profile_bg">#18ffff</color>
     <color name="profile_text_bg">#9e9e9e</color>
+
+    <color name="about_bg">#ff3d00</color>
+    <color name="about_tag">#ffe082</color>
+
+    <color name="add_contact_bg">#76ff03</color>
+    <color name="add_contact_btn">#6200ea</color>
+    <color name="add_contact_btn_text">#ef9a9a</color>
+    <color name="add_contact_desc">#3e2723</color>
+    <color name="add_contact_title">#dd2c00</color>
+
 </resources>
