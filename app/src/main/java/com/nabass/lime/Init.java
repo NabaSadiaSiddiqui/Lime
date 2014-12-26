@@ -3,8 +3,10 @@ package com.nabass.lime;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.telephony.TelephonyManager;
 import android.util.Patterns;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,10 @@ public class Init extends Application {
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         List<String> emailList = getEmailList();
         email_arr = emailList.toArray(new String[emailList.size()]);
+
+        // Set phone number of the device in shared pref --> will be used by Profile Fragment
+        TelephonyManager tMgr = (TelephonyManager)getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
+        setSharedPref(Constants.USER_PHONE_NUM, tMgr.getLine1Number());
     }
     private List<String> getEmailList() {
         List<String> lst = new ArrayList<String>();
@@ -67,6 +73,11 @@ public class Init extends Application {
 
     public static String getMode() {
         return prefs.getString(Constants.MODE_USER, null);
+    }
+
+
+    public static String getPhoneNum() {
+        return prefs.getString(Constants.USER_PHONE_NUM, null);
     }
 
     public static void setSharedPref(String key, String val) {

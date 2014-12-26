@@ -9,6 +9,9 @@
     <!-- To retrieve and/or invalidate tokens -->
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
+    <!-- Permission needed to read phone number -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
     <!-- Components needed to work with GCM -->
     <uses-sdk
         android:minSdkVersion="9"

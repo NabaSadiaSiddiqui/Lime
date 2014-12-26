@@ -2,6 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="@dimen/profile_page_padding"
+    android:paddingBottom="@dimen/profile_page_padding_bottom"
+    android:paddingLeft="@dimen/profile_page_padding"
+    android:paddingRight="@dimen/profile_page_padding"
     android:orientation="vertical"
     android:background="@color/profile_bg"
     tools:context=".fragments.Profile">
@@ -15,14 +19,72 @@
         android:padding="@dimen/profile_img_padding"
         android:src="@drawable/olaf"/>
 
-    <!-- TODO: update text to person's name -->
-    <TextView
-        android:id="@+id/profile_name"
+    <View style="@style/ViewDivider"/>
+
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="2"
-        android:text="@string/hello_world"
-        android:textSize="@dimen/profile_name_size"
-        android:gravity="center_horizontal" />
+        android:layout_weight="2">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:text="@string/profile_name"
+            android:textSize="@dimen/profile_key_size"
+            android:gravity="center" />
+        <TextView
+            android:id="@+id/profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/profile_value_size"
+            android:gravity="center"/>
+    </RelativeLayout>
+
+    <View style="@style/ViewDivider"/>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="2">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:text="@string/profile_phone_number"
+            android:textSize="@dimen/profile_key_size"
+            android:gravity="center" />
+        <TextView
+            android:id="@+id/profile_phone_num"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/profile_value_size"
+            android:gravity="center" />
+    </RelativeLayout>
+
+    <View style="@style/ViewDivider"/>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="2">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:text="@string/profile_sender_id"
+            android:textSize="@dimen/profile_key_size"
+            android:gravity="center" />
+        <TextView
+            android:id="@+id/profile_sender_id"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/profile_value_size"
+            android:gravity="center" />
+    </RelativeLayout>
+
+    <View style="@style/ViewDivider"/>
 
 </LinearLayout>

@@ -72,4 +72,9 @@
         <item>Member 4</item>
     </string-array>
 
+    <!-- Profile -->
+    <string name="profile_name">Name:</string>
+    <string name="profile_phone_number">Phone Number:</string>
+    <string name="profile_sender_id">Sender ID:</string>
+
 </resources>

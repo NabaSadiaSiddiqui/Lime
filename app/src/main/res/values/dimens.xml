@@ -26,6 +26,9 @@
 
     <!-- Profile page -->
     <dimen name="profile_img_padding">30dp</dimen>
-    <dimen name="profile_name_size">25sp</dimen>
+    <dimen name="profile_page_padding">30dp</dimen>
+    <dimen name="profile_page_padding_bottom">40dp</dimen>
+    <dimen name="profile_key_size">16sp</dimen>
+    <dimen name="profile_value_size">20sp</dimen>
 
 </resources>

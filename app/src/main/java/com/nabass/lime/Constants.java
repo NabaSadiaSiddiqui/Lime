@@ -19,6 +19,8 @@ public interface Constants {
     public static final String MODE_REMOTE = "mode_remote";
     public static final String MODE_LOCAL = "mode_local";
 
+    public static final String USER_PHONE_NUM = "phone_number";
+
     public static final String FRAG_CHAT = "frag_chat";
     public static final String FRAG_CONTACTS = "frag_contacts";
 
