@@ -91,4 +91,108 @@ public class Init extends Application {
         return str.substring(0,1).toUpperCase() + str.substring(1,str.length()).toLowerCase();
     }
 
+    // Returns the first character of the string
+    public static String getFirst(String str) {
+        return str.substring(0,1);
+    }
+
+    // Returns the first character of the string in upper case: foo -> F
+    public static String getFirstToUpper(String str) {
+        return getFirst(str).toUpperCase();
+    }
+
+    // Returns the first character of the string in lower case: foo -> f
+    public static String getFirstToLower(String str) {
+        return getFirst(str).toLowerCase();
+    }
+
+    // Returns the index of upper case letter ch in alphabets: A --> 0
+    public static int mapLetterInAlphabets(String str) {
+        char ch = str.charAt(0);
+        int position;
+        switch(ch) {
+            case 'A':
+                position=0;
+                break;
+            case 'B':
+                position=1;
+                break;
+            case 'C':
+                position=2;
+                break;
+            case 'D':
+                position=3;
+                break;
+            case 'E':
+                position=4;
+                break;
+            case 'F':
+                position=5;
+                break;
+            case 'G':
+                position=6;
+                break;
+            case 'H':
+                position=7;
+                break;
+            case 'I':
+                position=8;
+                break;
+            case 'J':
+                position=9;
+                break;
+            case 'K':
+                position=10;
+                break;
+            case 'L':
+                position=11;
+                break;
+            case 'M':
+                position=12;
+                break;
+            case 'N':
+                position=13;
+                break;
+            case 'O':
+                position=14;
+                break;
+            case 'P':
+                position=15;
+                break;
+            case 'Q':
+                position=16;
+                break;
+            case 'R':
+                position=17;
+                break;
+            case 'S':
+                position=18;
+                break;
+            case 'T':
+                position=19;
+                break;
+            case 'U':
+                position=20;
+                break;
+            case 'V':
+                position=21;
+                break;
+            case 'W':
+                position=22;
+                break;
+            case 'X':
+                position=23;
+                break;
+            case 'Y':
+                position=24;
+                break;
+            case 'Z':
+                position=25;
+                break;
+            default:
+                position=0;
+                break;
+        }
+        return position;
+    }
 }

@@ -6,7 +6,7 @@
     <color name="nav_list_divider">#e1bee7</color>
 
     <color name="chat_text">#000000</color>
-    <color name="chat_bg">#987654</color>
+    <color name="chat_new_msg">#1b5e20</color>
 
     <color name="contact_text">#111888</color>
     <color name="contact_bg">#6578</color>
