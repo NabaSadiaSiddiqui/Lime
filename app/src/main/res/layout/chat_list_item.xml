@@ -12,40 +12,29 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="6dip"
+        android:contentDescription="@string/chat_avatar"
         android:scaleType="fitStart" />
 
     <TextView
-        android:id="@+id/text1"
+        android:id="@+id/chat_name"
         android:layout_width="fill_parent"
-        android:layout_height="26dip"
-        android:layout_alignParentBottom="true"
+        android:layout_height="@dimen/chat_name_height"
+        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@id/avatar"
         android:ellipsize="marquee"
         android:singleLine="true"
         android:gravity="center_vertical"
-        android:textColor="@color/chat_text"
-        android:textAllCaps="true" />
-
-    <TextView
-        android:id="@+id/text2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/text1"
-        android:layout_alignParentTop="true"
-        android:layout_alignWithParentIfMissing="true"
-        android:layout_toRightOf="@id/avatar"
-        android:gravity="center_vertical"
         android:textColor="@color/chat_text" />
 
     <TextView
-        android:id="@+id/textEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-		android:layout_alignParentBottom="true"        
-        android:ellipsize="marquee"
-        android:textSize="12sp"
+        android:id="@+id/chat_msg"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/chat_msg_height"
+        android:layout_below="@id/chat_name"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/avatar"
+        android:gravity="center_vertical"
         android:textColor="@color/chat_text" />
 
 </RelativeLayout>

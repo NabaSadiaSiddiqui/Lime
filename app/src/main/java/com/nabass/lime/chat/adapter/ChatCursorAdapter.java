@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.nabass.lime.R;
 import com.nabass.lime.db.CustomCP;
 
+import static com.nabass.lime.Init.formatStringCamelCase;
+
 public class ChatCursorAdapter extends CursorAdapter {
 
     private LayoutInflater mInflater;
@@ -27,33 +29,28 @@ public class ChatCursorAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        View itemLayout = mInflater.inflate(R.layout.chat_list_item, parent, false);
+        View rootView = mInflater.inflate(R.layout.chat_list_item, parent, false);
         ViewHolder holder = new ViewHolder();
-        itemLayout.setTag(holder);
-        holder.text1 = (TextView) itemLayout.findViewById(R.id.text1);
-        holder.text2 = (TextView) itemLayout.findViewById(R.id.text2);
-        holder.textEmail = (TextView) itemLayout.findViewById(R.id.textEmail);
-        holder.avatar = (ImageView) itemLayout.findViewById(R.id.avatar);
-        return itemLayout;
+        rootView.setTag(holder);
+        holder.avatar = (ImageView) rootView.findViewById(R.id.avatar);
+        holder.chat_name = (TextView) rootView.findViewById(R.id.chat_name);
+        holder.chat_msg = (TextView) rootView.findViewById(R.id.chat_msg);
+        return rootView;
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        ViewHolder holder = (ViewHolder) view.getTag();
-        holder.text1.setText(cursor.getString(cursor.getColumnIndex(CustomCP.COL_NAME)));
-        holder.textEmail.setText(cursor.getString(cursor.getColumnIndex(CustomCP.COL_EMAIL)));
+        ViewHolder rootView = (ViewHolder) view.getTag();
+        String name = formatStringCamelCase(cursor.getString(cursor.getColumnIndex(CustomCP.COL_NAME)));
+        rootView.chat_name.setText(name);
+
         int count = cursor.getInt(cursor.getColumnIndex(CustomCP.COL_COUNT));
-        if (count > 0){
-            holder.text2.setVisibility(View.VISIBLE);
-            holder.text2.setText(String.format("%d new message%s", count, count==1 ? "" : "s"));
-        }else
-            holder.text2.setVisibility(View.GONE);
+        rootView.chat_msg.setText(String.format("%d new message%s", count, count==1 ? "" : "s"));
     }
 
     private static class ViewHolder {
-        TextView text1;
-        TextView text2;
-        TextView textEmail;
         ImageView avatar;
+        TextView chat_name;
+        TextView chat_msg;
     }
 }

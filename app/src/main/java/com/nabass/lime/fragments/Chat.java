@@ -39,7 +39,7 @@ public class Chat extends Fragment implements LoaderManager.LoaderCallbacks<Curs
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
         // Set the adapter
-        ListView mListView = (ListView) view.findViewById(R.id.contactslist);
+        ListView mListView = (ListView) view.findViewById(R.id.chatslist);
         mAdapter = new ChatCursorAdapter(getActivity().getApplicationContext(), null);
 
         mListView.setAdapter(mAdapter);

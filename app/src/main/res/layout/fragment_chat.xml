@@ -5,7 +5,7 @@
     tools:context=".fragments.Chat">
 
     <ListView
-        android:id="@+id/contactslist"
+        android:id="@+id/chatslist"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

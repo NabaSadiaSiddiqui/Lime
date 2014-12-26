@@ -77,4 +77,7 @@
     <string name="profile_phone_number">Phone Number:</string>
     <string name="profile_sender_id">Sender ID:</string>
 
+    <!-- Chat -->
+    <string name="chat_avatar">Contact image</string>
+
 </resources>

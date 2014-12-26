@@ -86,4 +86,9 @@ public class Init extends Application {
         editor.commit();
     }
 
+    // changes a string 'foo' to 'Foo'
+    public static String formatStringCamelCase(String str) {
+        return str.substring(0,1).toUpperCase() + str.substring(1,str.length()).toLowerCase();
+    }
+
 }

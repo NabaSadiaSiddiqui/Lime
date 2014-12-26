@@ -34,4 +34,8 @@
     <dimen name="profile_key_size">16sp</dimen>
     <dimen name="profile_value_size">20sp</dimen>
 
+    <!-- Chat page -->
+    <dimen name="chat_name_height">25dp</dimen>
+    <dimen name="chat_msg_height">20dp</dimen>
+
 </resources>
