@@ -94,13 +94,19 @@ public class MessageActivity extends FragmentActivity implements Message.OnFragm
             protected String doInBackground(Void... params) {
                 String msg = "";
                 try {
-                    ServerUtilities.send(txt, profileEmail);
                     ContentValues values = new ContentValues(2);
                     values.put(CustomCP.COL_TYPE,  CustomCP.MessageType.OUTGOING.ordinal());
                     values.put(CustomCP.COL_MESSAGE, txt);
                     values.put(CustomCP.COL_RECEIVER_EMAIL, profileEmail);
                     values.put(CustomCP.COL_SENDER_EMAIL, Init.getPreferredEmail());
                     getContentResolver().insert(CustomCP.CONTENT_URI_MESSAGES, values);
+                    //TODO: sleep process for 1000 ms so that vertical orientation of messages view is fine
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    ServerUtilities.send(txt, profileEmail);
 
                 } catch (IOException ex) {
                     msg = "Message could not be sent";
