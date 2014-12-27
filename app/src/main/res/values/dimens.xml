@@ -41,4 +41,7 @@
     <dimen name="chat_img_width">60dip</dimen>
     <dimen name="chat_text_padding">8dip</dimen>
 
+    <!-- Chat actions dialog -->
+    <dimen name="chat_actions_padding">10dip</dimen>
+
 </resources>

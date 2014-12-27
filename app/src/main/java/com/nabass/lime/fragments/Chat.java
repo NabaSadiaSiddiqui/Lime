@@ -1,6 +1,8 @@
 package com.nabass.lime.fragments;
 
 import android.app.Activity;
+import android.app.DialogFragment;
+import android.app.FragmentTransaction;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.nabass.lime.Init;
 import com.nabass.lime.R;
@@ -19,7 +22,7 @@ import com.nabass.lime.chat.adapter.ChatCursorAdapter;
 import com.nabass.lime.db.CustomCP;
 import com.nabass.lime.Constants;
 
-public class Chat extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, AdapterView.OnItemClickListener {
+public class Chat extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
     private OnFragmentInteractionListener mListener;
     private ChatCursorAdapter mAdapter;
@@ -45,6 +48,7 @@ public class Chat extends Fragment implements LoaderManager.LoaderCallbacks<Curs
         mListView.setAdapter(mAdapter);
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener((AdapterView.OnItemClickListener) this);
+        mListView.setOnItemLongClickListener((AdapterView.OnItemLongClickListener) this);
         getLoaderManager().initLoader(0, null, this);
 
         return view;
@@ -73,6 +77,27 @@ public class Chat extends Fragment implements LoaderManager.LoaderCallbacks<Curs
         Bundle bundle = new Bundle();
         bundle.putString(Init.PROFILE_ID, String.valueOf(l));
         mListener.onFragmentInteraction(Constants.FRAG_CHAT, bundle);
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+        //TODO: open dialog with option to view contact or delete chat
+        // DialogFragment.show() will take care of adding the fragment
+        // in a transaction.  We also want to remove any currently showing
+        // dialog, so make our own transaction and take care of that here.
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        // Create and show the dialog.
+        DialogFragment chatActions = new ChatActions();
+        chatActions.show(ft, "dialog");
+
+        // Returns true to stop event propagation to onItemClick
+        return true;
     }
 
     /**
