@@ -4,35 +4,31 @@ import android.app.Activity;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import com.nabass.lime.db.CustomCP;
 import com.nabass.lime.fragments.About;
 import com.nabass.lime.fragments.AddContact;
 import com.nabass.lime.fragments.Chat;
 import com.nabass.lime.fragments.Contacts;
 import com.nabass.lime.fragments.Profile;
 import com.nabass.lime.fragments.Settings;
-import com.nabass.lime.fragments.ChatActions;
 import com.nabass.lime.nav.drawer.adapter.NavDrawerListAdapter;
 import com.nabass.lime.nav.drawer.model.NavDrawerItem;
 import com.nabass.lime.db.DBExtended;
-
 import java.util.ArrayList;
-
 import static com.nabass.lime.Init.getMode;
 
 
@@ -78,7 +74,7 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
 
         // adding nav drawer items to array
         // Home -- 0
-        // Profile -- 1
+        // Add a contact -- 1
         // etc.
         for (int i = 0; i < navMenuTitles.length; i++) {
             navDrawerItems.add(new NavDrawerItem(navMenuTitles[i], navMenuIcons.getResourceId(i, -1)));
@@ -94,8 +90,19 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
         mDrawerList.setAdapter(adapter);
 
         // enabling action bar app icon and behaving it as toggle button
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+        //getActionBar().setDisplayHomeAsUpEnabled(true);
+        //getActionBar().setHomeButtonEnabled(true);
+
+
+        getActionBar().setDisplayShowHomeEnabled(false);
+        getActionBar().setDisplayShowTitleEnabled(false);
+        LayoutInflater mInflater = LayoutInflater.from(this);
+
+        View mCustomView = mInflater.inflate(R.layout.actionbar_custom, null);
+        getActionBar().setCustomView(mCustomView);
+        getActionBar().setDisplayShowCustomEnabled(true);
+
+
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                 R.drawable.ic_drawer, //nav menu toggle icon
@@ -125,6 +132,20 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
         }
     }
 
+    // Called when the person clicks on his photo
+    public void showProfile(View view) {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment prev = getFragmentManager().findFragmentByTag(Constants.TAG_DIALOG);
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        // Create and show the dialog.
+        Profile profileDialog = new Profile();
+        profileDialog.show(ft, Constants.TAG_DIALOG);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
@@ -148,13 +169,13 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
 
     @Override
     public void onFragmentInteraction(String frag, Bundle bundle) {
-        if(frag == Constants.FRAG_CHAT || frag == Constants.FRAG_CONTACTS) {
+        if(frag.equals(Constants.FRAG_CHAT) || frag.equals(Constants.FRAG_CONTACTS)) {
             // TODO: open the conversation
             String profile_id = bundle.getString(Init.PROFILE_ID);
             Intent intent = new Intent(this, MessageActivity.class);
             intent.putExtra(Init.PROFILE_ID, profile_id);
             startActivity(intent);
-        } else if(frag == Constants.FRAG_CHAT_ACTIONS) {
+        } else if(frag.equals(Constants.FRAG_CHAT_ACTIONS)) {
             // TODO: delete conversation
             String profile_id = bundle.getString(Init.PROFILE_ID);
             Chat.chatActionsDialog.dismiss();
@@ -248,15 +269,12 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
                 fragment = new Chat();  // Home
                 break;
             case 1:
-                fragment = new Profile();
-                break;
-            case 2:
                 fragment = new AddContact();
                 break;
-            case 3:
+            case 2:
                 fragment = new Settings();
                 break;
-            case 4:
+            case 3:
                 fragment = new About();
                 break;
             default:

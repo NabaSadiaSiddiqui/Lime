@@ -31,4 +31,6 @@ public interface Constants {
     public static final String TYPE_ADD_PIN = "pin";
     public static final String TYPE_ADD_PHONE = "phone";
 
+    public static final String TAG_DIALOG = "dialog";
+
 }

@@ -29,10 +29,10 @@
 
     <!-- Profile page -->
     <dimen name="profile_img_padding">30dp</dimen>
-    <dimen name="profile_page_padding">30dp</dimen>
-    <dimen name="profile_page_padding_bottom">40dp</dimen>
+    <dimen name="profile_page_padding">15dip</dimen>
+    <dimen name="profile_page_padding_bottom">15dip</dimen>
     <dimen name="profile_key_size">16sp</dimen>
-    <dimen name="profile_value_size">20sp</dimen>
+    <dimen name="profile_value_size">18sp</dimen>
 
     <!-- Chat page -->
     <dimen name="chat_name_height">25dip</dimen>
@@ -43,5 +43,10 @@
 
     <!-- Chat actions dialog -->
     <dimen name="chat_actions_padding">10dip</dimen>
+
+    <!-- Custom action bar -->
+    <dimen name="action_bar_icon_size">60dip</dimen>
+    <dimen name="action_bar_icon_padding">5dip</dimen>
+    <dimen name="action_bar_icon_padding_left">15dip</dimen>
 
 </resources>

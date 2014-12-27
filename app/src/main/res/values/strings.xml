@@ -16,7 +16,6 @@
     <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">
         <item>Home</item>
-        <item>Profile</item>
         <item>Add Contact</item>
         <item>Settings</item>
         <item>About</item>
@@ -26,7 +25,6 @@
     <array name="nav_drawer_icons">
 
         <!-- TODO: get a drawable specific to home -->
-        <item>@drawable/ic_profile</item>
         <item>@drawable/ic_profile</item>
         <!-- TODO: get a drawable specific to contact -->
         <item>@drawable/ic_action_add_person</item>

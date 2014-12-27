@@ -10,24 +10,14 @@
     android:background="@color/profile_bg"
     tools:context=".fragments.Profile">
 
-    <!-- TODO: update src attribute to person's picture -->
-    <com.nabass.lime.widgets.CircleImageView
-        android:id="@+id/profile_img"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:padding="@dimen/profile_img_padding"
-        android:src="@drawable/olaf"/>
-
     <View style="@style/ViewDivider"/>
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="2">
+        android:layout_height="wrap_content">
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:text="@string/profile_name"
             android:textSize="@dimen/profile_key_size"
@@ -35,7 +25,7 @@
         <TextView
             android:id="@+id/profile_name"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:textSize="@dimen/profile_value_size"
             android:gravity="center"/>
@@ -45,11 +35,10 @@
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="2">
+        android:layout_height="wrap_content">
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:text="@string/profile_phone_number"
             android:textSize="@dimen/profile_key_size"
@@ -57,7 +46,7 @@
         <TextView
             android:id="@+id/profile_phone_num"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:textSize="@dimen/profile_value_size"
             android:gravity="center" />
@@ -67,11 +56,10 @@
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="2">
+        android:layout_height="wrap_content">
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:text="@string/profile_sender_id"
             android:textSize="@dimen/profile_key_size"
@@ -79,7 +67,7 @@
         <TextView
             android:id="@+id/profile_sender_id"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:textSize="@dimen/profile_value_size"
             android:gravity="center" />

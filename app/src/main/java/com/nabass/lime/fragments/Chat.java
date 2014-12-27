@@ -91,7 +91,7 @@ public class Chat extends Fragment implements LoaderManager.LoaderCallbacks<Curs
         bundle.putString(Init.PROFILE_ID, String.valueOf(l));
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+        Fragment prev = getFragmentManager().findFragmentByTag(Constants.TAG_DIALOG);
         if (prev != null) {
             ft.remove(prev);
         }
@@ -99,7 +99,7 @@ public class Chat extends Fragment implements LoaderManager.LoaderCallbacks<Curs
 
         // Create and show the dialog.
         chatActionsDialog = ChatActions.newInstance(bundle);
-        chatActionsDialog.show(ft, "dialog");
+        chatActionsDialog.show(ft, Constants.TAG_DIALOG);
 
         // Returns true to stop event propagation to onItemClick
         return true;
