@@ -1,12 +1,15 @@
 package com.nabass.lime.fragments;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.database.Cursor;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +18,25 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nabass.lime.Constants;
+import com.nabass.lime.Init;
 import com.nabass.lime.R;
+import com.nabass.lime.db.CustomCP;
 
 
 public class ChatActions extends DialogFragment {
 
+    private static Bundle profileBundle;
+    private Chat.OnFragmentInteractionListener mListener;
+
+
     public ChatActions() {
         // Required empty public constructor
+    }
+
+    public static ChatActions newInstance(Bundle bundle) {
+        profileBundle = bundle;
+        return new ChatActions();
     }
 
     @Override
@@ -55,8 +70,7 @@ public class ChatActions extends DialogFragment {
             @Override
             public void onClick(View view) {
                 //TODO: delete conversation
-                Toast.makeText(getActivity(), "Delete conversation", Toast.LENGTH_LONG)
-                        .show();
+                mListener.onFragmentInteraction(Constants.FRAG_CHAT_ACTIONS, profileBundle);
             }
         });
 
@@ -70,6 +84,16 @@ public class ChatActions extends DialogFragment {
                 .setCancelable(true)
                 .setView(ll)
                 .create();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (Chat.OnFragmentInteractionListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement OnFragmentInteractionListener");
+        }
     }
 
 }

@@ -7,6 +7,7 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -18,14 +19,17 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.nabass.lime.db.CustomCP;
 import com.nabass.lime.fragments.About;
 import com.nabass.lime.fragments.AddContact;
 import com.nabass.lime.fragments.Chat;
 import com.nabass.lime.fragments.Contacts;
 import com.nabass.lime.fragments.Profile;
 import com.nabass.lime.fragments.Settings;
+import com.nabass.lime.fragments.ChatActions;
 import com.nabass.lime.nav.drawer.adapter.NavDrawerListAdapter;
 import com.nabass.lime.nav.drawer.model.NavDrawerItem;
+import com.nabass.lime.db.DBExtended;
 
 import java.util.ArrayList;
 
@@ -150,7 +154,17 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
             Intent intent = new Intent(this, MessageActivity.class);
             intent.putExtra(Init.PROFILE_ID, profile_id);
             startActivity(intent);
+        } else if(frag == Constants.FRAG_CHAT_ACTIONS) {
+            // TODO: delete conversation
+            String profile_id = bundle.getString(Init.PROFILE_ID);
+            Chat.chatActionsDialog.dismiss();
+            deleteConversation(profile_id);
         }
+    }
+
+    public void deleteConversation(String profileID) {
+        String email = DBExtended.getEmailFromProfileID(getContentResolver(), profileID);
+        DBExtended.deleteConversationByEmail(getContentResolver(), email);
     }
 
     @Override

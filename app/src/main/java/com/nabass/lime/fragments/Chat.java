@@ -7,6 +7,7 @@ import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ public class Chat extends Fragment implements LoaderManager.LoaderCallbacks<Curs
 
     private OnFragmentInteractionListener mListener;
     private ChatCursorAdapter mAdapter;
+    public static DialogFragment chatActionsDialog;
 
     public Chat() {
         // Required empty public constructor
@@ -85,6 +87,9 @@ public class Chat extends Fragment implements LoaderManager.LoaderCallbacks<Curs
         // DialogFragment.show() will take care of adding the fragment
         // in a transaction.  We also want to remove any currently showing
         // dialog, so make our own transaction and take care of that here.
+        Bundle bundle = new Bundle();
+        bundle.putString(Init.PROFILE_ID, String.valueOf(l));
+
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         Fragment prev = getFragmentManager().findFragmentByTag("dialog");
         if (prev != null) {
@@ -93,8 +98,8 @@ public class Chat extends Fragment implements LoaderManager.LoaderCallbacks<Curs
         ft.addToBackStack(null);
 
         // Create and show the dialog.
-        DialogFragment chatActions = new ChatActions();
-        chatActions.show(ft, "dialog");
+        chatActionsDialog = ChatActions.newInstance(bundle);
+        chatActionsDialog.show(ft, "dialog");
 
         // Returns true to stop event propagation to onItemClick
         return true;

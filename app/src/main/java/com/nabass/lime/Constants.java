@@ -23,6 +23,7 @@ public interface Constants {
 
     public static final String FRAG_CHAT = "frag_chat";
     public static final String FRAG_CONTACTS = "frag_contacts";
+    public static final String FRAG_CHAT_ACTIONS = "frag_chat_actions";
 
     public static final String ERR_INVALID_EMAIL = "Email is not valid";
 
