@@ -7,14 +7,17 @@ import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.nabass.lime.Init;
@@ -36,6 +39,7 @@ public class Chat extends Fragment implements LoaderManager.LoaderCallbacks<Curs
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -65,6 +69,29 @@ public class Chat extends Fragment implements LoaderManager.LoaderCallbacks<Curs
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        SearchView sv = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        // implementing the search view listener
+        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                Toast.makeText(getActivity().getApplicationContext(), s, Toast.LENGTH_SHORT)
+                        .show();
+                Log.e("Chat.java", "Implement things here");
+                // Return false to let the SearchView perform the default action.
+                // Returning true indicates that the listener already performed teh default action
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return true;
+            }
+        });
     }
 
     @Override
