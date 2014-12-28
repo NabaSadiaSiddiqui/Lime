@@ -8,12 +8,6 @@ public class DBConstants {
     public static final String CONTENT_PROVIDER = "com.nabass.lime.provider";
     public static final String COL_ID = "_id";
 
-    //parameters recognized by demo server
-    public static final String SENDER_EMAIL 		= "senderEmail";
-    public static final String RECEIVER_EMAIL 		= "receiverEmail";
-    public static final String REG_ID 				= "regId";
-    public static final String MESSAGE 				= "message";
-
     /*
      * Contacts
      */

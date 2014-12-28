@@ -13,6 +13,14 @@ public interface Constants {
      */
 	String SENDER_ID = "374736890011";
 
+    /*
+    * 3rd party auth server connecting client to GCM servers
+    */
+    String SENDER_EMAIL 		= "senderEmail";
+    String RECEIVER_EMAIL 		= "receiverEmail";
+    String REG_ID 				= "regId";
+    String MESSAGE 				= "message";
+
     public static final String STR_NULL = "";
 
     public static final String MODE_USER = "mode_user";
