@@ -12,6 +12,8 @@ import android.widget.CursorAdapter;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
+import com.nabass.lime.Constants;
+import com.nabass.lime.Init;
 import com.nabass.lime.conversation.adapter.ConversationCursorAdapter;
 import com.nabass.lime.db.DBConstants;
 
@@ -93,8 +95,8 @@ public class Message extends ListFragment implements LoaderManager.LoaderCallbac
         CursorLoader loader = new CursorLoader(getActivity(),
                 DBConstants.DB_MSGS,
                 null,
-                DBConstants.COL_SENDER_ID + " = ? or " + DBConstants.COL_RECIPIENT_ID + " = ?",
-                new String[]{profileEmail, profileEmail},
+                DBConstants.COL_SENDER_ID + " = ? and " + DBConstants.COL_RECIPIENT_ID + " = ?",
+                new String[]{Init.getPreferredEmail(), profileEmail},
                 DBConstants.COL_TIME + " ASC");
         return loader;
     }

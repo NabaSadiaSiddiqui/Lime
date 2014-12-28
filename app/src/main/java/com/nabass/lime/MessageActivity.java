@@ -103,7 +103,7 @@ public class MessageActivity extends FragmentActivity implements Message.OnFragm
                     getContentResolver().insert(DBConstants.DB_MSGS, values);
                     //TODO: sleep process for 100 ms so that vertical orientation of messages view is fine
                     try {
-                        Thread.sleep(500);
+                        Thread.sleep(3000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

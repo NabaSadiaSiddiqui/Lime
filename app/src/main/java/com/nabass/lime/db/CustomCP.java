@@ -7,8 +7,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.util.Log;
 
 public class CustomCP extends ContentProvider {
+
+    private static final String TAG = "CustomCP";
 
     private DBManager dbm;
 
@@ -64,8 +67,10 @@ public class CustomCP extends ContentProvider {
         switch(DBConstants.sURIMatcher.match(uri)) {
             case DBConstants.ALL_MSGS:
                 id = db.insertOrThrow(DBConstants.TBL_MSGS, null, values);
-                if (values.get(DBConstants.COL_RECIPIENT_ID) == null) {
-                    db.execSQL("update " + DBConstants.TBL_CONTACTS + " set count = count+1 where email = ?", new Object[]{values.get(DBConstants.COL_SENDER_ID)});
+                Log.e(TAG, "Before updating notification count");
+                if(values.get(DBConstants.COL_MSG_TYPE).equals(DBConstants.MsgDirection.DIRECTION_INCOMING.ordinal())) {
+                    Log.e(TAG, "Updating count when a message is received");
+                    db.execSQL("update " + DBConstants.TBL_CONTACTS + " set count = count+1 where email = ?", new Object[]{values.get(DBConstants.COL_RECIPIENT_ID)});
                     getContext().getContentResolver().notifyChange(DBConstants.DB_CONTACTS, null);
                 }
                 break;

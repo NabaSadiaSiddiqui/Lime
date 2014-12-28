@@ -33,7 +33,7 @@ public class Profile extends DialogFragment {
         TextView phone = (TextView) dialoglayout.findViewById(R.id.profile_phone_num);
         TextView senderID = (TextView) dialoglayout.findViewById(R.id.profile_sender_id);
 
-        name.setText(getDisplayName());
+        //name.setText(getDisplayName());
         phone.setText(getPhoneNum());
         senderID.setText(getSenderId());
 
