@@ -7,6 +7,8 @@ import android.database.SQLException;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -27,6 +29,12 @@ public class AddContact extends Fragment {
 
     public AddContact(){
         //Nothing for now
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -71,6 +79,12 @@ public class AddContact extends Fragment {
         });
 
         return rootView;
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        // Hide search bar
+        menu.findItem(R.id.action_search).setVisible(false).setEnabled(false);
     }
 
     @Override
