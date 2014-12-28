@@ -40,7 +40,7 @@ public class ChatCursorAdapter extends CursorAdapter {
         rootView.setTag(holder);
 
         holder.chat_img = (ImageView) rootView.findViewById(R.id.chat_img);
-        holder.chat_name = (TextView) rootView.findViewById(R.id.chat_name);
+        holder.chat_id = (TextView) rootView.findViewById(R.id.chat_id);
         holder.chat_msg = (TextView) rootView.findViewById(R.id.chat_msg);
 
         return rootView;
@@ -50,8 +50,8 @@ public class ChatCursorAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         ViewHolder rootView = (ViewHolder) view.getTag();
 
-        String name = formatStringCamelCase(cursor.getString(cursor.getColumnIndex(CustomCP.COL_NAME)));
-        String initial = getFirstToUpper(name);
+        String email = cursor.getString(cursor.getColumnIndex(CustomCP.COL_EMAIL));
+        String initial = getFirstToUpper(email);
         int count = cursor.getInt(cursor.getColumnIndex(CustomCP.COL_COUNT));
         String[] colors = view.getResources().getStringArray(R.array.chat_img_view);
         int position = mapLetterInAlphabets(initial);
@@ -60,7 +60,7 @@ public class ChatCursorAdapter extends CursorAdapter {
                 .buildRound(initial, color);
 
         rootView.chat_img.setImageDrawable(drawable);
-        rootView.chat_name.setText(name);
+        rootView.chat_id.setText(email);
         rootView.chat_msg.setText(String.format("%d new message%s", count, count==1 ? "" : "s"));
 
         // Highlight new message(s), if any
@@ -71,7 +71,7 @@ public class ChatCursorAdapter extends CursorAdapter {
 
     private static class ViewHolder {
         ImageView chat_img;
-        TextView chat_name;
+        TextView chat_id;
         TextView chat_msg;
     }
 }

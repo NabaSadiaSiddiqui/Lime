@@ -31,18 +31,18 @@ public class ContactsCursorAdapter extends CursorAdapter {
         ViewHolder holder = new ViewHolder();
         itemLayout.setTag(holder);
         holder.pic = (ImageView) itemLayout.findViewById(R.id.pic);
-        holder.name = (TextView) itemLayout.findViewById(R.id.name);
+        holder.email = (TextView) itemLayout.findViewById(R.id.email);
         return itemLayout;
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         ViewHolder holder = (ViewHolder) view.getTag();
-        holder.name.setText(cursor.getString(cursor.getColumnIndex(CustomCP.COL_NAME)));
+        holder.email.setText(cursor.getString(cursor.getColumnIndex(CustomCP.COL_EMAIL)));
     }
 
     private static class ViewHolder {
         ImageView pic;
-        TextView name;
+        TextView email;
     }
 }

@@ -100,9 +100,9 @@ public class MessageActivity extends FragmentActivity implements Message.OnFragm
                     values.put(CustomCP.COL_RECEIVER_EMAIL, profileEmail);
                     values.put(CustomCP.COL_SENDER_EMAIL, Init.getPreferredEmail());
                     getContentResolver().insert(CustomCP.CONTENT_URI_MESSAGES, values);
-                    //TODO: sleep process for 1000 ms so that vertical orientation of messages view is fine
+                    //TODO: sleep process for 100 ms so that vertical orientation of messages view is fine
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(100);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

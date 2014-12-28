@@ -15,7 +15,7 @@
         android:scaleType="fitStart" />
 
     <TextView
-        android:id="@+id/chat_name"
+        android:id="@+id/chat_id"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/chat_name_height"
         android:layout_alignParentTop="true"
@@ -31,7 +31,7 @@
         android:id="@+id/chat_msg"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/chat_msg_height"
-        android:layout_below="@id/chat_name"
+        android:layout_below="@id/chat_id"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@id/chat_img"
         android:paddingLeft="@dimen/chat_text_padding"
