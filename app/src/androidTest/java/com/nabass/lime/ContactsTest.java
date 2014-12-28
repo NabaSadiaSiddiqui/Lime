@@ -7,8 +7,7 @@ import android.test.ProviderTestCase2;
 import android.test.mock.MockContentResolver;
 
 import com.nabass.lime.db.CustomCP;
-
-import java.net.URI;
+import com.nabass.lime.db.DBConstants;
 
 public class ContactsTest extends ProviderTestCase2 {
 
@@ -40,10 +39,10 @@ public class ContactsTest extends ProviderTestCase2 {
         String count = "2";
 
         ContentValues values = new ContentValues(2);
-        values.put(CustomCP.COL_NAME, name);
-        values.put(CustomCP.COL_EMAIL, email);
-        values.put(CustomCP.COL_COUNT,count );
-        Uri mUri = resolve.insert(CustomCP.CONTENT_URI_PROFILE, values);
+        values.put(DBConstants.COL_NAME, name);
+        values.put(DBConstants.COL_EMAIL, email);
+        values.put(DBConstants.COL_MSG_COUNT,count );
+        Uri mUri = resolve.insert(DBConstants.DB_CONTACTS, values);
         assertNotNull(mUri);
     }
 
@@ -55,15 +54,15 @@ public class ContactsTest extends ProviderTestCase2 {
         String count = "2";
         // Insert
         ContentValues values = new ContentValues(2);
-        values.put(CustomCP.COL_NAME, name);
-        values.put(CustomCP.COL_EMAIL, email);
-        values.put(CustomCP.COL_COUNT,count );
-        Uri mUri = resolve.insert(CustomCP.CONTENT_URI_PROFILE, values);
+        values.put(DBConstants.COL_NAME, name);
+        values.put(DBConstants.COL_EMAIL, email);
+        values.put(DBConstants.COL_MSG_COUNT,count );
+        Uri mUri = resolve.insert(DBConstants.DB_CONTACTS, values);
         assertNotNull(mUri);
         // Query
-        String[] projection = {CustomCP.COL_COUNT};
-        String selection = CustomCP.COL_EMAIL + " = '" + email + "'";
-        Cursor cursor = resolve.query(CustomCP.CONTENT_URI_PROFILE, projection, selection, null, null);
+        String[] projection = {DBConstants.COL_MSG_COUNT};
+        String selection = DBConstants.COL_EMAIL + " = '" + email + "'";
+        Cursor cursor = resolve.query(DBConstants.DB_CONTACTS, projection, selection, null, null);
         assertNotNull(cursor.moveToFirst());
         cursor.moveToFirst();
         String count_actual = cursor.getString(0);
@@ -78,20 +77,20 @@ public class ContactsTest extends ProviderTestCase2 {
         String count = "2";
         // Insert
         ContentValues values = new ContentValues(2);
-        values.put(CustomCP.COL_NAME, name);
-        values.put(CustomCP.COL_EMAIL, email);
-        values.put(CustomCP.COL_COUNT,count );
-        Uri mUri = resolve.insert(CustomCP.CONTENT_URI_PROFILE, values);
+        values.put(DBConstants.COL_NAME, name);
+        values.put(DBConstants.COL_EMAIL, email);
+        values.put(DBConstants.COL_MSG_COUNT,count );
+        Uri mUri = resolve.insert(DBConstants.DB_CONTACTS, values);
         assertNotNull(mUri);
         // Delete
-        String where = CustomCP.COL_EMAIL + "=?";
+        String where = DBConstants.COL_EMAIL + "=?";
         String[] whereArgs = {email};
-        int res = resolve.delete(CustomCP.CONTENT_URI_PROFILE, where,whereArgs);
+        int res = resolve.delete(DBConstants.DB_CONTACTS, where,whereArgs);
         assertNotSame(0, res);
         // Query
-        String[] projection = {CustomCP.COL_COUNT};
-        String selection = CustomCP.COL_EMAIL + " = '" + email + "'";
-        Cursor cursorQue = resolve.query(CustomCP.CONTENT_URI_PROFILE, projection, selection, null, null);
+        String[] projection = {DBConstants.COL_MSG_COUNT};
+        String selection = DBConstants.COL_EMAIL + " = '" + email + "'";
+        Cursor cursorQue = resolve.query(DBConstants.DB_CONTACTS, projection, selection, null, null);
         assertFalse(cursorQue.moveToFirst());
     }
 
@@ -103,24 +102,24 @@ public class ContactsTest extends ProviderTestCase2 {
         String count = "2";
         // Insert
         ContentValues values = new ContentValues(2);
-        values.put(CustomCP.COL_NAME, name);
-        values.put(CustomCP.COL_EMAIL, email);
-        values.put(CustomCP.COL_COUNT,count );
-        Uri mUri = resolve.insert(CustomCP.CONTENT_URI_PROFILE, values);
+        values.put(DBConstants.COL_NAME, name);
+        values.put(DBConstants.COL_EMAIL, email);
+        values.put(DBConstants.COL_MSG_COUNT,count );
+        Uri mUri = resolve.insert(DBConstants.DB_CONTACTS, values);
         assertNotNull(mUri);
         // Update
         String email_new = "test2@gmail.com";
         ContentValues valuesUp = new ContentValues(2);
-        valuesUp.put(CustomCP.COL_EMAIL, email_new);
-        String whereUp = CustomCP.COL_EMAIL + "=? AND " + CustomCP.COL_NAME + "=?";
+        valuesUp.put(DBConstants.COL_EMAIL, email_new);
+        String whereUp = DBConstants.COL_EMAIL + "=? AND " + DBConstants.COL_NAME + "=?";
         String[] whereArgsUp = {email, name};
-        int res = resolve.update(CustomCP.CONTENT_URI_PROFILE, valuesUp, whereUp, whereArgsUp);
+        int res = resolve.update(DBConstants.DB_CONTACTS, valuesUp, whereUp, whereArgsUp);
         assertNotSame(0, res);
 
         // Query
-        String[] projection = {CustomCP.COL_COUNT};
-        String selection = CustomCP.COL_EMAIL + " = '" + email + "'";
-        Cursor cursorQue = resolve.query(CustomCP.CONTENT_URI_PROFILE, projection, selection, null, null);
+        String[] projection = {DBConstants.COL_MSG_COUNT};
+        String selection = DBConstants.COL_EMAIL + " = '" + email + "'";
+        Cursor cursorQue = resolve.query(DBConstants.DB_CONTACTS, projection, selection, null, null);
         assertFalse(cursorQue.moveToFirst());
 
     }

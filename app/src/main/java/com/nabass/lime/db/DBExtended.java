@@ -12,16 +12,16 @@ public class DBExtended {
 
     public static String getEmailFromProfileID(ContentResolver cr, String profileId) {
         String profileEmail = null;
-        Cursor c = cr.query(Uri.withAppendedPath(CustomCP.CONTENT_URI_PROFILE, profileId), null, null, null, null);
+        Cursor c = cr.query(Uri.withAppendedPath(DBConstants.DB_CONTACTS, profileId), null, null, null, null);
         if (c.moveToFirst()) {
-            profileEmail = c.getString(c.getColumnIndex(CustomCP.COL_EMAIL));
+            profileEmail = c.getString(c.getColumnIndex(DBConstants.COL_EMAIL));
         }
         return profileEmail;
     }
 
     public static void deleteConversationByEmail(ContentResolver cr, String email) {
-        String where = CustomCP.COL_SENDER_EMAIL + "=?";
+        String where = DBConstants.COL_SENDER_ID + "=?";
         String[] selectionArgs = {email};
-        int res = cr.delete(CustomCP.CONTENT_URI_MESSAGES, where, selectionArgs);
+        int res = cr.delete(DBConstants.DB_MSGS, where, selectionArgs);
     }
 }

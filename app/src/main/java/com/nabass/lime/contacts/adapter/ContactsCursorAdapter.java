@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nabass.lime.R;
-import com.nabass.lime.db.CustomCP;
+import com.nabass.lime.db.DBConstants;
 
 public class ContactsCursorAdapter extends CursorAdapter {
 
@@ -38,7 +38,7 @@ public class ContactsCursorAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         ViewHolder holder = (ViewHolder) view.getTag();
-        holder.email.setText(cursor.getString(cursor.getColumnIndex(CustomCP.COL_EMAIL)));
+        holder.email.setText(cursor.getString(cursor.getColumnIndex(DBConstants.COL_EMAIL)));
     }
 
     private static class ViewHolder {

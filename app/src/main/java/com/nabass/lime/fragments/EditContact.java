@@ -14,7 +14,7 @@ import android.text.TextUtils;
 import android.widget.EditText;
 
 import com.nabass.lime.Init;
-import com.nabass.lime.db.CustomCP;
+import com.nabass.lime.db.DBConstants;
 
 public class EditContact extends DialogFragment {
 	
@@ -38,7 +38,7 @@ public class EditContact extends DialogFragment {
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		final Context ctx = getActivity();
 		final String profileId = getArguments().getString(Init.PROFILE_ID);
-		String profileName = getArguments().getString(CustomCP.COL_NAME);
+		String profileName = getArguments().getString(DBConstants.COL_NAME);
 		final EditText et = new EditText(ctx);
 		et.setText(profileName);
 		et.setFilters(new InputFilter[]{new InputFilter.LengthFilter(30)});
@@ -52,8 +52,8 @@ public class EditContact extends DialogFragment {
 					if (TextUtils.isEmpty(name)) return;
 					
 					ContentValues values = new ContentValues(1);
-					values.put(CustomCP.COL_NAME, name);
-					ctx.getContentResolver().update(Uri.withAppendedPath(CustomCP.CONTENT_URI_PROFILE, profileId), values, null, null);
+					values.put(DBConstants.COL_NAME, name);
+					ctx.getContentResolver().update(Uri.withAppendedPath(DBConstants.DB_CONTACTS, profileId), values, null, null);
 					
 					mListener.onEditContact(name);
 				}

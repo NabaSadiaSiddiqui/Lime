@@ -3,22 +3,17 @@ package com.nabass.lime.fragments;
 import android.app.Activity;
 import android.app.ListFragment;
 import android.app.LoaderManager;
-import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.nabass.lime.conversation.adapter.ConversationCursorAdapter;
-import com.nabass.lime.db.CustomCP;
+import com.nabass.lime.db.DBConstants;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -66,7 +61,7 @@ public class Message extends ListFragment implements LoaderManager.LoaderCallbac
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         getListView().setLayoutParams(params);
         Bundle args = new Bundle();
-        args.putString(CustomCP.COL_EMAIL, mListener.getProfileEmail());
+        args.putString(DBConstants.COL_EMAIL, mListener.getProfileEmail());
         getLoaderManager().initLoader(0, args, this);
     }
 
@@ -94,13 +89,13 @@ public class Message extends ListFragment implements LoaderManager.LoaderCallbac
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String profileEmail = args.getString(CustomCP.COL_EMAIL);
+        String profileEmail = args.getString(DBConstants.COL_EMAIL);
         CursorLoader loader = new CursorLoader(getActivity(),
-                CustomCP.CONTENT_URI_MESSAGES,
+                DBConstants.DB_MSGS,
                 null,
-                CustomCP.COL_SENDER_EMAIL + " = ? or " + CustomCP.COL_RECEIVER_EMAIL + " = ?",
+                DBConstants.COL_SENDER_ID + " = ? or " + DBConstants.COL_RECIPIENT_ID + " = ?",
                 new String[]{profileEmail, profileEmail},
-                CustomCP.COL_TIME + " ASC");
+                DBConstants.COL_TIME + " ASC");
         return loader;
     }
 

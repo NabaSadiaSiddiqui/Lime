@@ -12,9 +12,8 @@ import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.nabass.lime.R;
-import com.nabass.lime.db.CustomCP;
+import com.nabass.lime.db.DBConstants;
 
-import static com.nabass.lime.Init.formatStringCamelCase;
 import static com.nabass.lime.Init.getFirstToUpper;
 import static com.nabass.lime.Init.mapLetterInAlphabets;
 
@@ -50,9 +49,9 @@ public class ChatCursorAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         ViewHolder rootView = (ViewHolder) view.getTag();
 
-        String email = cursor.getString(cursor.getColumnIndex(CustomCP.COL_EMAIL));
+        String email = cursor.getString(cursor.getColumnIndex(DBConstants.COL_EMAIL));
         String initial = getFirstToUpper(email);
-        int count = cursor.getInt(cursor.getColumnIndex(CustomCP.COL_COUNT));
+        int count = cursor.getInt(cursor.getColumnIndex(DBConstants.COL_MSG_COUNT));
         String[] colors = view.getResources().getStringArray(R.array.chat_img_view);
         int position = mapLetterInAlphabets(initial);
         int color = Color.parseColor(colors[position]);

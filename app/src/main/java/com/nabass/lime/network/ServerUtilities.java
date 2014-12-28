@@ -16,7 +16,7 @@
 package com.nabass.lime.network;
 
 import com.nabass.lime.Init;
-import com.nabass.lime.db.CustomCP;
+import com.nabass.lime.db.DBConstants;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -47,8 +47,8 @@ public final class ServerUtilities {
 		//Log.i(TAG, "registering device (regId = " + regId + ")");
 		String serverUrl = Init.getServerUrl() + "/register";
 		Map<String, String> params = new HashMap<String, String>();
-		params.put(CustomCP.SENDER_EMAIL, email);
-		params.put(CustomCP.REG_ID, regId);
+		params.put(DBConstants.SENDER_EMAIL, email);
+		params.put(DBConstants.REG_ID, regId);
 		// Once GCM returns a registration id, we need to register it in the
 		// demo server. As the server might be down, we will retry it a couple
 		// times.
@@ -65,7 +65,7 @@ public final class ServerUtilities {
 		//Log.i(TAG, "unregistering device (email = " + email + ")");
 		String serverUrl = Init.getServerUrl() + "/unregister";
 		Map<String, String> params = new HashMap<String, String>();
-		params.put(CustomCP.SENDER_EMAIL, email);
+		params.put(DBConstants.SENDER_EMAIL, email);
 		try {
 			post(serverUrl, params, MAX_ATTEMPTS);
 		} catch (IOException e) {
@@ -84,9 +84,9 @@ public final class ServerUtilities {
 		//Log.i(TAG, "sending message (msg = " + msg + ")");
 		String serverUrl = Init.getServerUrl() + "/send";
 		Map<String, String> params = new HashMap<String, String>();
-		params.put(CustomCP.MESSAGE, msg);
-		params.put(CustomCP.SENDER_EMAIL, Init.getPreferredEmail());
-		params.put(CustomCP.RECEIVER_EMAIL, to);
+		params.put(DBConstants.MESSAGE, msg);
+		params.put(DBConstants.SENDER_EMAIL, Init.getPreferredEmail());
+		params.put(DBConstants.RECEIVER_EMAIL, to);
 		post(serverUrl, params, MAX_ATTEMPTS);
 	}
 

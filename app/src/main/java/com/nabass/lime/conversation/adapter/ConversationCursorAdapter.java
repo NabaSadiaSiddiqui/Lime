@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nabass.lime.R;
-import com.nabass.lime.db.CustomCP;
+import com.nabass.lime.db.DBConstants;
 
 import static com.nabass.lime.fragments.Message.getDisplayTime;
 
@@ -36,7 +36,7 @@ public class ConversationCursorAdapter extends CursorAdapter {
     }
 
     private int getItemViewType(Cursor _cursor) {
-        int typeIdx = _cursor.getColumnIndex(CustomCP.COL_TYPE);
+        int typeIdx = _cursor.getColumnIndex(DBConstants.COL_MSG_TYPE);
         int type = _cursor.getInt(typeIdx);
         return type == 0 ? 0 : 1;
     }
@@ -63,9 +63,9 @@ public class ConversationCursorAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         ViewHolder holder = (ViewHolder) view.getTag();
-        String email = cursor.getString(cursor.getColumnIndex(CustomCP.COL_SENDER_EMAIL));
-        holder.text1.setText(getDisplayTime(cursor.getString(cursor.getColumnIndex(CustomCP.COL_TIME))));
-        holder.text2.setText(cursor.getString(cursor.getColumnIndex(CustomCP.COL_MESSAGE)));
+        String email = cursor.getString(cursor.getColumnIndex(DBConstants.COL_SENDER_ID));
+        holder.text1.setText(getDisplayTime(cursor.getString(cursor.getColumnIndex(DBConstants.COL_TIME))));
+        holder.text2.setText(cursor.getString(cursor.getColumnIndex(DBConstants.COL_MSG)));
     }
 
     private static class ViewHolder {

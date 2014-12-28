@@ -17,8 +17,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.nabass.lime.Init;
 import com.nabass.lime.MainActivity;
 import com.nabass.lime.R;
-import com.nabass.lime.db.CustomCP;
-import com.nabass.lime.db.CustomCP.MessageType;
+import com.nabass.lime.db.DBConstants;
 
 public class GcmBroadcastReceiver extends BroadcastReceiver {
 	
@@ -39,15 +38,15 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
 			} else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED.equals(messageType)) {
 				sendNotification("Deleted messages on server", false);
 			} else {
-				String msg = intent.getStringExtra(CustomCP.COL_MESSAGE);
-				String senderEmail = intent.getStringExtra(CustomCP.COL_SENDER_EMAIL);
-				String receiverEmail = intent.getStringExtra(CustomCP.COL_RECEIVER_EMAIL);
+				String msg = intent.getStringExtra(DBConstants.COL_MSG);
+				String senderEmail = intent.getStringExtra(DBConstants.COL_SENDER_ID);
+				String receiverEmail = intent.getStringExtra(DBConstants.COL_RECIPIENT_ID);
 				ContentValues values = new ContentValues(2);
-				values.put(CustomCP.COL_TYPE,  MessageType.INCOMING.ordinal());
-				values.put(CustomCP.COL_MESSAGE, msg);
-				values.put(CustomCP.COL_SENDER_EMAIL, senderEmail);
-				values.put(CustomCP.COL_RECEIVER_EMAIL, receiverEmail);
-				context.getContentResolver().insert(CustomCP.CONTENT_URI_MESSAGES, values);
+				values.put(DBConstants.COL_MSG_TYPE,  DBConstants.MsgDirection.DIRECTION_INCOMING.ordinal());
+				values.put(DBConstants.COL_MSG, msg);
+				values.put(DBConstants.COL_SENDER_ID, senderEmail);
+				values.put(DBConstants.COL_RECIPIENT_ID, receiverEmail);
+				context.getContentResolver().insert(DBConstants.DB_MSGS, values);
 				
 				if (Init.isNotify()) {
 					sendNotification("New message", true);

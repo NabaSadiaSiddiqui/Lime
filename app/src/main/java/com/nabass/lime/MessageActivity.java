@@ -19,11 +19,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.nabass.lime.db.DBConstants;
 import com.nabass.lime.fragments.EditContact;
 import com.nabass.lime.fragments.Message;
 import com.nabass.lime.network.GcmUtil;
 import com.nabass.lime.network.ServerUtilities;
-import com.nabass.lime.db.CustomCP;
+
 import java.io.IOException;
 
 public class MessageActivity extends FragmentActivity implements Message.OnFragmentInteractionListener, EditContact.OnFragmentInteractionListener, OnClickListener {
@@ -45,10 +46,10 @@ public class MessageActivity extends FragmentActivity implements Message.OnFragm
         sendBtn = (Button) findViewById(R.id.send_btn);
         sendBtn.setOnClickListener(this);
 
-        Cursor c = getContentResolver().query(Uri.withAppendedPath(CustomCP.CONTENT_URI_PROFILE, profileId), null, null, null, null);
+        Cursor c = getContentResolver().query(Uri.withAppendedPath(DBConstants.DB_CONTACTS, profileId), null, null, null, null);
         if (c.moveToFirst()) {
-            profileName = c.getString(c.getColumnIndex(CustomCP.COL_NAME));
-            profileEmail = c.getString(c.getColumnIndex(CustomCP.COL_EMAIL));
+            profileName = c.getString(c.getColumnIndex(DBConstants.COL_NAME));
+            profileEmail = c.getString(c.getColumnIndex(DBConstants.COL_EMAIL));
         }
 
         registerReceiver(registrationStatusReceiver, new IntentFilter(Init.ACTION_REGISTER));
@@ -95,14 +96,14 @@ public class MessageActivity extends FragmentActivity implements Message.OnFragm
                 String msg = "";
                 try {
                     ContentValues values = new ContentValues(2);
-                    values.put(CustomCP.COL_TYPE,  CustomCP.MessageType.OUTGOING.ordinal());
-                    values.put(CustomCP.COL_MESSAGE, txt);
-                    values.put(CustomCP.COL_RECEIVER_EMAIL, profileEmail);
-                    values.put(CustomCP.COL_SENDER_EMAIL, Init.getPreferredEmail());
-                    getContentResolver().insert(CustomCP.CONTENT_URI_MESSAGES, values);
+                    values.put(DBConstants.COL_MSG_TYPE,  DBConstants.MsgDirection.DIRECTION_OUTGOING.ordinal());
+                    values.put(DBConstants.COL_MSG, txt);
+                    values.put(DBConstants.COL_RECIPIENT_ID, profileEmail);
+                    values.put(DBConstants.COL_SENDER_ID, Init.getPreferredEmail());
+                    getContentResolver().insert(DBConstants.DB_MSGS, values);
                     //TODO: sleep process for 100 ms so that vertical orientation of messages view is fine
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(500);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -126,8 +127,8 @@ public class MessageActivity extends FragmentActivity implements Message.OnFragm
     @Override
     protected void onPause() {
         ContentValues values = new ContentValues(1);
-        values.put(CustomCP.COL_COUNT, 0);
-        getContentResolver().update(Uri.withAppendedPath(CustomCP.CONTENT_URI_PROFILE, profileId), values, null, null);
+        values.put(DBConstants.COL_MSG_COUNT, 0);
+        getContentResolver().update(Uri.withAppendedPath(DBConstants.DB_CONTACTS, profileId), values, null, null);
         super.onPause();
     }
 

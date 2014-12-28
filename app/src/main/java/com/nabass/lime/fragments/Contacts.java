@@ -16,8 +16,8 @@ import android.widget.ListView;
 import com.nabass.lime.Init;
 import com.nabass.lime.R;
 import com.nabass.lime.contacts.adapter.ContactsCursorAdapter;
-import com.nabass.lime.db.CustomCP;
 import com.nabass.lime.Constants;
+import com.nabass.lime.db.DBConstants;
 
 public class Contacts extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, AdapterView.OnItemClickListener {
 
@@ -93,11 +93,11 @@ public class Contacts extends Fragment implements LoaderManager.LoaderCallbacks<
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         CursorLoader loader = new CursorLoader(getActivity().getApplicationContext(),
-                CustomCP.CONTENT_URI_PROFILE,
-                new String[]{CustomCP.COL_ID, CustomCP.COL_NAME, CustomCP.COL_EMAIL, CustomCP.COL_COUNT},
+                DBConstants.DB_CONTACTS,
+                new String[]{DBConstants.COL_ID, DBConstants.COL_NAME, DBConstants.COL_EMAIL, DBConstants.COL_MSG_COUNT},
                 null,
                 null,
-                CustomCP.COL_ID + " DESC");
+                DBConstants.COL_ID + " DESC");
         return loader;
     }
 

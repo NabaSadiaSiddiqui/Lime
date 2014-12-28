@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -17,7 +16,7 @@ import android.widget.Toast;
 
 import com.nabass.lime.Constants;
 import com.nabass.lime.R;
-import com.nabass.lime.db.CustomCP;
+import com.nabass.lime.db.DBConstants;
 
 public class AddContact extends Fragment {
 
@@ -108,9 +107,9 @@ public class AddContact extends Fragment {
             } else { // add to database
                 try {
                     ContentValues values = new ContentValues(2);
-                    values.put(CustomCP.COL_NAME, email.substring(0, email.indexOf('@')));
-                    values.put(CustomCP.COL_EMAIL, email);
-                    getActivity().getContentResolver().insert(CustomCP.CONTENT_URI_PROFILE, values);
+                    values.put(DBConstants.COL_NAME, email.substring(0, email.indexOf('@')));
+                    values.put(DBConstants.COL_EMAIL, email);
+                    getActivity().getContentResolver().insert(DBConstants.DB_CONTACTS, values);
                 } catch (SQLException e) {
                     throw new SQLException(view.toString() + " has an exception");
                 } finally {
