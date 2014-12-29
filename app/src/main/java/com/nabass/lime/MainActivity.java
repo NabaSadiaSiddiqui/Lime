@@ -35,6 +35,8 @@ import static com.nabass.lime.Init.getMode;
 
 public class MainActivity extends Activity implements Chat.OnFragmentInteractionListener, Contacts.OnFragmentInteractionListener, AddContact.OnFragmentInteractionListener {
 
+    private static final String TAG = "MainActivity";
+
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -224,9 +226,7 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
         Fragment fragment = null;
         switch (item.getItemId()) {
             case R.id.action_search:
-                Toast.makeText(getApplicationContext(), "Search", Toast.LENGTH_LONG)
-                        .show();
-                return true;
+                return false;
             case R.id.action_new:
                 fragment = new Contacts();
                 break;
@@ -251,7 +251,8 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
     public boolean onPrepareOptionsMenu(Menu menu) {
         // if nav drawer is opened, hide the action items
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-        menu.findItem(R.id.action_search).setVisible(!drawerOpen);
+        //menu.findItem(R.id.action_search).setVisible(!drawerOpen);
+        menu.findItem(R.id.action_search).setVisible(false).setEnabled(false);
         menu.findItem(R.id.action_new).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
@@ -291,7 +292,7 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
             mDrawerLayout.closeDrawer(mDrawerList);
         } else {
             // error in creating fragment
-            Log.e("MainActivity", "Error in creating fragment");
+            Log.e(TAG, "Error in creating fragment");
         }
     }
 

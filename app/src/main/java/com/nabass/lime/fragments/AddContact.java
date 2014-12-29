@@ -33,7 +33,6 @@ public class AddContact extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
     }
 
     @Override
@@ -78,12 +77,6 @@ public class AddContact extends Fragment {
         });
 
         return rootView;
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        // Hide search bar
-        menu.findItem(R.id.action_search).setVisible(false).setEnabled(false);
     }
 
     @Override
