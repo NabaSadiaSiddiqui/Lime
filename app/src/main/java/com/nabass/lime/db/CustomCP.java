@@ -67,12 +67,14 @@ public class CustomCP extends ContentProvider {
         switch(DBConstants.sURIMatcher.match(uri)) {
             case DBConstants.ALL_MSGS:
                 id = db.insertOrThrow(DBConstants.TBL_MSGS, null, values);
-                Log.e(TAG, "Before updating notification count");
                 if(values.get(DBConstants.COL_MSG_TYPE).equals(DBConstants.MsgDirection.DIRECTION_INCOMING.ordinal())) {
                     Log.e(TAG, "Updating count when a message is received");
                     db.execSQL("update " + DBConstants.TBL_CONTACTS + " set count = count+1 where email = ?", new Object[]{values.get(DBConstants.COL_RECIPIENT_ID)});
-                    getContext().getContentResolver().notifyChange(DBConstants.DB_CONTACTS, null);
                 }
+                Log.e(TAG, "Updating total number of messages");
+                db.execSQL("update " + DBConstants.TBL_CONTACTS + " set total = total+1 where email = ?", new Object[]{values.get(DBConstants.COL_RECIPIENT_ID)});
+                getContext().getContentResolver().notifyChange(DBConstants.DB_CONTACTS, null);
+
                 break;
             case DBConstants.ALL_CONTACTS:
                 id = db.insertOrThrow(DBConstants.TBL_CONTACTS, null, values);

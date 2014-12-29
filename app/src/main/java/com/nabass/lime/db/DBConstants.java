@@ -15,6 +15,7 @@ public class DBConstants {
     public static final String COL_NAME = "name";
     public static final String COL_EMAIL = "email";
     public static final String COL_MSG_FRESH = "count"; // number of unread messages
+    public static final String COL_MSG_TOTAL = "total"; // total number of messages
 
     /*
      * Messages

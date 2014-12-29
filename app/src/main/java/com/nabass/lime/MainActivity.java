@@ -5,9 +5,11 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -18,7 +20,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
+
+import com.nabass.lime.chat.adapter.ChatCursorAdapter;
+import com.nabass.lime.db.DBConstants;
 import com.nabass.lime.fragments.About;
 import com.nabass.lime.fragments.AddContact;
 import com.nabass.lime.fragments.Chat;
@@ -179,6 +185,7 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
             // TODO: clear conversation
             String contact_email = bundle.getString(Constants.CONTACT_EMAIL);
             DBExtended.clearConversationByEmail(getContentResolver(), contact_email);
+            // TODO: Obtain a fresh cursor and update adapter
             Chat.chatActionsDialog.dismiss();
         }
     }
