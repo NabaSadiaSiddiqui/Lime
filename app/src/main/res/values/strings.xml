@@ -8,7 +8,7 @@
 
     <!-- Actions -->
     <string name="action_search">Search</string>
-    <string name="action_chat">Chat</string>
+    <string name="action_new">New</string>
 
     <!-- Navigation drawer -->
     <string name="drawer_open">Slider Menu Opened</string>

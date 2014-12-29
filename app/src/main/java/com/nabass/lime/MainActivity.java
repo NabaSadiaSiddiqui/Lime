@@ -5,11 +5,9 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -20,11 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
-import com.nabass.lime.chat.adapter.ChatCursorAdapter;
-import com.nabass.lime.db.DBConstants;
 import com.nabass.lime.fragments.About;
 import com.nabass.lime.fragments.AddContact;
 import com.nabass.lime.fragments.Chat;
@@ -232,7 +227,7 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
                 Toast.makeText(getApplicationContext(), "Search", Toast.LENGTH_LONG)
                         .show();
                 return true;
-            case R.id.action_chat:
+            case R.id.action_new:
                 fragment = new Contacts();
                 break;
             default:
@@ -257,7 +252,7 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
         // if nav drawer is opened, hide the action items
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
         menu.findItem(R.id.action_search).setVisible(!drawerOpen);
-        menu.findItem(R.id.action_chat).setVisible(!drawerOpen);
+        menu.findItem(R.id.action_new).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
 
