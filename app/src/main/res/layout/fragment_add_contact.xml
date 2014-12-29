@@ -43,6 +43,7 @@
             android:id="@+id/add_pin"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:enabled="false"
             android:hint="@string/add_contact_pin_hint"
             android:inputType="number"/>
 
@@ -59,6 +60,7 @@
             android:id="@+id/add_phone"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:enabled="false"
             android:hint="@string/add_contact_phone_hint"
             android:inputType="phone"/>
 

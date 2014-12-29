@@ -76,7 +76,7 @@
     <string name="profile_sender_id">Sender ID:</string>
 
     <!-- Chat -->
-    <string name="chat_avatar">Contact image</string>
+    <string name="chat_img">Contact image</string>
     <!-- Colors for image view of chat/contacts -->
     <string-array name="chat_img_view">
         <item>#d50000</item>

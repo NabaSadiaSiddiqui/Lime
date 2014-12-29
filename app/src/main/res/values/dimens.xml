@@ -41,6 +41,12 @@
     <dimen name="chat_img_width">60dip</dimen>
     <dimen name="chat_text_padding">8dip</dimen>
 
+    <!-- Contacts page -->
+    <dimen name="contact_name_height">25dip</dimen>
+    <dimen name="contact_img_padding">5dip</dimen>
+    <dimen name="contact_img_width">60dip</dimen>
+    <dimen name="contact_text_padding">8dip</dimen>
+
     <!-- Chat actions dialog -->
     <dimen name="chat_actions_padding">10dip</dimen>
 

@@ -11,7 +11,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="@dimen/chat_img_padding"
-        android:contentDescription="@string/chat_avatar"
+        android:contentDescription="@string/chat_img"
         android:scaleType="fitStart" />
 
     <TextView
