@@ -26,13 +26,19 @@ public class ChatCursorAdapter extends CursorAdapter {
         this.mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    private static class ViewHolder {
+        ImageView chat_img;
+        TextView chat_id;
+        TextView chat_msg;
+    }
+
     @Override
     public int getCount() {
         return getCursor() == null ? 0 : super.getCount();
     }
 
     @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+    public View newView(Context context, Cursor cursor, ViewGroup parent) { // Creates a new view
         View rootView = mInflater.inflate(R.layout.chat_list_item, parent, false);
 
         ViewHolder holder = new ViewHolder();
@@ -46,8 +52,8 @@ public class ChatCursorAdapter extends CursorAdapter {
     }
 
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
-        ViewHolder rootView = (ViewHolder) view.getTag();
+    public void bindView(View view, Context context, Cursor cursor) {   // Binds data to the view returned from newView
+        ViewHolder holder = (ViewHolder) view.getTag();
 
         String email = cursor.getString(cursor.getColumnIndex(DBConstants.COL_EMAIL));
         String initial = getFirstToUpper(email);
@@ -58,19 +64,13 @@ public class ChatCursorAdapter extends CursorAdapter {
         TextDrawable drawable = TextDrawable.builder()
                 .buildRound(initial, color);
 
-        rootView.chat_img.setImageDrawable(drawable);
-        rootView.chat_id.setText(email);
-        rootView.chat_msg.setText(String.format("%d new message%s", count, count==1 ? "" : "s"));
+        holder.chat_img.setImageDrawable(drawable);
+        holder.chat_id.setText(email);
+        holder.chat_msg.setText(String.format("%d new message%s", count, count==1 ? "" : "s"));
 
         // Highlight new message(s), if any
         if(count>0) {
-            rootView.chat_msg.setTextColor(view.getResources().getColor(R.color.chat_new_msg));
+            holder.chat_msg.setTextColor(view.getResources().getColor(R.color.chat_new_msg));
         }
-    }
-
-    private static class ViewHolder {
-        ImageView chat_img;
-        TextView chat_id;
-        TextView chat_msg;
     }
 }
