@@ -64,12 +64,12 @@ public class ChatActions extends DialogFragment {
         divider.setBackgroundColor(Color.BLACK);
 
         TextView deleteChat = new TextView(getActivity());
-        deleteChat.setText("Delete conversation");
+        deleteChat.setText("Clear conversation");
         deleteChat.setPadding(padding, padding, padding, padding);
         deleteChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: delete conversation
+                //TODO: clear conversation
                 mListener.onFragmentInteraction(Constants.FRAG_CHAT_ACTIONS, profileBundle);
             }
         });
