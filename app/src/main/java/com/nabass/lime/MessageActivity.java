@@ -41,7 +41,7 @@ public class MessageActivity extends FragmentActivity implements Message.OnFragm
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
 
-        profileId = getIntent().getStringExtra(Init.PROFILE_ID);
+        profileId = getIntent().getStringExtra(Constants.PROFILE_ID);
         msgEdit = (EditText) findViewById(R.id.msg_edit);
         sendBtn = (Button) findViewById(R.id.send_btn);
         sendBtn.setOnClickListener(this);
@@ -52,7 +52,7 @@ public class MessageActivity extends FragmentActivity implements Message.OnFragm
             profileEmail = c.getString(c.getColumnIndex(DBConstants.COL_EMAIL));
         }
 
-        registerReceiver(registrationStatusReceiver, new IntentFilter(Init.ACTION_REGISTER));
+        registerReceiver(registrationStatusReceiver, new IntentFilter(Constants.ACTION_REGISTER));
         gcmUtil = new GcmUtil(getApplicationContext());
     }
 
@@ -99,7 +99,7 @@ public class MessageActivity extends FragmentActivity implements Message.OnFragm
                     values.put(DBConstants.COL_MSG_TYPE,  DBConstants.MsgDirection.DIRECTION_OUTGOING.ordinal());
                     values.put(DBConstants.COL_MSG, txt);
                     values.put(DBConstants.COL_RECIPIENT_ID, profileEmail);
-                    values.put(DBConstants.COL_SENDER_ID, Init.getPreferredEmail());
+                    values.put(DBConstants.COL_SENDER_ID, Init.getClientEmail());
                     getContentResolver().insert(DBConstants.DB_MSGS, values);
                     //TODO: sleep process for 100 ms so that vertical orientation of messages view is fine
                     try {
@@ -142,13 +142,13 @@ public class MessageActivity extends FragmentActivity implements Message.OnFragm
     private BroadcastReceiver registrationStatusReceiver = new  BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent != null && Init.ACTION_REGISTER.equals(intent.getAction())) {
-                switch (intent.getIntExtra(Init.EXTRA_STATUS, 100)) {
-                    case Init.STATUS_SUCCESS:
+            if (intent != null && Constants.ACTION_REGISTER.equals(intent.getAction())) {
+                switch (intent.getIntExtra(Constants.EXTRA_STATUS, 100)) {
+                    case Constants.STATUS_SUCCESS:
                         sendBtn.setEnabled(true);
                         break;
 
-                    case Init.STATUS_FAILED:
+                    case Constants.STATUS_FAILED:
                         break;
                 }
             }

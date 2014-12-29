@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.nabass.lime.Constants;
 import com.nabass.lime.Init;
 
 import java.io.IOException;
@@ -17,9 +18,8 @@ import java.util.Random;
 public class GcmUtil {
 	
 	private static final String TAG = "GcmUtil";
-	
-	public static final String PROPERTY_REG_ID = "registration_id";
-	private static final String PROPERTY_APP_VERSION = "appVersion";
+
+    private static final String KEY_APP_VERSION = "appVersion";
 	private static final String PROPERTY_ON_SERVER_EXPIRATION_TIME = "onServerExpirationTimeMs";
 	
     /**
@@ -59,14 +59,14 @@ public class GcmUtil {
 	 *         complete.
 	 */
 	private String getRegistrationId() {
-	    String registrationId = prefs.getString(PROPERTY_REG_ID, "");
+	    String registrationId = prefs.getString(Constants.KEY_REG_ID, "");
 	    if (registrationId.length() == 0) {
 	        //Log.v(TAG, "Registration not found.");
 	        return "";
 	    }
 	    // check if app was updated; if so, it must clear registration id to
 	    // avoid a race condition if GCM sends a message
-	    int registeredVersion = prefs.getInt(PROPERTY_APP_VERSION, Integer.MIN_VALUE);
+	    int registeredVersion = prefs.getInt(KEY_APP_VERSION, Integer.MIN_VALUE);
 	    int currentVersion = getAppVersion();
 	    if (registeredVersion != currentVersion || isRegistrationExpired()) {
 	        //Log.v(TAG, "App version changed or registration expired.");
@@ -85,8 +85,8 @@ public class GcmUtil {
 	    int appVersion = getAppVersion();
 	    //Log.v(TAG, "Saving regId on app version " + appVersion);
 	    SharedPreferences.Editor editor = prefs.edit();
-	    editor.putString(PROPERTY_REG_ID, regId);
-	    editor.putInt(PROPERTY_APP_VERSION, appVersion);
+	    editor.putString(Constants.KEY_REG_ID, regId);
+	    editor.putInt(KEY_APP_VERSION, appVersion);
 	    long expirationTime = System.currentTimeMillis() + REGISTRATION_EXPIRY_TIME_MS;
 
 	    //Log.v(TAG, "Setting registration expiry time to " + new Timestamp(expirationTime));
@@ -143,7 +143,7 @@ public class GcmUtil {
 	
 		                // You should send the registration ID to your server over HTTP,
 		                // so it can use GCM/HTTP or CCS to send messages to your app.
-		                ServerUtilities.register(Init.getPreferredEmail(), regid);
+		                ServerUtilities.register(Init.getClientEmail(), regid);
 	
 		                // Save the regid - no need to register again.
 		                setRegistrationId(regid);
@@ -177,8 +177,8 @@ public class GcmUtil {
 	}
 	
 	private void broadcastStatus(boolean status) {
-    	Intent intent = new Intent(Init.ACTION_REGISTER);
-        intent.putExtra(Init.EXTRA_STATUS, status ? Init.STATUS_SUCCESS : Init.STATUS_FAILED);
+    	Intent intent = new Intent(Constants.ACTION_REGISTER);
+        intent.putExtra(Constants.EXTRA_STATUS, status ? Constants.STATUS_SUCCESS : Constants.STATUS_FAILED);
         ctx.sendBroadcast(intent);		
 	}
 	

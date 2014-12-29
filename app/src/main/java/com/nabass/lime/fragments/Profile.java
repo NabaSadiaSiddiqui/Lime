@@ -10,8 +10,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 import com.nabass.lime.R;
-import static com.nabass.lime.Init.getDisplayName;
-import static com.nabass.lime.Init.getPhoneNum;
 import static com.nabass.lime.Init.getSenderId;
 
 public class Profile extends DialogFragment {
@@ -34,7 +32,7 @@ public class Profile extends DialogFragment {
         TextView senderID = (TextView) dialoglayout.findViewById(R.id.profile_sender_id);
 
         //name.setText(getDisplayName());
-        phone.setText(getPhoneNum());
+        //phone.setText(getPhoneNum());
         senderID.setText(getSenderId());
 
         AlertDialog profileDialog = new AlertDialog.Builder(getActivity())

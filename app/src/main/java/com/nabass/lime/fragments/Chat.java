@@ -20,7 +20,6 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-import com.nabass.lime.Init;
 import com.nabass.lime.R;
 import com.nabass.lime.chat.adapter.ChatCursorAdapter;
 import com.nabass.lime.Constants;
@@ -104,7 +103,7 @@ public class Chat extends Fragment implements LoaderManager.LoaderCallbacks<Curs
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         //TODO: open conversation
         Bundle bundle = new Bundle();
-        bundle.putString(Init.PROFILE_ID, String.valueOf(l));
+        bundle.putString(Constants.PROFILE_ID, String.valueOf(l));
         mListener.onFragmentInteraction(Constants.FRAG_CHAT, bundle);
     }
 
@@ -115,7 +114,7 @@ public class Chat extends Fragment implements LoaderManager.LoaderCallbacks<Curs
         // in a transaction.  We also want to remove any currently showing
         // dialog, so make our own transaction and take care of that here.
         Bundle bundle = new Bundle();
-        bundle.putString(Init.PROFILE_ID, String.valueOf(l));
+        bundle.putString(Constants.PROFILE_ID, String.valueOf(l));
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         Fragment prev = getFragmentManager().findFragmentByTag(Constants.TAG_DIALOG);

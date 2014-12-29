@@ -13,7 +13,7 @@ import android.text.InputFilter;
 import android.text.TextUtils;
 import android.widget.EditText;
 
-import com.nabass.lime.Init;
+import com.nabass.lime.Constants;
 import com.nabass.lime.db.DBConstants;
 
 public class EditContact extends DialogFragment {
@@ -37,7 +37,7 @@ public class EditContact extends DialogFragment {
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		final Context ctx = getActivity();
-		final String profileId = getArguments().getString(Init.PROFILE_ID);
+		final String profileId = getArguments().getString(Constants.PROFILE_ID);
 		String profileName = getArguments().getString(DBConstants.COL_NAME);
 		final EditText et = new EditText(ctx);
 		et.setText(profileName);

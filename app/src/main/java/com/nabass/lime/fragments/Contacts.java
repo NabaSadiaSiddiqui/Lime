@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.nabass.lime.Init;
 import com.nabass.lime.R;
 import com.nabass.lime.contacts.adapter.ContactsCursorAdapter;
 import com.nabass.lime.Constants;
@@ -71,7 +70,7 @@ public class Contacts extends Fragment implements LoaderManager.LoaderCallbacks<
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         //TODO: open conversation
         Bundle bundle = new Bundle();
-        bundle.putString(Init.PROFILE_ID, String.valueOf(l));
+        bundle.putString(Constants.PROFILE_ID, String.valueOf(l));
         mListener.onFragmentInteraction(Constants.FRAG_CONTACTS, bundle);
     }
 

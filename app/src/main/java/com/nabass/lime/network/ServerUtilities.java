@@ -85,7 +85,7 @@ public final class ServerUtilities {
 		String serverUrl = Init.getServerUrl() + "/send";
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(Constants.MESSAGE, msg);
-		params.put(Constants.SENDER_EMAIL, Init.getPreferredEmail());
+		params.put(Constants.SENDER_EMAIL, Init.getClientEmail());
 		params.put(Constants.RECEIVER_EMAIL, to);
 		post(serverUrl, params, MAX_ATTEMPTS);
 	}
