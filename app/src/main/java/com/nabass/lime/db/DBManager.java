@@ -30,7 +30,7 @@ public class DBManager extends SQLiteOpenHelper {
                 + "_id integer primary key autoincrement, "
                 + DBConstants.COL_NAME 	  +" text, "
                 + DBConstants.COL_EMAIL   +" text unique, "
-                + DBConstants.COL_MSG_COUNT +" integer default 0);");
+                + DBConstants.COL_MSG_FRESH +" integer default 0);");
     }
 
     @Override

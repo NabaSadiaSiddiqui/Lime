@@ -155,7 +155,7 @@ public class Chat extends Fragment implements LoaderManager.LoaderCallbacks<Curs
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         CursorLoader loader = new CursorLoader(getActivity().getApplicationContext(),
                 DBConstants.DB_CONTACTS,
-                new String[]{DBConstants.COL_ID, DBConstants.COL_NAME, DBConstants.COL_EMAIL, DBConstants.COL_MSG_COUNT},
+                new String[]{DBConstants.COL_ID, DBConstants.COL_NAME, DBConstants.COL_EMAIL, DBConstants.COL_MSG_FRESH},
                 null,
                 null,
                 DBConstants.COL_ID + " DESC");

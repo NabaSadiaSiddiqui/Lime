@@ -41,7 +41,7 @@ public class ContactsTest extends ProviderTestCase2 {
         ContentValues values = new ContentValues(2);
         values.put(DBConstants.COL_NAME, name);
         values.put(DBConstants.COL_EMAIL, email);
-        values.put(DBConstants.COL_MSG_COUNT,count );
+        values.put(DBConstants.COL_MSG_FRESH,count );
         Uri mUri = resolve.insert(DBConstants.DB_CONTACTS, values);
         assertNotNull(mUri);
     }
@@ -56,11 +56,11 @@ public class ContactsTest extends ProviderTestCase2 {
         ContentValues values = new ContentValues(2);
         values.put(DBConstants.COL_NAME, name);
         values.put(DBConstants.COL_EMAIL, email);
-        values.put(DBConstants.COL_MSG_COUNT,count );
+        values.put(DBConstants.COL_MSG_FRESH,count );
         Uri mUri = resolve.insert(DBConstants.DB_CONTACTS, values);
         assertNotNull(mUri);
         // Query
-        String[] projection = {DBConstants.COL_MSG_COUNT};
+        String[] projection = {DBConstants.COL_MSG_FRESH};
         String selection = DBConstants.COL_EMAIL + " = '" + email + "'";
         Cursor cursor = resolve.query(DBConstants.DB_CONTACTS, projection, selection, null, null);
         assertNotNull(cursor.moveToFirst());
@@ -79,7 +79,7 @@ public class ContactsTest extends ProviderTestCase2 {
         ContentValues values = new ContentValues(2);
         values.put(DBConstants.COL_NAME, name);
         values.put(DBConstants.COL_EMAIL, email);
-        values.put(DBConstants.COL_MSG_COUNT,count );
+        values.put(DBConstants.COL_MSG_FRESH,count );
         Uri mUri = resolve.insert(DBConstants.DB_CONTACTS, values);
         assertNotNull(mUri);
         // Delete
@@ -88,7 +88,7 @@ public class ContactsTest extends ProviderTestCase2 {
         int res = resolve.delete(DBConstants.DB_CONTACTS, where,whereArgs);
         assertNotSame(0, res);
         // Query
-        String[] projection = {DBConstants.COL_MSG_COUNT};
+        String[] projection = {DBConstants.COL_MSG_FRESH};
         String selection = DBConstants.COL_EMAIL + " = '" + email + "'";
         Cursor cursorQue = resolve.query(DBConstants.DB_CONTACTS, projection, selection, null, null);
         assertFalse(cursorQue.moveToFirst());
@@ -104,7 +104,7 @@ public class ContactsTest extends ProviderTestCase2 {
         ContentValues values = new ContentValues(2);
         values.put(DBConstants.COL_NAME, name);
         values.put(DBConstants.COL_EMAIL, email);
-        values.put(DBConstants.COL_MSG_COUNT,count );
+        values.put(DBConstants.COL_MSG_FRESH,count );
         Uri mUri = resolve.insert(DBConstants.DB_CONTACTS, values);
         assertNotNull(mUri);
         // Update
@@ -117,7 +117,7 @@ public class ContactsTest extends ProviderTestCase2 {
         assertNotSame(0, res);
 
         // Query
-        String[] projection = {DBConstants.COL_MSG_COUNT};
+        String[] projection = {DBConstants.COL_MSG_FRESH};
         String selection = DBConstants.COL_EMAIL + " = '" + email + "'";
         Cursor cursorQue = resolve.query(DBConstants.DB_CONTACTS, projection, selection, null, null);
         assertFalse(cursorQue.moveToFirst());

@@ -51,7 +51,7 @@ public class ChatCursorAdapter extends CursorAdapter {
 
         String email = cursor.getString(cursor.getColumnIndex(DBConstants.COL_EMAIL));
         String initial = getFirstToUpper(email);
-        int count = cursor.getInt(cursor.getColumnIndex(DBConstants.COL_MSG_COUNT));
+        int count = cursor.getInt(cursor.getColumnIndex(DBConstants.COL_MSG_FRESH));
         String[] colors = view.getResources().getStringArray(R.array.chat_img_view);
         int position = mapLetterInAlphabets(initial);
         int color = Color.parseColor(colors[position]);

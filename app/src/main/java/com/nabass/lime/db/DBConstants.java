@@ -14,7 +14,7 @@ public class DBConstants {
     public static final String TBL_CONTACTS = "contacts";
     public static final String COL_NAME = "name";
     public static final String COL_EMAIL = "email";
-    public static final String COL_MSG_COUNT = "count";
+    public static final String COL_MSG_FRESH = "count"; // number of unread messages
 
     /*
      * Messages

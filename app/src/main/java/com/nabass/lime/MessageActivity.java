@@ -116,7 +116,7 @@ public class MessageActivity extends FragmentActivity implements Message.OnFragm
     @Override
     protected void onPause() {
         ContentValues values = new ContentValues(1);
-        values.put(DBConstants.COL_MSG_COUNT, 0);
+        values.put(DBConstants.COL_MSG_FRESH, 0);
         getContentResolver().update(Uri.withAppendedPath(DBConstants.DB_CONTACTS, profileId), values, null, null);
         super.onPause();
     }
