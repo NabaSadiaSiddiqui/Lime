@@ -4,29 +4,21 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.database.Cursor;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nabass.lime.Constants;
-import com.nabass.lime.Init;
 import com.nabass.lime.R;
-import com.nabass.lime.db.CustomCP;
 
 
 public class ChatActions extends DialogFragment {
 
-    private static Bundle profileBundle;
+    private static Bundle contactBundle;
     private Chat.OnFragmentInteractionListener mListener;
 
 
@@ -35,7 +27,7 @@ public class ChatActions extends DialogFragment {
     }
 
     public static ChatActions newInstance(Bundle bundle) {
-        profileBundle = bundle;
+        contactBundle = bundle;
         return new ChatActions();
     }
 
@@ -70,7 +62,7 @@ public class ChatActions extends DialogFragment {
             @Override
             public void onClick(View view) {
                 //TODO: clear conversation
-                mListener.onFragmentInteraction(Constants.FRAG_CHAT_ACTIONS, profileBundle);
+                mListener.onFragmentInteraction(Constants.FRAG_CHAT_ACTIONS, contactBundle);
             }
         });
 

@@ -171,22 +171,18 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
     public void onFragmentInteraction(String frag, Bundle bundle) {
         if(frag.equals(Constants.FRAG_CHAT) || frag.equals(Constants.FRAG_CONTACTS)) {
             // TODO: open the conversation
-            String profile_id = bundle.getString(Constants.PROFILE_ID);
+            String profile_id = bundle.getString(Constants.CONTACT_ID);
             Intent intent = new Intent(this, MessageActivity.class);
-            intent.putExtra(Constants.PROFILE_ID, profile_id);
+            intent.putExtra(Constants.CONTACT_ID, profile_id);
             startActivity(intent);
         } else if(frag.equals(Constants.FRAG_CHAT_ACTIONS)) {
-            // TODO: delete conversation
-            String profile_id = bundle.getString(Constants.PROFILE_ID);
+            // TODO: clear conversation
+            String contact_email = bundle.getString(Constants.CONTACT_EMAIL);
+            DBExtended.clearConversationByEmail(getContentResolver(), contact_email);
             Chat.chatActionsDialog.dismiss();
-            deleteConversation(profile_id);
         }
     }
 
-    public void deleteConversation(String profileID) {
-        String email = DBExtended.getEmailFromProfileID(getContentResolver(), profileID);
-        DBExtended.deleteConversationByEmail(getContentResolver(), email);
-    }
 
     @Override
     public void goToHome() {    // AddContact.OnFragmentInteractionListener which opens home fragment that contains all the recent chats

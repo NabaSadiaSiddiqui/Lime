@@ -30,6 +30,10 @@ public interface Constants {
 
     public static final String TAG_DIALOG = "dialog";
 
+    // Content provider fields
+    public static String CONTACT_ID = "contact_id";
+    public static String CONTACT_EMAIL = "contact_email";
+
     // GCM constants/parameters
     public static String SERVER_URL = "http://1-dot-bold-flash-798.appspot.com";
     public static String SENDER_ID = "374736890011";
@@ -38,7 +42,6 @@ public interface Constants {
     public static String REG_ID = "regId";
     public static String MESSAGE = "message";
     public static String KEY_REG_ID = "gcm_registration_id";
-    public static String PROFILE_ID = "profile_id";
 
     // Parameters used on GCM registration
     public static String ACTION_REGISTER = "com.nabass.lime.REGISTER";

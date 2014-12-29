@@ -34,7 +34,7 @@ public class MessageActivity extends FragmentActivity implements Message.OnFragm
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
 
-        profileId = getIntent().getStringExtra(Constants.PROFILE_ID);
+        profileId = getIntent().getStringExtra(Constants.CONTACT_ID);
         msgEdit = (EditText) findViewById(R.id.msg_edit);
         sendBtn = (Button) findViewById(R.id.send_btn);
         sendBtn.setOnClickListener(this);

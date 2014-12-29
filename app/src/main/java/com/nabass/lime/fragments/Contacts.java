@@ -70,7 +70,7 @@ public class Contacts extends Fragment implements LoaderManager.LoaderCallbacks<
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         //TODO: open conversation
         Bundle bundle = new Bundle();
-        bundle.putString(Constants.PROFILE_ID, String.valueOf(l));
+        bundle.putString(Constants.CONTACT_ID, String.valueOf(l));
         mListener.onFragmentInteraction(Constants.FRAG_CONTACTS, bundle);
     }
 
