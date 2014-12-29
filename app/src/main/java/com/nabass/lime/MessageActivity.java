@@ -1,10 +1,6 @@
 package com.nabass.lime;
 
-import android.content.BroadcastReceiver;
 import android.content.ContentValues;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -22,7 +18,6 @@ import android.widget.Toast;
 import com.nabass.lime.db.DBConstants;
 import com.nabass.lime.fragments.EditContact;
 import com.nabass.lime.fragments.Message;
-import com.nabass.lime.network.GcmUtil;
 import com.nabass.lime.network.ServerUtilities;
 
 import java.io.IOException;
@@ -32,9 +27,7 @@ public class MessageActivity extends FragmentActivity implements Message.OnFragm
     private EditText msgEdit;
     private Button sendBtn;
     private String profileId;
-    private String profileName;
     private String profileEmail;
-    private GcmUtil gcmUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +41,8 @@ public class MessageActivity extends FragmentActivity implements Message.OnFragm
 
         Cursor c = getContentResolver().query(Uri.withAppendedPath(DBConstants.DB_CONTACTS, profileId), null, null, null, null);
         if (c.moveToFirst()) {
-            profileName = c.getString(c.getColumnIndex(DBConstants.COL_NAME));
             profileEmail = c.getString(c.getColumnIndex(DBConstants.COL_EMAIL));
         }
-
-        registerReceiver(registrationStatusReceiver, new IntentFilter(Constants.ACTION_REGISTER));
-        gcmUtil = new GcmUtil(getApplicationContext());
     }
 
     @Override
@@ -134,25 +123,6 @@ public class MessageActivity extends FragmentActivity implements Message.OnFragm
 
     @Override
     protected void onDestroy() {
-        unregisterReceiver(registrationStatusReceiver);
-        gcmUtil.cleanup();
         super.onDestroy();
     }
-
-    private BroadcastReceiver registrationStatusReceiver = new  BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent != null && Constants.ACTION_REGISTER.equals(intent.getAction())) {
-                switch (intent.getIntExtra(Constants.EXTRA_STATUS, 100)) {
-                    case Constants.STATUS_SUCCESS:
-                        sendBtn.setEnabled(true);
-                        break;
-
-                    case Constants.STATUS_FAILED:
-                        break;
-                }
-            }
-        }
-    };
-
 }

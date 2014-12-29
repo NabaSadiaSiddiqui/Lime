@@ -3,11 +3,19 @@ package com.nabass.lime;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Application;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
+
+import com.nabass.lime.network.GcmUtil;
 
 public class Init extends Application {
     private static SharedPreferences prefs;
+    private static GcmUtil gcm;
 
     @Override
     public void onCreate() {
@@ -16,6 +24,9 @@ public class Init extends Application {
 
         // Set client email (from accounts)
         setClientEmail();
+
+        registerReceiver(registrationStatusReceiver, new IntentFilter(Constants.ACTION_REGISTER));
+        gcm = new GcmUtil(getApplicationContext());
     }
 
     private static void setSharedPref(String key, String val) {
@@ -172,4 +183,20 @@ public class Init extends Application {
         }
         return position;
     }
+
+    private BroadcastReceiver registrationStatusReceiver = new  BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent != null && Constants.ACTION_REGISTER.equals(intent.getAction())) {
+                switch (intent.getIntExtra(Constants.EXTRA_STATUS, 100)) {
+                    case Constants.STATUS_SUCCESS:
+                        Log.e("Init.java", "Success");
+                        break;
+                    case Constants.STATUS_FAILED:
+                        Log.e("Init.java", "Failure");
+                        break;
+                }
+            }
+        }
+    };
 }
