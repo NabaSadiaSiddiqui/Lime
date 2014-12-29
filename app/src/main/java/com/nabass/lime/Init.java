@@ -16,6 +16,7 @@ import com.nabass.lime.network.GcmUtil;
 public class Init extends Application {
     private static SharedPreferences prefs;
     private static GcmUtil gcm;
+    public static String REG_STATUS = "";
 
     @Override
     public void onCreate() {
@@ -25,7 +26,7 @@ public class Init extends Application {
         // Set client email (from accounts)
         setClientEmail();
 
-        registerReceiver(registrationStatusReceiver, new IntentFilter(Constants.ACTION_REGISTER));
+        registerReceiver(gcmRegStatus, new IntentFilter(Constants.ACTION_REGISTER));
         gcm = new GcmUtil(getApplicationContext());
     }
 
@@ -184,16 +185,16 @@ public class Init extends Application {
         return position;
     }
 
-    private BroadcastReceiver registrationStatusReceiver = new  BroadcastReceiver() {
+    private BroadcastReceiver gcmRegStatus = new  BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent != null && Constants.ACTION_REGISTER.equals(intent.getAction())) {
                 switch (intent.getIntExtra(Constants.EXTRA_STATUS, 100)) {
                     case Constants.STATUS_SUCCESS:
-                        Log.e("Init.java", "Success");
+                        REG_STATUS = "ONLINE";
                         break;
                     case Constants.STATUS_FAILED:
-                        Log.e("Init.java", "Failure");
+                        REG_STATUS = "OFFLINE";
                         break;
                 }
             }

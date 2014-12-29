@@ -39,6 +39,8 @@ public interface Constants {
     public static String MESSAGE = "message";
     public static String KEY_REG_ID = "gcm_registration_id";
     public static String PROFILE_ID = "profile_id";
+
+    // Parameters used on GCM registration
     public static String ACTION_REGISTER = "com.nabass.lime.REGISTER";
     public static String EXTRA_STATUS = "status";
     public static int STATUS_SUCCESS = 1;
