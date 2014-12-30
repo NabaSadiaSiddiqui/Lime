@@ -8,8 +8,6 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
-import android.media.Image;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -19,9 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.nabass.lime.fragments.About;
 import com.nabass.lime.fragments.AddContact;
@@ -190,12 +186,6 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
             Intent intent = new Intent(this, MessageActivity.class);
             intent.putExtra(Constants.CONTACT_ID, profile_id);
             startActivity(intent);
-        } else if(frag.equals(Constants.FRAG_CHAT_ACTIONS)) {
-            // TODO: clear conversation
-            String contact_email = bundle.getString(Constants.CONTACT_EMAIL);
-            DBExtended.clearConversationByEmail(getContentResolver(), contact_email);
-            // TODO: Obtain a fresh cursor and update adapter
-            Chat.chatActionsDialog.dismiss();
         }
     }
 

@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.nabass.lime.Constants;
 import com.nabass.lime.R;
+import com.nabass.lime.db.DBExtended;
 
 
 public class ChatActions extends DialogFragment {
@@ -42,12 +43,12 @@ public class ChatActions extends DialogFragment {
 
         TextView viewContact = new TextView(getActivity());
         viewContact.setPadding(padding, padding, padding, padding);
-        viewContact.setText("View contact");
+        viewContact.setText("Email chat");
         viewContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: view contact
-                Toast.makeText(getActivity(), "View contact", Toast.LENGTH_LONG)
+                //TODO: email chat
+                Toast.makeText(getActivity(), "Email chat", Toast.LENGTH_LONG)
                         .show();
             }
         });
@@ -55,14 +56,17 @@ public class ChatActions extends DialogFragment {
         View divider = new View(getActivity());
         divider.setBackgroundColor(Color.BLACK);
 
-        TextView deleteChat = new TextView(getActivity());
-        deleteChat.setText("Clear conversation");
-        deleteChat.setPadding(padding, padding, padding, padding);
-        deleteChat.setOnClickListener(new View.OnClickListener() {
+        TextView clearChat = new TextView(getActivity());
+        clearChat.setText("Clear chat");
+        clearChat.setPadding(padding, padding, padding, padding);
+        clearChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //TODO: clear conversation
-                mListener.onFragmentInteraction(Constants.FRAG_CHAT_ACTIONS, contactBundle);
+                //mListener.onFragmentInteraction(Constants.FRAG_CHAT_ACTIONS, contactBundle);
+                String contact_email = contactBundle.getString(Constants.CONTACT_EMAIL);
+                DBExtended.clearChatByEmail(getActivity().getContentResolver(), contact_email);
+                Chat.chatActionsDialog.dismiss();
             }
         });
 
@@ -70,7 +74,7 @@ public class ChatActions extends DialogFragment {
         ll.setOrientation(LinearLayout.VERTICAL);
         ll.addView(viewContact);
         ll.addView(divider, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 2));
-        ll.addView(deleteChat);
+        ll.addView(clearChat);
 
         return new AlertDialog.Builder(getActivity())
                 .setCancelable(true)

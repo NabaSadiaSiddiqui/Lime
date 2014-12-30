@@ -125,17 +125,21 @@ public class CustomCP extends ContentProvider {
         int count;
         switch(DBConstants.sURIMatcher.match(uri)) {
             case DBConstants.ALL_MSGS:
+                Log.e(TAG, "Deleting all messages");
                 count = db.delete(DBConstants.TBL_MSGS, selection, selectionArgs);
                 break;
             case DBConstants.ONE_MSG:
+                Log.e(TAG, "Deleting message per contact");
                 selection = DBConstants.COL_ID + " = ?";
                 selectionArgs = new String[]{uri.getLastPathSegment()};
                 count = db.delete(DBConstants.TBL_MSGS, selection, selectionArgs);
                 break;
             case DBConstants.ALL_CONTACTS:
+                Log.e(TAG, "Deleting all contacts");
                 count = db.delete(DBConstants.TBL_CONTACTS, selection, selectionArgs);
                 break;
             case DBConstants.ONE_CONTACT:
+                Log.e(TAG, "Deleting one contact");
                 selection = DBConstants.COL_ID + " = ?";
                 selectionArgs = new String[]{uri.getLastPathSegment()};
                 count = db.delete(DBConstants.TBL_CONTACTS, selection, selectionArgs);
