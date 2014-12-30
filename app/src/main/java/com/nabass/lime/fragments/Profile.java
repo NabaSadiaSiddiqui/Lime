@@ -8,11 +8,16 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.nabass.lime.Constants;
 import com.nabass.lime.R;
 
 import static com.nabass.lime.Init.REG_STATUS;
 import static com.nabass.lime.Init.getClientEmail;
+import static com.nabass.lime.Init.getClientImg;
+import static com.nabass.lime.Init.getClientName;
 import static com.nabass.lime.Init.getSenderId;
 
 public class Profile extends DialogFragment {
@@ -30,10 +35,12 @@ public class Profile extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View dialoglayout = inflater.inflate(R.layout.fragment_profile, null, false);
+        TextView name = (TextView) dialoglayout.findViewById(R.id.profile_name);
         TextView email = (TextView) dialoglayout.findViewById(R.id.profile_email);
         TextView status = (TextView) dialoglayout.findViewById(R.id.profile_status);
         TextView senderID = (TextView) dialoglayout.findViewById(R.id.profile_sender_id);
 
+        name.setText(getClientName());
         email.setText(getClientEmail());
         status.setText(REG_STATUS);
         senderID.setText(getSenderId());

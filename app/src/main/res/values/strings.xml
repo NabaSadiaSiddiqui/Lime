@@ -71,6 +71,7 @@
     </string-array>
 
     <!-- Profile -->
+    <string name="profile_name">Name:</string>
     <string name="profile_email">Email:</string>
     <string name="profile_status">Status:</string>
     <string name="profile_sender_id">Sender ID:</string>

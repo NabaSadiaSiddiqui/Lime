@@ -8,6 +8,8 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -17,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -29,7 +32,11 @@ import com.nabass.lime.fragments.Settings;
 import com.nabass.lime.nav.drawer.adapter.NavDrawerListAdapter;
 import com.nabass.lime.nav.drawer.model.NavDrawerItem;
 import com.nabass.lime.db.DBExtended;
+import com.nabass.lime.widgets.CircleImageView;
+
 import java.util.ArrayList;
+
+import static com.nabass.lime.Init.getClientImg;
 import static com.nabass.lime.Init.getMode;
 
 
@@ -97,11 +104,16 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
         //getActionBar().setHomeButtonEnabled(true);
 
 
+        // Set custom icon on action bar
         getActionBar().setDisplayShowHomeEnabled(false);
         getActionBar().setDisplayShowTitleEnabled(false);
         LayoutInflater mInflater = LayoutInflater.from(this);
-
         View mCustomView = mInflater.inflate(R.layout.actionbar_custom, null);
+        //TODO: if person's G+ has an image -> use that
+        /*if(!getClientImg().equals(Constants.STR_NULL)) {        // If person's G+ profile had an image -> use that
+            CircleImageView img = (CircleImageView) mCustomView.findViewById(R.id.profile_img);
+            img.setImageURI(Uri.parse(getClientImg()));
+        }*/
         getActionBar().setCustomView(mCustomView);
         getActionBar().setDisplayShowCustomEnabled(true);
 
