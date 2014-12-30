@@ -55,6 +55,7 @@ public class ContactsActions extends DialogFragment {
                 String contact_email = contactBundle.getString(Constants.CONTACT_EMAIL);
                 Toast.makeText(getActivity().getApplicationContext(), contact_email, Toast.LENGTH_LONG)
                         .show();
+                refreshSearchView();
                 Contacts.contactsActionsDialog.dismiss();
             }
         });
@@ -69,6 +70,7 @@ public class ContactsActions extends DialogFragment {
                 String contact_email = contactBundle.getString(Constants.CONTACT_EMAIL);
                 Toast.makeText(getActivity().getApplicationContext(), contact_email + " blocked", Toast.LENGTH_LONG)
                         .show();
+                refreshSearchView();
                 Contacts.contactsActionsDialog.dismiss();
             }
         });
@@ -84,6 +86,7 @@ public class ContactsActions extends DialogFragment {
                 DBExtended.deleteContactByEmail(getActivity().getContentResolver(), contact_email);
                 Toast.makeText(getActivity().getApplicationContext(), contact_email + " deleted", Toast.LENGTH_LONG)
                         .show();
+                refreshSearchView();
                 Contacts.contactsActionsDialog.dismiss();
             }
         });
