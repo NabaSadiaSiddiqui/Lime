@@ -34,8 +34,8 @@ public class Contacts extends Fragment implements LoaderManager.LoaderCallbacks<
 
     private OnFragmentInteractionListener mListener;
     private ContactsCursorAdapter mAdapter;
-    private ListView mListView;
     private boolean queryListener = false;
+    public static SearchView sv;
     public static DialogFragment contactsActionsDialog;
 
     public Contacts() {
@@ -53,7 +53,7 @@ public class Contacts extends Fragment implements LoaderManager.LoaderCallbacks<
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_contacts, container, false);
-        mListView = (ListView) view.findViewById(R.id.contacts);
+        ListView mListView = (ListView) view.findViewById(R.id.contacts);
         // Set empty view
         /*TextView emptyView = new TextView(getActivity().getApplicationContext());
         emptyView.setText("No contacts found");
@@ -94,7 +94,7 @@ public class Contacts extends Fragment implements LoaderManager.LoaderCallbacks<
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        final SearchView sv = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        sv = (SearchView) menu.findItem(R.id.action_search).getActionView();
 
         sv.setOnSearchClickListener(new View.OnClickListener() {
             @Override
@@ -162,10 +162,6 @@ public class Contacts extends Fragment implements LoaderManager.LoaderCallbacks<
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
         //TODO: open dialog with option to view contact or delete contact
-        // DialogFragment.show() will take care of adding the fragment
-        // in a transaction.  We also want to remove any currently showing
-        // dialog, so make our own transaction and take care of that here.
-
         TextView contactEmailView = (TextView) view.findViewById(R.id.contact_id);
         String contactEmail = contactEmailView.getText().toString();
         Bundle bundle = new Bundle();
@@ -186,16 +182,6 @@ public class Contacts extends Fragment implements LoaderManager.LoaderCallbacks<
         return true;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(String frag, Bundle bundle);

@@ -1,17 +1,12 @@
 package com.nabass.lime.fragments;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.text.Layout;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +16,8 @@ import com.nabass.lime.R;
 import com.nabass.lime.db.DBExtended;
 
 public class ContactsActions extends DialogFragment {
+
+    private static final String TAG = "ContactsAction";
 
     private static Bundle contactBundle;
 
@@ -58,6 +55,7 @@ public class ContactsActions extends DialogFragment {
                 String contact_email = contactBundle.getString(Constants.CONTACT_EMAIL);
                 Toast.makeText(getActivity().getApplicationContext(), contact_email, Toast.LENGTH_LONG)
                         .show();
+                refreshSearchView();
                 Contacts.contactsActionsDialog.dismiss();
             }
         });
@@ -72,6 +70,7 @@ public class ContactsActions extends DialogFragment {
                 String contact_email = contactBundle.getString(Constants.CONTACT_EMAIL);
                 Toast.makeText(getActivity().getApplicationContext(), contact_email + " blocked", Toast.LENGTH_LONG)
                         .show();
+                refreshSearchView();
                 Contacts.contactsActionsDialog.dismiss();
             }
         });
@@ -87,6 +86,7 @@ public class ContactsActions extends DialogFragment {
                 DBExtended.deleteContactByEmail(getActivity().getContentResolver(), contact_email);
                 Toast.makeText(getActivity().getApplicationContext(), contact_email + " deleted", Toast.LENGTH_LONG)
                         .show();
+                refreshSearchView();
                 Contacts.contactsActionsDialog.dismiss();
             }
         });
@@ -105,5 +105,14 @@ public class ContactsActions extends DialogFragment {
                 .setCancelable(true)
                 .setView(ll)
                 .create();
+    }
+
+    /*
+     * Hack to refresh search view when a person simultaneously searches for a contact and performs an action on a view like "Delete"
+     */
+    private static void refreshSearchView() {
+        String some = Contacts.sv.getQuery().toString();
+        Contacts.sv.setQuery(some+" ", false);
+        Contacts.sv.setQuery(some, false);
     }
 }
