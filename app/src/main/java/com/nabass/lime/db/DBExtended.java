@@ -2,6 +2,7 @@ package com.nabass.lime.db;
 
 
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
@@ -26,9 +27,20 @@ public class DBExtended {
     }
 
     public static void clearChatByEmail(ContentResolver cr, String email) {
+        // Delete all messages for this person
         String selection = DBConstants.COL_RECIPIENT_ID + "=?";
         String[] selectionArgs = new String[] {email};
         cr.delete(DBConstants.DB_MSGS, selection, selectionArgs);
-        cr.notifyChange(DBConstants.DB_CONTACTS, null);
+    }
+
+    public static void deleteChatByEmail(ContentResolver cr, String email) {
+        clearChatByEmail(cr, email);
+
+        // Update total for that recepient in the contacts table
+        ContentValues values = new ContentValues(1);
+        values.put(DBConstants.COL_MSG_TOTAL, 0);
+        String selection = DBConstants.COL_EMAIL + "=?";
+        String[] selectionArgs = new String[] {email};
+        cr.update(DBConstants.DB_CONTACTS, values, selection, selectionArgs);
     }
 }

@@ -41,20 +41,21 @@ public class ChatActions extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         int padding = getResources().getDimensionPixelSize(R.dimen.chat_actions_padding);
 
-        TextView viewContact = new TextView(getActivity());
-        viewContact.setPadding(padding, padding, padding, padding);
-        viewContact.setText("Email chat");
-        viewContact.setOnClickListener(new View.OnClickListener() {
+        View divider = new View(getActivity());
+        divider.setBackgroundColor(Color.BLACK);
+
+        /*TextView emailChat = new TextView(getActivity());
+        emailChat.setPadding(padding, padding, padding, padding);
+        emailChat.setText("Email chat");
+        emailChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //TODO: email chat
                 Toast.makeText(getActivity(), "Email chat", Toast.LENGTH_LONG)
                         .show();
+                Chat.chatActionsDialog.dismiss();
             }
-        });
-
-        View divider = new View(getActivity());
-        divider.setBackgroundColor(Color.BLACK);
+        });*/
 
         TextView clearChat = new TextView(getActivity());
         clearChat.setText("Clear chat");
@@ -63,18 +64,30 @@ public class ChatActions extends DialogFragment {
             @Override
             public void onClick(View view) {
                 //TODO: clear conversation
-                //mListener.onFragmentInteraction(Constants.FRAG_CHAT_ACTIONS, contactBundle);
                 String contact_email = contactBundle.getString(Constants.CONTACT_EMAIL);
                 DBExtended.clearChatByEmail(getActivity().getContentResolver(), contact_email);
                 Chat.chatActionsDialog.dismiss();
             }
         });
 
+        TextView deleteChat = new TextView(getActivity());
+        deleteChat.setText("Delete chat");
+        deleteChat.setPadding(padding, padding, padding, padding);
+        deleteChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO: delete conversation
+                String contact_email = contactBundle.getString(Constants.CONTACT_EMAIL);
+                DBExtended.deleteChatByEmail(getActivity().getContentResolver(), contact_email);
+                Chat.chatActionsDialog.dismiss();
+            }
+        });
+
         LinearLayout ll = new LinearLayout(getActivity().getApplicationContext());
         ll.setOrientation(LinearLayout.VERTICAL);
-        ll.addView(viewContact);
-        ll.addView(divider, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 2));
         ll.addView(clearChat);
+        ll.addView(divider, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 2));
+        ll.addView(deleteChat);
 
         return new AlertDialog.Builder(getActivity())
                 .setCancelable(true)
