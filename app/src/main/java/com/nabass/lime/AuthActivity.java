@@ -20,6 +20,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
+import com.google.android.gms.plus.model.people.Person;
 
 public class AuthActivity extends Activity implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -149,6 +150,7 @@ public class AuthActivity extends Activity implements View.OnClickListener, Goog
     private void resolveSignInError() {
         if (mConnectionResult.hasResolution()) {
             try {
+                Log.e("AuthActivity", "resolving connection error");
                 mIntentInProgress = true;
                 startIntentSenderForResult(mConnectionResult.getResolution().getIntentSender(),
                         RC_SIGN_IN, null, 0, 0, 0);
@@ -202,7 +204,28 @@ public class AuthActivity extends Activity implements View.OnClickListener, Goog
     @Override
     public void onConnected(Bundle connectionHint) {
         mSignInClicked = false;
-        Toast.makeText(this, "User is connected!", Toast.LENGTH_LONG).show();
+        //TODO: go back to reading account from Settings when removing Google+ sign in
+        try {
+            if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
+                Person currentPerson = Plus.PeopleApi
+                        .getCurrentPerson(mGoogleApiClient);
+                String personName = currentPerson.getDisplayName();
+                String personPhotoUrl = currentPerson.getImage().getUrl();
+                String personEmail = Plus.AccountApi.getAccountName(mGoogleApiClient);
+
+                Init.setSharedPref(Constants.KEY_CLIENT_EMAIL, personEmail);
+                Init.setSharedPref(Constants.KEY_CLIENT_NAME, personName);
+                Init.setSharedPref(Constants.KEY_CLIENT_IMG, personPhotoUrl);
+
+                Init.setModeRemote();
+                setResult(RESULT_OK);
+                finish();
+            } else {
+                Toast.makeText(getApplicationContext(), "Person information is null. Try local sign in", Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // Try to reconnect to service if suspended
@@ -220,9 +243,9 @@ public class AuthActivity extends Activity implements View.OnClickListener, Goog
         if (view.getId() == R.id.sign_in_button && !mGoogleApiClient.isConnecting()) {
             mSignInClicked = true;
             resolveSignInError();
-            Init.setModeRemote();
+            /*Init.setModeRemote();
             setResult(RESULT_OK);
-            finish();
+            finish();*/
         } else if(view.getId() == R.id.local_mode_button) {
             Init.setModeLocal();
             setResult(RESULT_OK);

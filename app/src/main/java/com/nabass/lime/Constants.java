@@ -7,6 +7,8 @@ public interface Constants {
     // Preference manager keys
     public static final String KEY_MODE_USER = "mode_user";
     public static final String KEY_CLIENT_EMAIL = "client_email";
+    public static final String KEY_CLIENT_NAME = "client_name";
+    public static final String KEY_CLIENT_IMG = "client_img";
     public static final String KEY_NEW_MSG = "notifications_msg";
     public static final String KEY_RINGTONE = "notifications_ringtone";
     public static final String KEY_SERVER_URL = "server_url";

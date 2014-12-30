@@ -24,13 +24,14 @@ public class Init extends Application {
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         // Set client email (from accounts)
-        setClientEmail();
+        //TODO: use this when removing Google+ sign in
+        //setClientEmail();
 
         registerReceiver(gcmRegStatus, new IntentFilter(Constants.ACTION_REGISTER));
         gcm = new GcmUtil(getApplicationContext());
     }
 
-    private static void setSharedPref(String key, String val) {
+    public static void setSharedPref(String key, String val) {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(key, val);
         editor.apply();
@@ -71,6 +72,22 @@ public class Init extends Application {
 
     public static String getClientEmail() {
         return prefs.getString(Constants.KEY_CLIENT_EMAIL, Constants.STR_NULL);
+    }
+
+    public static void setClientName(String name) {
+        setSharedPref(Constants.KEY_CLIENT_NAME, name);
+    }
+
+    public static String getClientName() {
+        return prefs.getString(Constants.KEY_CLIENT_NAME, Constants.STR_NULL);
+    }
+
+    public static void setClientImg(String url) {
+        setSharedPref(Constants.KEY_CLIENT_IMG, url);
+    }
+
+    public static String getClientImg() {
+        return prefs.getString(Constants.KEY_CLIENT_IMG, Constants.STR_NULL);
     }
 
     public static boolean isNotify() {
