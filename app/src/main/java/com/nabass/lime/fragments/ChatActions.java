@@ -44,19 +44,6 @@ public class ChatActions extends DialogFragment {
         View divider = new View(getActivity());
         divider.setBackgroundColor(Color.BLACK);
 
-        /*TextView emailChat = new TextView(getActivity());
-        emailChat.setPadding(padding, padding, padding, padding);
-        emailChat.setText("Email chat");
-        emailChat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO: email chat
-                Toast.makeText(getActivity(), "Email chat", Toast.LENGTH_LONG)
-                        .show();
-                Chat.chatActionsDialog.dismiss();
-            }
-        });*/
-
         TextView clearChat = new TextView(getActivity());
         clearChat.setText("Clear chat");
         clearChat.setPadding(padding, padding, padding, padding);
@@ -66,6 +53,8 @@ public class ChatActions extends DialogFragment {
                 //TODO: clear conversation
                 String contact_email = contactBundle.getString(Constants.CONTACT_EMAIL);
                 DBExtended.clearChatByEmail(getActivity().getContentResolver(), contact_email);
+                Toast.makeText(getActivity().getApplicationContext(), "Chat with " + contact_email + " cleared", Toast.LENGTH_LONG)
+                        .show();
                 Chat.chatActionsDialog.dismiss();
             }
         });
@@ -79,6 +68,8 @@ public class ChatActions extends DialogFragment {
                 //TODO: delete conversation
                 String contact_email = contactBundle.getString(Constants.CONTACT_EMAIL);
                 DBExtended.deleteChatByEmail(getActivity().getContentResolver(), contact_email);
+                Toast.makeText(getActivity().getApplicationContext(), "Chat with " + contact_email + " deleted", Toast.LENGTH_LONG)
+                        .show();
                 Chat.chatActionsDialog.dismiss();
             }
         });
