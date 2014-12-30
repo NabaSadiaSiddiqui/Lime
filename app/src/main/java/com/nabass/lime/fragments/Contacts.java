@@ -5,6 +5,7 @@ import android.app.DialogFragment;
 import android.app.FragmentTransaction;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -101,7 +102,7 @@ public class Contacts extends Fragment implements LoaderManager.LoaderCallbacks<
             public void onClick(View view) {
                 // implementing the search view listener
 
-                if(!queryListener) {
+                if (!queryListener) {
                     sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
                         @Override

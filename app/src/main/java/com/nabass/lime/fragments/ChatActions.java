@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -94,6 +95,11 @@ public class ChatActions extends DialogFragment {
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement OnFragmentInteractionListener");
         }
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        ContactsActions.refreshSearchView();
     }
 
 }

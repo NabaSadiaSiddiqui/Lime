@@ -55,7 +55,6 @@ public class ContactsActions extends DialogFragment {
                 String contact_email = contactBundle.getString(Constants.CONTACT_EMAIL);
                 Toast.makeText(getActivity().getApplicationContext(), contact_email, Toast.LENGTH_LONG)
                         .show();
-                refreshSearchView();
                 Contacts.contactsActionsDialog.dismiss();
             }
         });
@@ -70,7 +69,6 @@ public class ContactsActions extends DialogFragment {
                 String contact_email = contactBundle.getString(Constants.CONTACT_EMAIL);
                 Toast.makeText(getActivity().getApplicationContext(), contact_email + " blocked", Toast.LENGTH_LONG)
                         .show();
-                refreshSearchView();
                 Contacts.contactsActionsDialog.dismiss();
             }
         });
@@ -86,7 +84,6 @@ public class ContactsActions extends DialogFragment {
                 DBExtended.deleteContactByEmail(getActivity().getContentResolver(), contact_email);
                 Toast.makeText(getActivity().getApplicationContext(), contact_email + " deleted", Toast.LENGTH_LONG)
                         .show();
-                refreshSearchView();
                 Contacts.contactsActionsDialog.dismiss();
             }
         });
@@ -110,7 +107,7 @@ public class ContactsActions extends DialogFragment {
     /*
      * Hack to refresh search view when a person simultaneously searches for a contact and performs an action on a view like "Delete"
      */
-    private static void refreshSearchView() {
+    public static void refreshSearchView() {
         String some = Contacts.sv.getQuery().toString();
         Contacts.sv.setQuery(some+" ", false);
         Contacts.sv.setQuery(some, false);
