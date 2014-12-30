@@ -56,7 +56,6 @@ public class ContactsActions extends DialogFragment {
             public void onClick(View view) {
                 //TODO: view contact
                 String contact_email = contactBundle.getString(Constants.CONTACT_EMAIL);
-                //DBExtended.clearChatByEmail(getActivity().getContentResolver(), contact_email);
                 Toast.makeText(getActivity().getApplicationContext(), contact_email, Toast.LENGTH_LONG)
                         .show();
                 Contacts.contactsActionsDialog.dismiss();
@@ -85,9 +84,9 @@ public class ContactsActions extends DialogFragment {
             public void onClick(View view) {
                 //TODO: delete contact
                 String contact_email = contactBundle.getString(Constants.CONTACT_EMAIL);
+                DBExtended.deleteContactByEmail(getActivity().getContentResolver(), contact_email);
                 Toast.makeText(getActivity().getApplicationContext(), contact_email + " deleted", Toast.LENGTH_LONG)
                         .show();
-                DBExtended.deleteContactByEmail(getActivity().getContentResolver(), contact_email);
                 Contacts.contactsActionsDialog.dismiss();
             }
         });

@@ -34,6 +34,8 @@ public class Contacts extends Fragment implements LoaderManager.LoaderCallbacks<
 
     private OnFragmentInteractionListener mListener;
     private ContactsCursorAdapter mAdapter;
+    private ListView mListView;
+    private boolean queryListener = false;
     public static DialogFragment contactsActionsDialog;
 
     public Contacts() {
@@ -51,14 +53,20 @@ public class Contacts extends Fragment implements LoaderManager.LoaderCallbacks<
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_contacts, container, false);
+        mListView = (ListView) view.findViewById(R.id.contacts);
+        // Set empty view
+        /*TextView emptyView = new TextView(getActivity().getApplicationContext());
+        emptyView.setText("No contacts found");
+        mListView.setEmptyView(emptyView);*/
         // Set the adapter
-        ListView mListView = (ListView) view.findViewById(R.id.contacts);
         mAdapter = new ContactsCursorAdapter(getActivity().getApplicationContext(), null);
+        mListView.setAdapter(mAdapter);
 
         // Define filter query provider which will run a query on a given character sequence
         mAdapter.setFilterQueryProvider(new FilterQueryProvider() {
             @Override
             public Cursor runQuery(CharSequence charSequence) {
+                Log.e(TAG, "Calling runQuery");
                 Cursor c = DBExtended.dynamicSearchContactByEmail(getActivity().getContentResolver(), charSequence);
                 if (c.moveToFirst()) {
                     return c;
@@ -69,7 +77,6 @@ public class Contacts extends Fragment implements LoaderManager.LoaderCallbacks<
             }
         });
 
-        mListView.setAdapter(mAdapter);
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener((AdapterView.OnItemClickListener) this);
         mListView.setOnItemLongClickListener((AdapterView.OnItemLongClickListener) this);
@@ -87,31 +94,42 @@ public class Contacts extends Fragment implements LoaderManager.LoaderCallbacks<
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        SearchView sv = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        // implementing the search view listener
-        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        final SearchView sv = (SearchView) menu.findItem(R.id.action_search).getActionView();
 
+        sv.setOnSearchClickListener(new View.OnClickListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
-                Toast.makeText(getActivity().getApplicationContext(), s, Toast.LENGTH_SHORT)
-                        .show();
-                Cursor c = DBExtended.searchContactByEmail(getActivity().getContentResolver(), s);
-                if(c!=null) {
-                    Log.e(TAG, "C IS NOT NULL");
-                    Log.e(TAG, c.toString());
-                } else {
-                    Log.e(TAG, "YOU ARE SEARCHING FOR ALIENS");
+            public void onClick(View view) {
+                // implementing the search view listener
+
+                if(!queryListener) {
+                    sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+                        @Override
+                        public boolean onQueryTextSubmit(String s) {
+                            Toast.makeText(getActivity().getApplicationContext(), s, Toast.LENGTH_SHORT)
+                                    .show();
+                            Cursor c = DBExtended.searchContactByEmail(getActivity().getContentResolver(), s);
+                            if (c != null) {
+                                Log.e(TAG, "C IS NOT NULL");
+                                Log.e(TAG, c.toString());
+                            } else {
+                                Log.e(TAG, "YOU ARE SEARCHING FOR ALIENS");
+                            }
+                            // Return false to let the SearchView perform the default action.
+                            // Returning true indicates that the listener already performed teh default action
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onQueryTextChange(String newText) {
+                            //execute the adapter filter
+                            mAdapter.getFilter().filter(newText);
+                            return true;
+                        }
+                    });
+
+                    queryListener = true;
                 }
-                // Return false to let the SearchView perform the default action.
-                // Returning true indicates that the listener already performed teh default action
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                //execute the adapter filter
-                mAdapter.getFilter().filter(newText);
-                return true;
             }
         });
     }
