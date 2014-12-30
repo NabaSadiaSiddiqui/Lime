@@ -16,6 +16,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/profile_name_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -26,7 +27,8 @@
             android:id="@+id/profile_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/profile_name_text"
+            android:paddingLeft="@dimen/profile_vertical_padding_text"
             android:textSize="@dimen/profile_value_size"
             android:gravity="center"/>
     </RelativeLayout>
@@ -38,6 +40,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/profile_email_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -48,7 +51,8 @@
             android:id="@+id/profile_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/profile_email_text"
+            android:paddingLeft="@dimen/profile_vertical_padding_text"
             android:textSize="@dimen/profile_value_size"
             android:gravity="center"/>
     </RelativeLayout>
@@ -59,6 +63,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/profile_status_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -69,7 +74,8 @@
             android:id="@+id/profile_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/profile_status_text"
+            android:paddingLeft="@dimen/profile_vertical_padding_text"
             android:textSize="@dimen/profile_value_size"
             android:gravity="center" />
     </RelativeLayout>
@@ -80,6 +86,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/profile_sender_id_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -90,7 +97,8 @@
             android:id="@+id/profile_sender_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/profile_sender_id_text"
+            android:paddingLeft="@dimen/profile_vertical_padding_text"
             android:textSize="@dimen/profile_value_size"
             android:gravity="center" />
     </RelativeLayout>

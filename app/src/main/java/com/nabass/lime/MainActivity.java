@@ -110,10 +110,10 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
         LayoutInflater mInflater = LayoutInflater.from(this);
         View mCustomView = mInflater.inflate(R.layout.actionbar_custom, null);
         //TODO: if person's G+ has an image -> use that
-        /*if(!getClientImg().equals(Constants.STR_NULL)) {        // If person's G+ profile had an image -> use that
-            CircleImageView img = (CircleImageView) mCustomView.findViewById(R.id.profile_img);
-            img.setImageURI(Uri.parse(getClientImg()));
-        }*/
+        if(!getClientImg().equals(Constants.STR_NULL)) {        // If person's G+ profile had an image -> use that
+            Util.LoadProfileImage profileLoader = new Util.LoadProfileImage((CircleImageView) mCustomView.findViewById(R.id.profile_img));
+            profileLoader.execute(getClientImg());
+        }
         getActionBar().setCustomView(mCustomView);
         getActionBar().setDisplayShowCustomEnabled(true);
 
