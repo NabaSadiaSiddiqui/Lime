@@ -150,7 +150,7 @@ public class Contacts extends Fragment implements LoaderManager.LoaderCallbacks<
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        //TODO: open conversation
+        // Open conversation
         Bundle bundle = new Bundle();
         bundle.putString(Constants.CONTACT_ID, String.valueOf(l));
         mListener.onFragmentInteraction(Constants.FRAG_CONTACTS, bundle);
@@ -158,7 +158,7 @@ public class Contacts extends Fragment implements LoaderManager.LoaderCallbacks<
 
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-        //TODO: open dialog with option to view contact or delete contact
+        // Open dialog with option to view, block or delete
         TextView contactEmailView = (TextView) view.findViewById(R.id.contact_id);
         String contactEmail = contactEmailView.getText().toString();
         Bundle bundle = new Bundle();
@@ -185,13 +185,7 @@ public class Contacts extends Fragment implements LoaderManager.LoaderCallbacks<
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        CursorLoader loader = new CursorLoader(getActivity().getApplicationContext(),
-                DBConstants.DB_CONTACTS,
-                new String[]{DBConstants.COL_ID, DBConstants.COL_NAME, DBConstants.COL_EMAIL, DBConstants.COL_MSG_FRESH},
-                null,
-                null,
-                DBConstants.COL_ID + " DESC");
-        return loader;
+        return new CursorLoader(getActivity().getApplicationContext(), DBConstants.DB_CONTACTS, null, null, null, DBConstants.COL_ID + " DESC");
     }
 
     @Override

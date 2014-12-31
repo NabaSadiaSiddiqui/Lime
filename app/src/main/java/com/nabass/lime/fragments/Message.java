@@ -90,14 +90,12 @@ public class Message extends ListFragment implements LoaderManager.LoaderCallbac
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String profileEmail = args.getString(DBConstants.COL_EMAIL);
-        CursorLoader loader = new CursorLoader(getActivity(),
-                DBConstants.DB_MSGS,
-                null,
-                DBConstants.COL_SENDER_ID + " = ? and " + DBConstants.COL_RECIPIENT_ID + " = ?",
-                new String[]{Init.getClientEmail(), profileEmail},
-                DBConstants.COL_TIME + " ASC");
-        return loader;
+        String receiverEmail = args.getString(DBConstants.COL_EMAIL);
+        String senderEmail = Init.getClientEmail();
+        String selection = DBConstants.COL_SENDER_ID + " = ? and " + DBConstants.COL_RECIPIENT_ID + " = ? ";
+        String[] selectionArgs = new String[] {senderEmail, receiverEmail};
+        String sort = DBConstants.COL_TIME + " ASC";
+        return new CursorLoader(getActivity(), DBConstants.DB_MSGS, null, selection, selectionArgs, sort);
     }
 
     @Override
