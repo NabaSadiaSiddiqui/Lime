@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nabass.lime.Constants;
+import com.nabass.lime.MainActivity;
 import com.nabass.lime.R;
 import com.nabass.lime.db.DBExtended;
 
@@ -83,7 +84,7 @@ public class ContactsActions extends DialogFragment {
             public void onClick(View view) {
                 //TODO: delete contact
                 String contact_email = contactBundle.getString(Constants.CONTACT_EMAIL);
-                DBExtended.deleteContactByEmail(getActivity().getContentResolver(), contact_email);
+                DBExtended.deleteContactByEmail(MainActivity.contentResolver, contact_email);
                 Toast.makeText(getActivity().getApplicationContext(), contact_email + " deleted", Toast.LENGTH_LONG)
                         .show();
                 refreshSearchView();

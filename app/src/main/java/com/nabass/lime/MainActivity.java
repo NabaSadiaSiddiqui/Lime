@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
@@ -40,6 +41,8 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
 
     private static final String TAG = "MainActivity";
 
+    public static ContentResolver contentResolver;
+
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -63,6 +66,8 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        contentResolver = getContentResolver();
 
         mTitle = mDrawerTitle = getTitle();
 

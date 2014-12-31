@@ -4,6 +4,7 @@ package com.nabass.lime.db;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
@@ -46,19 +47,6 @@ public class DBExtended {
         cr.update(DBConstants.DB_CONTACTS, values, selection, selectionArgs);
     }
 
-    public static void insertMsgByEmail(ContentResolver cr, String email) {
-        /*String msg = intent.getStringExtra(DBConstants.COL_MSG);
-        String senderEmail = intent.getStringExtra(DBConstants.COL_SENDER_ID);
-        String receiverEmail = intent.getStringExtra(DBConstants.COL_RECIPIENT_ID);
-        ContentValues values = new ContentValues(2);
-        values.put(DBConstants.COL_MSG_TYPE,  DBConstants.MsgDirection.DIRECTION_INCOMING.ordinal());
-        values.put(DBConstants.COL_MSG, msg);
-        values.put(DBConstants.COL_SENDER_ID, senderEmail);
-        values.put(DBConstants.COL_RECIPIENT_ID, receiverEmail);
-        context.getContentResolver().insert(DBConstants.DB_MSGS, values);*/
-        //Implement this
-    }
-
     public static void deleteContactByEmail(ContentResolver cr, String email) {
         // Delete this contact
         String selection = DBConstants.COL_EMAIL + "=?";
@@ -81,5 +69,15 @@ public class DBExtended {
         Cursor c = cr.query(DBConstants.DB_CONTACTS, null, selection, null, null);
         Log.e(TAG, c.toString());
         return c;
+    }
+
+    public static void addContactByEmail(ContentResolver cr, String email) {
+        try {
+            ContentValues values = new ContentValues(1);
+            values.put(DBConstants.COL_EMAIL, email);
+            cr.insert(DBConstants.DB_CONTACTS, values);
+        } catch (SQLException e) {
+            throw new SQLException(TAG + " has an exception");
+        }
     }
 }

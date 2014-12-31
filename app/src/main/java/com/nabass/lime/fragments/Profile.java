@@ -8,15 +8,11 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nabass.lime.Constants;
 import com.nabass.lime.R;
-
 import static com.nabass.lime.Init.REG_STATUS;
 import static com.nabass.lime.Init.getClientEmail;
-import static com.nabass.lime.Init.getClientImg;
 import static com.nabass.lime.Init.getClientName;
 import static com.nabass.lime.Init.getSenderId;
 

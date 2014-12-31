@@ -1,6 +1,5 @@
 package com.nabass.lime.fragments;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nabass.lime.Constants;
+import com.nabass.lime.MainActivity;
 import com.nabass.lime.R;
 import com.nabass.lime.db.DBExtended;
 
@@ -20,8 +20,6 @@ import com.nabass.lime.db.DBExtended;
 public class ChatActions extends DialogFragment {
 
     private static Bundle contactBundle;
-    private Chat.OnFragmentInteractionListener mListener;
-
 
     public ChatActions() {
         // Required empty public constructor
@@ -52,7 +50,7 @@ public class ChatActions extends DialogFragment {
             public void onClick(View view) {
                 //TODO: clear conversation
                 String contact_email = contactBundle.getString(Constants.CONTACT_EMAIL);
-                DBExtended.clearChatByEmail(getActivity().getContentResolver(), contact_email);
+                DBExtended.clearChatByEmail(MainActivity.contentResolver, contact_email);
                 Toast.makeText(getActivity().getApplicationContext(), "Chat with " + contact_email + " cleared", Toast.LENGTH_LONG)
                         .show();
                 Chat.chatActionsDialog.dismiss();
@@ -85,15 +83,4 @@ public class ChatActions extends DialogFragment {
                 .setView(ll)
                 .create();
     }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (Chat.OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement OnFragmentInteractionListener");
-        }
-    }
-
 }

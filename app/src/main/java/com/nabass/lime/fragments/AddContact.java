@@ -2,12 +2,9 @@ package com.nabass.lime.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.ContentValues;
-import android.database.SQLException;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -15,8 +12,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.nabass.lime.Constants;
+import com.nabass.lime.MainActivity;
 import com.nabass.lime.R;
-import com.nabass.lime.db.DBConstants;
+import com.nabass.lime.db.DBExtended;
 
 public class AddContact extends Fragment {
 
@@ -24,7 +22,6 @@ public class AddContact extends Fragment {
     private static EditText pinTxt;
     private static EditText phoneTxt;
     private OnFragmentInteractionListener mListener;
-
 
     public AddContact(){
         //Nothing for now
@@ -98,16 +95,8 @@ public class AddContact extends Fragment {
             if(!isValid(Constants.TYPE_ADD_EMAIL, email)) {
                 emailTxt.setError(Constants.ERR_INVALID_EMAIL);
             } else { // add to database
-                try {
-                    ContentValues values = new ContentValues(2);
-                    values.put(DBConstants.COL_NAME, email.substring(0, email.indexOf('@')));
-                    values.put(DBConstants.COL_EMAIL, email);
-                    getActivity().getContentResolver().insert(DBConstants.DB_CONTACTS, values);
-                } catch (SQLException e) {
-                    throw new SQLException(view.toString() + " has an exception");
-                } finally {
-                    mListener.goToHome();
-                }
+                DBExtended.addContactByEmail(MainActivity.contentResolver, email);
+                mListener.goToHome();
             }
         } else if(pin!=null) {
             //TODO: add by pin

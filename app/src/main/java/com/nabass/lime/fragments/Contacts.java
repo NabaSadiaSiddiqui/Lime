@@ -5,7 +5,6 @@ import android.app.DialogFragment;
 import android.app.FragmentTransaction;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
-import android.content.DialogInterface;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -23,6 +22,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nabass.lime.MainActivity;
 import com.nabass.lime.R;
 import com.nabass.lime.contacts.adapter.ContactsCursorAdapter;
 import com.nabass.lime.Constants;
@@ -55,10 +55,6 @@ public class Contacts extends Fragment implements LoaderManager.LoaderCallbacks<
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_contacts, container, false);
         ListView mListView = (ListView) view.findViewById(R.id.contacts);
-        // Set empty view
-        /*TextView emptyView = new TextView(getActivity().getApplicationContext());
-        emptyView.setText("No contacts found");
-        mListView.setEmptyView(emptyView);*/
         // Set the adapter
         mAdapter = new ContactsCursorAdapter(getActivity().getApplicationContext(), null);
         mListView.setAdapter(mAdapter);
@@ -68,7 +64,7 @@ public class Contacts extends Fragment implements LoaderManager.LoaderCallbacks<
             @Override
             public Cursor runQuery(CharSequence charSequence) {
                 Log.e(TAG, "Calling runQuery");
-                Cursor c = DBExtended.dynamicSearchContactByEmail(getActivity().getContentResolver(), charSequence);
+                Cursor c = DBExtended.dynamicSearchContactByEmail(MainActivity.contentResolver, charSequence);
                 if (c.moveToFirst()) {
                     return c;
                 } else {
@@ -109,7 +105,7 @@ public class Contacts extends Fragment implements LoaderManager.LoaderCallbacks<
                         public boolean onQueryTextSubmit(String s) {
                             Toast.makeText(getActivity().getApplicationContext(), s, Toast.LENGTH_SHORT)
                                     .show();
-                            Cursor c = DBExtended.searchContactByEmail(getActivity().getContentResolver(), s);
+                            Cursor c = DBExtended.searchContactByEmail(MainActivity.contentResolver, s);
                             if (c != null) {
                                 Log.e(TAG, "C IS NOT NULL");
                                 Log.e(TAG, c.toString());
@@ -184,7 +180,6 @@ public class Contacts extends Fragment implements LoaderManager.LoaderCallbacks<
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         public void onFragmentInteraction(String frag, Bundle bundle);
     }
 
