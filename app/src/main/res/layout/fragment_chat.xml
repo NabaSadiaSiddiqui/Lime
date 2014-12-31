@@ -11,7 +11,13 @@
 
     <TextView
         android:id="@+id/emptyChatList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Empty View"/>
+        android:layout_width="@dimen/empty_view_speech_bubble_width"
+        android:layout_height="@dimen/empty_view_speech_bubble_height"
+        android:layout_gravity="center"
+        android:background="@drawable/message_icon"
+        android:text="@string/empty_view_no_chats"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/empty_view_speech_bubble_text"
+        android:textStyle="bold"
+        android:gravity="center"/>
 </FrameLayout>

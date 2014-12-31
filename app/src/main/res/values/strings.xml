@@ -108,4 +108,7 @@
         <item>#607d8b</item>
     </string-array>
 
+    <!-- Empty view speech bubble -->
+    <string name="empty_view_no_chats">You have no recent conversations.</string>
+
 </resources>

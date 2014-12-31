@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -43,11 +44,12 @@ public class Chat extends Fragment implements LoaderManager.LoaderCallbacks<Curs
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
         // Get the adapter for this fragment
         mAdapter = new ChatCursorAdapter(getActivity().getApplicationContext(), null);
+        // Get empty text view
+        TextView emptyView = (TextView) view.findViewById(R.id.emptyChatList);
         // Get the listview
         ListView mListView = (ListView) view.findViewById(R.id.chatslist);
         // Set empty view
-        TextView emptyText = (TextView) view.findViewById(R.id.emptyChatList);
-        mListView.setEmptyView(emptyText);
+        mListView.setEmptyView(emptyView);
         // Set the adapter
         mListView.setAdapter(mAdapter);
 

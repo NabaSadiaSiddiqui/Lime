@@ -56,4 +56,12 @@
     <dimen name="action_bar_icon_padding">5dip</dimen>
     <dimen name="action_bar_icon_padding_left">15dip</dimen>
 
+    <!-- Speech bubble for empty view -->
+    <dimen name="empty_view_speech_bubble_width">300dip</dimen>
+    <dimen name="empty_view_speech_bubble_height">100dip</dimen>
+    <dimen name="empty_view_speech_bubble_triangle_offset">50dip</dimen>
+    <dimen name="empty_view_speech_bubble_rectangle_offset">20dip</dimen>
+    <dimen name="empty_view_speech_bubble_radius">10dip</dimen>
+    <dimen name="empty_view_speech_bubble_text">20sp</dimen>
+
 </resources>
