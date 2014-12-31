@@ -73,9 +73,11 @@ public class Chat extends Fragment implements LoaderManager.LoaderCallbacks<Curs
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        //TODO: open conversation
+        // Open conversation
+        TextView contactEmailView = (TextView) view.findViewById(R.id.chat_id);
+        String contactEmail = contactEmailView.getText().toString();
         Bundle bundle = new Bundle();
-        bundle.putString(Constants.CONTACT_ID, String.valueOf(l));
+        bundle.putString(Constants.CONTACT_EMAIL, contactEmail);
         mListener.onFragmentInteraction(Constants.FRAG_CHAT, bundle);
     }
 

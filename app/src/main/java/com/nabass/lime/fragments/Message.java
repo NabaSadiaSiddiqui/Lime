@@ -31,6 +31,8 @@ public class Message extends ListFragment implements LoaderManager.LoaderCallbac
     private CursorAdapter mAdapter;
     private static Date now;
 
+
+
     public Message() {
         // Required empty public constructor
     }
@@ -62,7 +64,7 @@ public class Message extends ListFragment implements LoaderManager.LoaderCallbac
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         getListView().setLayoutParams(params);
         Bundle args = new Bundle();
-        args.putString(DBConstants.COL_EMAIL, mListener.getProfileEmail());
+        args.putString(DBConstants.COL_EMAIL, mListener.getContactEmail());
         getLoaderManager().initLoader(0, args, this);
     }
 
@@ -73,7 +75,7 @@ public class Message extends ListFragment implements LoaderManager.LoaderCallbac
     }
 
     public interface OnFragmentInteractionListener {
-        public String getProfileEmail();
+        public String getContactEmail();
     }
 
     public static String getDisplayTime(String datetime) {

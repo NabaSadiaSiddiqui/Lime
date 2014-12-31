@@ -151,8 +151,10 @@ public class Contacts extends Fragment implements LoaderManager.LoaderCallbacks<
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         // Open conversation
+        TextView contactEmailView = (TextView) view.findViewById(R.id.contact_id);
+        String contactEmail = contactEmailView.getText().toString();
         Bundle bundle = new Bundle();
-        bundle.putString(Constants.CONTACT_ID, String.valueOf(l));
+        bundle.putString(Constants.CONTACT_EMAIL, contactEmail);
         mListener.onFragmentInteraction(Constants.FRAG_CONTACTS, bundle);
     }
 

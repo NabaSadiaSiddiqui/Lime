@@ -186,10 +186,10 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
     @Override
     public void onFragmentInteraction(String frag, Bundle bundle) {
         if(frag.equals(Constants.FRAG_CHAT) || frag.equals(Constants.FRAG_CONTACTS)) {
-            // TODO: open the conversation
-            String profile_id = bundle.getString(Constants.CONTACT_ID);
+            // Open the conversation
+            String email = bundle.getString(Constants.CONTACT_EMAIL);
             Intent intent = new Intent(this, MessageActivity.class);
-            intent.putExtra(Constants.CONTACT_ID, profile_id);
+            intent.putExtra(Constants.CONTACT_EMAIL, email);
             startActivity(intent);
         }
     }
