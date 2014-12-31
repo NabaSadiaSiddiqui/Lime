@@ -28,7 +28,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:hint="@string/add_contact_email_hint"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:textColorHint="@android:color/tab_indicator_text"/>
 
         <TextView
             android:id="@+id/add_email_address_desc"
@@ -37,7 +38,8 @@
             android:layout_marginBottom="@dimen/add_vertical_space"
             android:paddingLeft="@dimen/add_horizontal_padding_desc"
             android:text="@string/add_contact_email_desc"
-            android:textColor="@color/add_contact_desc" />
+            android:textColor="@color/add_contact_desc"
+            android:textStyle="bold"/>
 
         <EditText
             android:id="@+id/add_pin"
@@ -45,7 +47,8 @@
             android:layout_height="wrap_content"
             android:enabled="false"
             android:hint="@string/add_contact_pin_hint"
-            android:inputType="number"/>
+            android:inputType="number"
+            android:textColorHint="@android:color/tab_indicator_text"/>
 
         <TextView
             android:id="@+id/add_pin_desc"
@@ -54,7 +57,8 @@
             android:layout_marginBottom="@dimen/add_vertical_space"
             android:paddingLeft="@dimen/add_horizontal_padding_desc"
             android:text="@string/add_contact_pin_desc"
-            android:textColor="@color/add_contact_desc" />
+            android:textColor="@color/add_contact_desc"
+            android:textStyle="bold"/>
 
         <EditText
             android:id="@+id/add_phone"
@@ -62,7 +66,8 @@
             android:layout_height="wrap_content"
             android:enabled="false"
             android:hint="@string/add_contact_phone_hint"
-            android:inputType="phone"/>
+            android:inputType="phone"
+            android:textColorHint="@android:color/tab_indicator_text"/>
 
         <TextView
             android:id="@+id/add_phone_desc"
@@ -71,7 +76,8 @@
             android:layout_marginBottom="@dimen/add_vertical_space"
             android:paddingLeft="@dimen/add_horizontal_padding_desc"
             android:text="@string/add_contact_phone_desc"
-            android:textColor="@color/add_contact_desc" />
+            android:textColor="@color/add_contact_desc"
+            android:textStyle="bold"/>
 
         <Button
             android:id="@+id/button_add_contact_ok"
@@ -80,7 +86,8 @@
             android:layout_marginBottom="@dimen/add_vertical_space"
             android:background="@color/add_contact_btn"
             android:text="@string/add_contact_button_ok"
-            android:textColor="@color/add_contact_btn_text" />
+            android:textColor="@color/add_contact_btn_text"
+            android:textStyle="bold"/>
 
         <Button
             android:id="@+id/button_add_contact_cancel"
@@ -88,7 +95,8 @@
             android:layout_height="wrap_content"
             android:background="@color/add_contact_btn"
             android:text="@string/add_contact_button_cancel"
-            android:textColor="@color/add_contact_btn_text"/>
+            android:textColor="@color/add_contact_btn_text"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 

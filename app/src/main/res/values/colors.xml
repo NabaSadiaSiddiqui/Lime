@@ -15,13 +15,13 @@
     <color name="profile_bg">#b2dfdb</color>
     <color name="profile_text_bg">#212121</color>
 
-    <color name="about_bg">#ff3d00</color>
-    <color name="about_tag">#ffe082</color>
+    <color name="about_bg">#7cb342</color>
+    <color name="about_tag">#ffffff</color>
 
-    <color name="add_contact_bg">#ffd180</color>
-    <color name="add_contact_btn">#6200ea</color>
-    <color name="add_contact_btn_text">#b388ff</color>
-    <color name="add_contact_desc">#3e2723</color>
-    <color name="add_contact_title">#6200ea</color>
+    <color name="add_contact_bg">#00acc1</color>
+    <color name="add_contact_btn">#ffffff</color>
+    <color name="add_contact_btn_text">#00acc1</color>
+    <color name="add_contact_desc">#ffffff</color>
+    <color name="add_contact_title">#ffffff</color>
 
 </resources>
