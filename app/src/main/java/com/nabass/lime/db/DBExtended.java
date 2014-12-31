@@ -16,7 +16,7 @@ public class DBExtended {
 
     public static void clearChatByEmail(ContentResolver cr, String email) {
         // Delete all messages for this person
-        String selection = DBConstants.COL_RECIPIENT_ID + "=?";
+        String selection = DBConstants.COL_SELF_ID + "=?";
         String[] selectionArgs = new String[] {email};
         cr.delete(DBConstants.DB_MSGS, selection, selectionArgs);
     }

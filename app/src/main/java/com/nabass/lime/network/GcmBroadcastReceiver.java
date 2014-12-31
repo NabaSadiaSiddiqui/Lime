@@ -12,6 +12,7 @@ import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.nabass.lime.Constants;
@@ -43,12 +44,16 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
 				sendNotification(Constants.NOTIFICATION_ERR_DEL, false);
 			}
             else {
+                Log.e(TAG, "Message received from GCM");
+                Log.e(TAG, "COL_OTHER_ID:"+intent.getStringExtra(DBConstants.COL_OTHER_ID));
+                Log.e(TAG, "COL_SELF_ID:"+intent.getStringExtra(DBConstants.COL_SELF_ID));
+                Log.e(TAG, "COL_MSG:"+intent.getStringExtra(DBConstants.COL_MSG));
 				ContentValues values = new ContentValues(4);
 				values.put(DBConstants.COL_MSG_TYPE,  DBConstants.MsgDirection.DIRECTION_INCOMING.ordinal());
 				values.put(DBConstants.COL_MSG, intent.getStringExtra(DBConstants.COL_MSG));
-				values.put(DBConstants.COL_SENDER_ID, intent.getStringExtra(DBConstants.COL_SENDER_ID));
-				values.put(DBConstants.COL_RECIPIENT_ID, intent.getStringExtra(DBConstants.COL_RECIPIENT_ID));
-                DBExtended.insertIncomingMsg(context.getContentResolver(), values, intent.getStringExtra(DBConstants.COL_RECIPIENT_ID));
+				values.put(DBConstants.COL_OTHER_ID, intent.getStringExtra(DBConstants.COL_OTHER_ID));
+				values.put(DBConstants.COL_SELF_ID, intent.getStringExtra(DBConstants.COL_SELF_ID));
+                DBExtended.insertIncomingMsg(context.getContentResolver(), values, intent.getStringExtra(DBConstants.COL_OTHER_ID));
 				
 				if (Init.isNotify()) {
 					sendNotification(Constants.NOTIFICAITON_NEW_MSG, true);

@@ -23,8 +23,8 @@ public class DBConstants {
      */
     public static final String TBL_MSGS = "messages";
     public static final String COL_MSG_TYPE = "type";
-    public static final String COL_SENDER_ID = "senderEmail";
-    public static final String COL_RECIPIENT_ID = "receiverEmail";
+    public static final String COL_OTHER_ID = "senderEmail";
+    public static final String COL_SELF_ID = "receiverEmail";
     public static final String COL_MSG = "message";
     public static final String COL_TIME = "time";
 

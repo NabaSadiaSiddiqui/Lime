@@ -93,8 +93,8 @@ public class Conversation extends Fragment implements LoaderManager.LoaderCallba
                     ContentValues values = new ContentValues(2);
                     values.put(DBConstants.COL_MSG_TYPE,  DBConstants.MsgDirection.DIRECTION_OUTGOING.ordinal());
                     values.put(DBConstants.COL_MSG, message);
-                    values.put(DBConstants.COL_RECIPIENT_ID, contactsEmail);
-                    values.put(DBConstants.COL_SENDER_ID, Init.getClientEmail());
+                    values.put(DBConstants.COL_SELF_ID, contactsEmail);
+                    values.put(DBConstants.COL_OTHER_ID, Init.getClientEmail());
                     DBExtended.insertOutgoingMsg(MainActivity.contentResolver, values, contactsEmail);
                     //TODO: sleep process for 100 ms so that vertical orientation of messages view is fine
                     try {
@@ -121,9 +121,9 @@ public class Conversation extends Fragment implements LoaderManager.LoaderCallba
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String receiverEmail = args.getString(DBConstants.COL_EMAIL);
-        String senderEmail = Init.getClientEmail();
-        String selection = DBConstants.COL_SENDER_ID + " = ? and " + DBConstants.COL_RECIPIENT_ID + " = ? ";
+        String senderEmail = args.getString(DBConstants.COL_EMAIL);
+        String receiverEmail = Init.getClientEmail();
+        String selection = DBConstants.COL_OTHER_ID + " = ? and " + DBConstants.COL_SELF_ID + " = ? ";
         String[] selectionArgs = new String[] {senderEmail, receiverEmail};
         String sort = DBConstants.COL_TIME + " ASC";
         return new CursorLoader(getActivity(), DBConstants.DB_MSGS, null, selection, selectionArgs, sort);

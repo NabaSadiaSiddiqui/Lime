@@ -44,8 +44,8 @@ public class MessagesTest extends ProviderTestCase2 {
         ContentValues values = new ContentValues(2);
         values.put(DBConstants.COL_MSG_TYPE, DBConstants.MsgDirection.DIRECTION_INCOMING.ordinal());
         values.put(DBConstants.COL_MSG, msg);
-        values.put(DBConstants.COL_SENDER_ID, email_from);
-        values.put(DBConstants.COL_RECIPIENT_ID, email_to);
+        values.put(DBConstants.COL_OTHER_ID, email_from);
+        values.put(DBConstants.COL_SELF_ID, email_to);
         Uri mUri = resolve.insert(DBConstants.DB_MSGS, values);
         assertNotNull(mUri);
     }
@@ -60,8 +60,8 @@ public class MessagesTest extends ProviderTestCase2 {
         ContentValues values = new ContentValues(2);
         values.put(DBConstants.COL_MSG_TYPE, DBConstants.MsgDirection.DIRECTION_INCOMING.ordinal());
         values.put(DBConstants.COL_MSG, msg);
-        values.put(DBConstants.COL_SENDER_ID, email_from);
-        values.put(DBConstants.COL_RECIPIENT_ID, email_to);
+        values.put(DBConstants.COL_OTHER_ID, email_from);
+        values.put(DBConstants.COL_SELF_ID, email_to);
         Uri mUri = resolve.insert(DBConstants.DB_MSGS, values);
         // Query
         String[] projection = {DBConstants.COL_MSG};
@@ -83,8 +83,8 @@ public class MessagesTest extends ProviderTestCase2 {
         ContentValues values = new ContentValues(2);
         values.put(DBConstants.COL_MSG_TYPE, DBConstants.MsgDirection.DIRECTION_INCOMING.ordinal());
         values.put(DBConstants.COL_MSG, msg);
-        values.put(DBConstants.COL_SENDER_ID, email_from);
-        values.put(DBConstants.COL_RECIPIENT_ID, email_to);
+        values.put(DBConstants.COL_OTHER_ID, email_from);
+        values.put(DBConstants.COL_SELF_ID, email_to);
         Uri mUri = resolve.insert(DBConstants.DB_MSGS, values);
         // Delete
         String where = DBConstants.COL_MSG + "=?";
@@ -109,14 +109,14 @@ public class MessagesTest extends ProviderTestCase2 {
         ContentValues values = new ContentValues(2);
         values.put(DBConstants.COL_MSG_TYPE, DBConstants.MsgDirection.DIRECTION_INCOMING.ordinal());
         values.put(DBConstants.COL_MSG, msg);
-        values.put(DBConstants.COL_SENDER_ID, email_from);
-        values.put(DBConstants.COL_RECIPIENT_ID, email_to);
+        values.put(DBConstants.COL_OTHER_ID, email_from);
+        values.put(DBConstants.COL_SELF_ID, email_to);
         Uri mUri = resolve.insert(DBConstants.DB_MSGS, values);
         // Update
         String msg_new = "Hello World Again";
         ContentValues valuesUp = new ContentValues(2);
         valuesUp.put(DBConstants.COL_MSG, msg_new);
-        String whereUp = DBConstants.COL_SENDER_ID + "=? AND " + DBConstants.COL_RECIPIENT_ID + "=?";
+        String whereUp = DBConstants.COL_OTHER_ID + "=? AND " + DBConstants.COL_SELF_ID + "=?";
         String[] whereArgsUp = {email_from, email_to};
         int res = resolve.update(DBConstants.DB_MSGS, valuesUp, whereUp, whereArgsUp);
         assertNotSame(0, res);

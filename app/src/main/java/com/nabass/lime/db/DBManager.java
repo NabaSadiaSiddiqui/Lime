@@ -22,8 +22,8 @@ public class DBManager extends SQLiteOpenHelper {
                 + "_id integer primary key autoincrement, "
                 + DBConstants.COL_MSG_TYPE +" integer, "
                 + DBConstants.COL_MSG +" text, "
-                + DBConstants.COL_SENDER_ID +" text, "
-                + DBConstants.COL_RECIPIENT_ID +" text, "
+                + DBConstants.COL_OTHER_ID +" text, "
+                + DBConstants.COL_SELF_ID +" text, "
                 + DBConstants.COL_TIME 			  +" datetime default current_timestamp);");
 
         db.execSQL("create table " + DBConstants.TBL_CONTACTS + " ("

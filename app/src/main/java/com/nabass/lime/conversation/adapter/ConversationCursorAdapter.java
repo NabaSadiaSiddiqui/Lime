@@ -63,7 +63,7 @@ public class ConversationCursorAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         ViewHolder holder = (ViewHolder) view.getTag();
-        String email = cursor.getString(cursor.getColumnIndex(DBConstants.COL_SENDER_ID));
+        String email = cursor.getString(cursor.getColumnIndex(DBConstants.COL_OTHER_ID));
         holder.text1.setText(getTime(cursor.getString(cursor.getColumnIndex(DBConstants.COL_TIME))));
         holder.text2.setText(cursor.getString(cursor.getColumnIndex(DBConstants.COL_MSG)));
     }
