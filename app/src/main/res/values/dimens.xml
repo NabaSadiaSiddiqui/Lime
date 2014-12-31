@@ -64,4 +64,8 @@
     <dimen name="empty_view_speech_bubble_radius">10dip</dimen>
     <dimen name="empty_view_speech_bubble_text">20sp</dimen>
 
+    <!-- Empty view contacts list -->
+    <dimen name="empty_view_no_contacts_text">20sp</dimen>
+    <dimen name="empty_view_no_contacts_padding">10dip</dimen>
+
 </resources>

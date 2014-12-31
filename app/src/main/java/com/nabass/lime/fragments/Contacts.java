@@ -54,9 +54,15 @@ public class Contacts extends Fragment implements LoaderManager.LoaderCallbacks<
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_contacts, container, false);
+        // Get the list view
         ListView mListView = (ListView) view.findViewById(R.id.contacts);
-        // Set the adapter
+        // Get the adapter
         mAdapter = new ContactsCursorAdapter(getActivity().getApplicationContext(), null);
+        // Get empty text view
+        TextView emptyView = (TextView) view.findViewById(R.id.emptyContactsList);
+        // Set empty view
+        mListView.setEmptyView(emptyView);
+        // Set the adapter
         mListView.setAdapter(mAdapter);
 
         // Define filter query provider which will run a query on a given character sequence

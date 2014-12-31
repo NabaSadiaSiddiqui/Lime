@@ -8,5 +8,16 @@
         android:id="@+id/contacts"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    
+    <TextView
+        android:id="@+id/emptyContactsList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/empty_view_no_contacts_padding"
+        android:gravity="center"
+        android:text="@string/empty_view_no_contacts"
+        android:textColor="@android:color/primary_text_light_nodisable"
+        android:textSize="@dimen/empty_view_no_contacts_text"
+        android:textAllCaps="true"/>
 
 </FrameLayout>

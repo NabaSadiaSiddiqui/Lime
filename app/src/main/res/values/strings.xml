@@ -110,5 +110,7 @@
 
     <!-- Empty view speech bubble -->
     <string name="empty_view_no_chats">You have no recent conversations.</string>
-
+    
+    <!-- Empty view contacts list -->
+    <string name="empty_view_no_contacts">You have no contacts.</string>
 </resources>
