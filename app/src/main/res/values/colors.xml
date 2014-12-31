@@ -3,7 +3,7 @@
     <color name="nav_list_bg">#b71c1c</color>
     <color name="nav_list_bg_pressed">#ff8a80</color>
     <color name="nav_list_item_title">#FFFFFF</color>
-    <color name="nav_list_divider">#00e676</color>
+    <color name="nav_list_divider">#ffffff</color>
 
     <color name="chat_text">#000000</color>
     <color name="chat_new_msg">#1b5e20</color>
