@@ -22,9 +22,13 @@ public interface Constants {
     // Fragment names --> Used in OnFragmentInteraction method
     public static final String FRAG_CHAT = "frag_chat";
     public static final String FRAG_CONTACTS = "frag_contacts";
-    public static final String FRAG_CHAT_ACTIONS = "frag_chat_actions";
 
     public static final String ERR_INVALID_EMAIL = "Email is not valid";
+    public static final String ERR_MSG_DELIVERY_FAILED = "Could not send the message";
+
+    public static final String NOTIFICATION_ERR_SEND = "Error sending message";
+    public static final String NOTIFICATION_ERR_DEL = "Messages deleted on GCM server";
+    public static final String NOTIFICAITON_NEW_MSG = "You have a new message on Lime";
 
     public static final String TYPE_ADD_EMAIL = "email";
     public static final String TYPE_ADD_PIN = "pin";

@@ -80,4 +80,20 @@ public class DBExtended {
             throw new SQLException(TAG + " has an exception");
         }
     }
+
+    public static void insertOutgoingMsg(ContentResolver cr, ContentValues values) {
+        cr.insert(DBConstants.DB_MSGS, values);
+    }
+
+    public static void insertIncomingMsg(ContentResolver cr, ContentValues values) {
+        cr.insert(DBConstants.DB_MSGS, values);
+    }
+
+    public static void resetFreshMsgCount(ContentResolver cr, String email) {
+        ContentValues values = new ContentValues(1);
+        values.put(DBConstants.COL_MSG_FRESH, 0);
+        String selection = DBConstants.COL_EMAIL + " = ? ";
+        String[] selectionArgs = new String[] {email};
+        cr.update(DBConstants.DB_CONTACTS, values, selection, selectionArgs);
+    }
 }

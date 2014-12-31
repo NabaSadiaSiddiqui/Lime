@@ -14,10 +14,12 @@ import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.nabass.lime.Constants;
 import com.nabass.lime.Init;
 import com.nabass.lime.MainActivity;
 import com.nabass.lime.R;
 import com.nabass.lime.db.DBConstants;
+import com.nabass.lime.db.DBExtended;
 
 public class GcmBroadcastReceiver extends BroadcastReceiver {
 	
@@ -33,27 +35,29 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
 		try {
 			GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(context);
 			String messageType = gcm.getMessageType(intent);
-			if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
-				sendNotification("Send error", false);
-			} else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED.equals(messageType)) {
-				sendNotification("Deleted messages on server", false);
-			} else {
-				String msg = intent.getStringExtra(DBConstants.COL_MSG);
-				String senderEmail = intent.getStringExtra(DBConstants.COL_SENDER_ID);
-				String receiverEmail = intent.getStringExtra(DBConstants.COL_RECIPIENT_ID);
-				ContentValues values = new ContentValues(2);
+
+				if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
+				sendNotification(Constants.NOTIFICATION_ERR_SEND, false);
+			}
+            else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED.equals(messageType)) {
+				sendNotification(Constants.NOTIFICATION_ERR_DEL, false);
+			}
+            else {
+				ContentValues values = new ContentValues(4);
 				values.put(DBConstants.COL_MSG_TYPE,  DBConstants.MsgDirection.DIRECTION_INCOMING.ordinal());
-				values.put(DBConstants.COL_MSG, msg);
-				values.put(DBConstants.COL_SENDER_ID, senderEmail);
-				values.put(DBConstants.COL_RECIPIENT_ID, receiverEmail);
-				context.getContentResolver().insert(DBConstants.DB_MSGS, values);
+				values.put(DBConstants.COL_MSG, intent.getStringExtra(DBConstants.COL_MSG));
+				values.put(DBConstants.COL_SENDER_ID, intent.getStringExtra(DBConstants.COL_SENDER_ID));
+				values.put(DBConstants.COL_RECIPIENT_ID, intent.getStringExtra(DBConstants.COL_RECIPIENT_ID));
+                DBExtended.insertIncomingMsg(context.getContentResolver(), values);
 				
 				if (Init.isNotify()) {
-					sendNotification("New message", true);
+					sendNotification(Constants.NOTIFICAITON_NEW_MSG, true);
 				}
 			}
-			setResultCode(Activity.RESULT_OK);
-		} finally {
+
+            setResultCode(Activity.RESULT_OK);
+
+        } finally {
 			mWakeLock.release();
 		}
 	}

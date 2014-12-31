@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.nabass.lime.db.DBConstants;
+import com.nabass.lime.db.DBExtended;
 import com.nabass.lime.fragments.EditContact;
 import com.nabass.lime.fragments.Message;
 import com.nabass.lime.network.ServerUtilities;
@@ -78,36 +78,35 @@ public class MessageActivity extends FragmentActivity implements Message.OnFragm
         return profileEmail;
     }
 
-    private void send(final String txt) {
+    private void send(final String message) {
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... params) {
-                String msg = "";
                 try {
                     ContentValues values = new ContentValues(2);
                     values.put(DBConstants.COL_MSG_TYPE,  DBConstants.MsgDirection.DIRECTION_OUTGOING.ordinal());
-                    values.put(DBConstants.COL_MSG, txt);
+                    values.put(DBConstants.COL_MSG, message);
                     values.put(DBConstants.COL_RECIPIENT_ID, profileEmail);
                     values.put(DBConstants.COL_SENDER_ID, Init.getClientEmail());
-                    getContentResolver().insert(DBConstants.DB_MSGS, values);
+                    DBExtended.insertOutgoingMsg(getContentResolver(), values);
                     //TODO: sleep process for 100 ms so that vertical orientation of messages view is fine
                     try {
                         Thread.sleep(3000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    ServerUtilities.send(txt, profileEmail);
+                    ServerUtilities.send(message, profileEmail);
 
                 } catch (IOException ex) {
-                    msg = "Message could not be sent";
+                    return Constants.ERR_MSG_DELIVERY_FAILED;
                 }
-                return msg;
+                return Constants.STR_NULL;
             }
 
             @Override
-            protected void onPostExecute(String msg) {
-                if (!TextUtils.isEmpty(msg)) {
-                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+            protected void onPostExecute(String status) {
+                if(status.equals(Constants.ERR_MSG_DELIVERY_FAILED)) {
+                    Toast.makeText(getApplicationContext(), status, Toast.LENGTH_LONG).show();
                 }
             }
         }.execute(null, null, null);
@@ -115,9 +114,7 @@ public class MessageActivity extends FragmentActivity implements Message.OnFragm
 
     @Override
     protected void onPause() {
-        ContentValues values = new ContentValues(1);
-        values.put(DBConstants.COL_MSG_FRESH, 0);
-        getContentResolver().update(Uri.withAppendedPath(DBConstants.DB_CONTACTS, profileId), values, null, null);
+        DBExtended.resetFreshMsgCount(getContentResolver(), profileEmail);
         super.onPause();
     }
 
