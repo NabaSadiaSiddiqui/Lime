@@ -10,7 +10,7 @@
 
     <color name="contact_text">#795548</color>
     <color name="contact_border">#ffccbc</color>
-    <color name="contact_bg">#b9f6ca</color>
+    <color name="contact_bg">#f1f8e9</color>
 
     <color name="profile_bg">#b2dfdb</color>
     <color name="profile_text_bg">#212121</color>
