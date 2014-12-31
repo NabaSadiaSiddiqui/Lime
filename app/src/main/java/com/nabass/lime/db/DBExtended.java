@@ -16,7 +16,7 @@ public class DBExtended {
 
     public static void clearChatByEmail(ContentResolver cr, String email) {
         // Delete all messages for this person
-        String selection = DBConstants.COL_SELF_ID + "=?";
+        String selection = DBConstants.COL_OTHER_ID + "=?";
         String[] selectionArgs = new String[] {email};
         cr.delete(DBConstants.DB_MSGS, selection, selectionArgs);
     }
@@ -24,7 +24,7 @@ public class DBExtended {
     public static void deleteChatByEmail(ContentResolver cr, String email) {
         clearChatByEmail(cr, email);
 
-        // Update total for that recipient in the contacts table
+        // Update total for other in the contacts table
         ContentValues values = new ContentValues(1);
         values.put(DBConstants.COL_MSG_TOTAL, 0);
         String selection = DBConstants.COL_EMAIL + "=?";
