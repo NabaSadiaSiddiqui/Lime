@@ -1,13 +1,10 @@
 package com.nabass.lime.db;
 
-
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.net.Uri;
 import android.util.Log;
-import android.widget.Toast;
 
 public class DBExtended {
 
@@ -15,18 +12,6 @@ public class DBExtended {
 
     public DBExtended() {
 
-    }
-
-    private static String getIdByEmail(ContentResolver cr, String email) {
-        String[] projection = new String[] {DBConstants.COL_ID};
-        String where = DBConstants.COL_EMAIL +"=?";
-        String[] selectionArgs = new String[] {email};
-        Cursor c = cr.query(DBConstants.DB_CONTACTS, projection, where, selectionArgs, null);
-        String id=null;
-        if(c.moveToFirst()) {
-            id = c.getString(c.getColumnIndex(DBConstants.COL_ID));
-        }
-        return id;
     }
 
     public static void clearChatByEmail(ContentResolver cr, String email) {
@@ -81,12 +66,15 @@ public class DBExtended {
         }
     }
 
-    public static void insertOutgoingMsg(ContentResolver cr, ContentValues values) {
+    public static void insertOutgoingMsg(ContentResolver cr, ContentValues values, String email) {
         cr.insert(DBConstants.DB_MSGS, values);
+        incrTotalMsgCount(cr, email);
     }
 
-    public static void insertIncomingMsg(ContentResolver cr, ContentValues values) {
+    public static void insertIncomingMsg(ContentResolver cr, ContentValues values, String email) {
         cr.insert(DBConstants.DB_MSGS, values);
+        incrFreshMsgCount(cr, email);
+        incrTotalMsgCount(cr, email);
     }
 
     public static void resetFreshMsgCount(ContentResolver cr, String email) {
@@ -96,4 +84,42 @@ public class DBExtended {
         String[] selectionArgs = new String[] {email};
         cr.update(DBConstants.DB_CONTACTS, values, selection, selectionArgs);
     }
+
+    private static void incrFreshMsgCount(ContentResolver cr, String email) {
+        String[] projection = new String[] {DBConstants.COL_MSG_FRESH};
+        String selection = DBConstants.COL_EMAIL + " = ?";
+        String[] selectionArgs = new String[] {email};
+
+        Cursor c = cr.query(DBConstants.DB_CONTACTS, projection, selection, selectionArgs, null);
+        if(c!=null) {
+            if(c.moveToFirst()) {
+                int new_count = c.getInt(0) + 1;
+
+                ContentValues values = new ContentValues(1);
+                values.put(DBConstants.COL_MSG_FRESH, new_count);
+
+                cr.update(DBConstants.DB_CONTACTS, values, selection, selectionArgs);
+            }
+            c.close();
+        }
+    }
+
+    private static void incrTotalMsgCount(ContentResolver cr, String email) {
+        String[] projection = new String[] {DBConstants.COL_MSG_TOTAL};
+        String selection = DBConstants.COL_EMAIL + " = ? ";
+        String[] selectionArgs = new String[] {email};
+
+        Cursor c = cr.query(DBConstants.DB_CONTACTS, projection, selection, selectionArgs, null);
+        if(c!=null) {
+            if(c.moveToFirst()) {
+                int new_total = c.getInt(0) + 1;
+
+                ContentValues values = new ContentValues(1);
+                values.put(DBConstants.COL_MSG_TOTAL, new_total);
+
+                cr.update(DBConstants.DB_CONTACTS, values, selection, selectionArgs);
+            }
+        }
+    }
+
 }

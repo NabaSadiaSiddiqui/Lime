@@ -74,7 +74,7 @@ public class MessageActivity extends FragmentActivity implements Message.OnFragm
                     values.put(DBConstants.COL_MSG, message);
                     values.put(DBConstants.COL_RECIPIENT_ID, toEmail);
                     values.put(DBConstants.COL_SENDER_ID, Init.getClientEmail());
-                    DBExtended.insertOutgoingMsg(getContentResolver(), values);
+                    DBExtended.insertOutgoingMsg(getContentResolver(), values, toEmail);
                     //TODO: sleep process for 100 ms so that vertical orientation of messages view is fine
                     try {
                         Thread.sleep(3000);

@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.util.Log;
 
 public class CustomCP extends ContentProvider {
 
@@ -39,16 +38,8 @@ public class CustomCP extends ContentProvider {
             case DBConstants.ALL_MSGS:
                 qb.setTables(DBConstants.TBL_MSGS);
                 break;
-            case DBConstants.ONE_MSG:
-                qb.setTables(DBConstants.TBL_MSGS);
-                qb.appendWhere(DBConstants.COL_ID + " = " + uri.getLastPathSegment());
-                break;
             case DBConstants.ALL_CONTACTS:
                 qb.setTables(DBConstants.TBL_CONTACTS);
-                break;
-            case DBConstants.ONE_CONTACT:
-                qb.setTables(DBConstants.TBL_CONTACTS);
-                qb.appendWhere(DBConstants.COL_ID + " = " + uri.getLastPathSegment());
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
@@ -67,14 +58,6 @@ public class CustomCP extends ContentProvider {
         switch(DBConstants.sURIMatcher.match(uri)) {
             case DBConstants.ALL_MSGS:
                 id = db.insertOrThrow(DBConstants.TBL_MSGS, null, values);
-                if(values.get(DBConstants.COL_MSG_TYPE).equals(DBConstants.MsgDirection.DIRECTION_INCOMING.ordinal())) {
-                    Log.e(TAG, "Updating count when a message is received");
-                    db.execSQL("update " + DBConstants.TBL_CONTACTS + " set count = count+1 where email = ?", new Object[]{values.get(DBConstants.COL_RECIPIENT_ID)});
-                }
-                Log.e(TAG, "Updating total number of messages");
-                db.execSQL("update " + DBConstants.TBL_CONTACTS + " set total = total+1 where email = ?", new Object[]{values.get(DBConstants.COL_RECIPIENT_ID)});
-                getContext().getContentResolver().notifyChange(DBConstants.DB_CONTACTS, null);
-
                 break;
             case DBConstants.ALL_CONTACTS:
                 id = db.insertOrThrow(DBConstants.TBL_CONTACTS, null, values);
@@ -97,17 +80,7 @@ public class CustomCP extends ContentProvider {
             case DBConstants.ALL_MSGS:
                 count = db.update(DBConstants.TBL_MSGS, values, selection, selectionArgs);
                 break;
-            case DBConstants.ONE_MSG:
-                selection = DBConstants.COL_ID + " = ?";
-                selectionArgs = new String[]{uri.getLastPathSegment()};
-                count = db.update(DBConstants.TBL_MSGS, values, selection, selectionArgs);
-                break;
             case DBConstants.ALL_CONTACTS:
-                count = db.update(DBConstants.TBL_CONTACTS, values, selection, selectionArgs);
-                break;
-            case DBConstants.ONE_CONTACT:
-                selection = DBConstants.COL_ID + " = ?";
-                selectionArgs = new String[]{uri.getLastPathSegment()};
                 count = db.update(DBConstants.TBL_CONTACTS, values, selection, selectionArgs);
                 break;
             default:
@@ -125,23 +98,9 @@ public class CustomCP extends ContentProvider {
         int count;
         switch(DBConstants.sURIMatcher.match(uri)) {
             case DBConstants.ALL_MSGS:
-                Log.e(TAG, "Deleting all messages");
-                count = db.delete(DBConstants.TBL_MSGS, selection, selectionArgs);
-                break;
-            case DBConstants.ONE_MSG:
-                Log.e(TAG, "Deleting message per contact");
-                selection = DBConstants.COL_ID + " = ?";
-                selectionArgs = new String[]{uri.getLastPathSegment()};
                 count = db.delete(DBConstants.TBL_MSGS, selection, selectionArgs);
                 break;
             case DBConstants.ALL_CONTACTS:
-                Log.e(TAG, "Deleting all contacts");
-                count = db.delete(DBConstants.TBL_CONTACTS, selection, selectionArgs);
-                break;
-            case DBConstants.ONE_CONTACT:
-                Log.e(TAG, "Deleting one contact");
-                selection = DBConstants.COL_ID + " = ?";
-                selectionArgs = new String[]{uri.getLastPathSegment()};
                 count = db.delete(DBConstants.TBL_CONTACTS, selection, selectionArgs);
                 break;
             default:

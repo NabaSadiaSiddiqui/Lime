@@ -48,7 +48,7 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
 				values.put(DBConstants.COL_MSG, intent.getStringExtra(DBConstants.COL_MSG));
 				values.put(DBConstants.COL_SENDER_ID, intent.getStringExtra(DBConstants.COL_SENDER_ID));
 				values.put(DBConstants.COL_RECIPIENT_ID, intent.getStringExtra(DBConstants.COL_RECIPIENT_ID));
-                DBExtended.insertIncomingMsg(context.getContentResolver(), values);
+                DBExtended.insertIncomingMsg(context.getContentResolver(), values, intent.getStringExtra(DBConstants.COL_RECIPIENT_ID));
 				
 				if (Init.isNotify()) {
 					sendNotification(Constants.NOTIFICAITON_NEW_MSG, true);

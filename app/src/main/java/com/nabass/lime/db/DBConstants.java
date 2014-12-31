@@ -31,17 +31,13 @@ public class DBConstants {
      * Build tree of Uri matcher objects
      */
     static final int ALL_MSGS = 1;
-    static final int ONE_MSG = 2;
-    static final int ALL_CONTACTS = 3;
-    static final int ONE_CONTACT = 4;
+    static final int ALL_CONTACTS = 2;
 
     static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
         DBConstants.sURIMatcher.addURI(DBConstants.CONTENT_PROVIDER, "messages", DBConstants.ALL_MSGS);
-        DBConstants.sURIMatcher.addURI(DBConstants.CONTENT_PROVIDER, "messages/#", DBConstants.ONE_MSG);
         DBConstants.sURIMatcher.addURI(DBConstants.CONTENT_PROVIDER, "contacts", DBConstants.ALL_CONTACTS);
-        DBConstants.sURIMatcher.addURI(DBConstants.CONTENT_PROVIDER, "contacts/#", DBConstants.ONE_CONTACT);
     }
 
     public enum MsgDirection {
