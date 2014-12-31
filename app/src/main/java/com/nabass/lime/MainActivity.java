@@ -24,6 +24,7 @@ import com.nabass.lime.fragments.About;
 import com.nabass.lime.fragments.AddContact;
 import com.nabass.lime.fragments.Chat;
 import com.nabass.lime.fragments.Contacts;
+import com.nabass.lime.fragments.Conversation;
 import com.nabass.lime.fragments.Profile;
 import com.nabass.lime.fragments.Settings;
 import com.nabass.lime.nav.drawer.adapter.NavDrawerListAdapter;
@@ -187,10 +188,15 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
     public void onFragmentInteraction(String frag, Bundle bundle) {
         if(frag.equals(Constants.FRAG_CHAT) || frag.equals(Constants.FRAG_CONTACTS)) {
             // Open the conversation
-            String email = bundle.getString(Constants.CONTACT_EMAIL);
+            /*String email = bundle.getString(Constants.CONTACT_EMAIL);
             Intent intent = new Intent(this, MessageActivity.class);
             intent.putExtra(Constants.CONTACT_EMAIL, email);
-            startActivity(intent);
+            startActivity(intent);*/
+
+            Fragment fragment = Conversation.newInstance(bundle);
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.frame_container, fragment).commit();
         }
     }
 

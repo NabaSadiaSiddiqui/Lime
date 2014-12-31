@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.nabass.lime.R;
 import com.nabass.lime.db.DBConstants;
 
-import static com.nabass.lime.fragments.Message.getDisplayTime;
+import static com.nabass.lime.Util.getTime;
 
 public class ConversationCursorAdapter extends CursorAdapter {
 
@@ -64,7 +64,7 @@ public class ConversationCursorAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         ViewHolder holder = (ViewHolder) view.getTag();
         String email = cursor.getString(cursor.getColumnIndex(DBConstants.COL_SENDER_ID));
-        holder.text1.setText(getDisplayTime(cursor.getString(cursor.getColumnIndex(DBConstants.COL_TIME))));
+        holder.text1.setText(getTime(cursor.getString(cursor.getColumnIndex(DBConstants.COL_TIME))));
         holder.text2.setText(cursor.getString(cursor.getColumnIndex(DBConstants.COL_MSG)));
     }
 

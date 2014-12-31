@@ -5,10 +5,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.CursorAdapter;
 
 import com.nabass.lime.widgets.CircleImageView;
 
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Util {
 
@@ -37,6 +42,22 @@ public class Util {
 
         protected void onPostExecute(Bitmap result) {
             bmImage.setImageBitmap(result);
+        }
+    }
+
+    public static String getTime(String datetime) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        DateFormat[] df = new DateFormat[] { DateFormat.getDateInstance(), DateFormat.getTimeInstance()};
+        Date now = new Date();
+
+        try {
+            Date dt = sdf.parse(datetime);
+            if (now.getYear()==dt.getYear() && now.getMonth()==dt.getMonth() && now.getDate()==dt.getDate()) {
+                return df[1].format(dt);
+            }
+            return df[0].format(dt);
+        } catch (ParseException e) {
+            return datetime;
         }
     }
 }
