@@ -30,20 +30,20 @@ public class DBConstants {
     /*
      * Build tree of Uri matcher objects
      */
-    static final int ALL_MSGS = 1;
-    static final int ALL_CONTACTS = 2;
+    static final int MSG_URI = 1;
+    static final int CONTACTS_URI = 2;
 
     static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
-        DBConstants.sURIMatcher.addURI(DBConstants.CONTENT_PROVIDER, "messages", DBConstants.ALL_MSGS);
-        DBConstants.sURIMatcher.addURI(DBConstants.CONTENT_PROVIDER, "contacts", DBConstants.ALL_CONTACTS);
+        DBConstants.sURIMatcher.addURI(DBConstants.CONTENT_PROVIDER, TBL_MSGS, DBConstants.MSG_URI);
+        DBConstants.sURIMatcher.addURI(DBConstants.CONTENT_PROVIDER, TBL_CONTACTS, DBConstants.CONTACTS_URI);
     }
 
     public enum MsgDirection {
         DIRECTION_INCOMING, DIRECTION_OUTGOING
     }
 
-    public static final Uri DB_MSGS = Uri.parse("content://" + CONTENT_PROVIDER + "/messages");
-    public static final Uri DB_CONTACTS = Uri.parse("content://" + CONTENT_PROVIDER + "/contacts");
+    public static final Uri DB_MSGS = Uri.parse("content://" + CONTENT_PROVIDER + "/" + TBL_MSGS);
+    public static final Uri DB_CONTACTS = Uri.parse("content://" + CONTENT_PROVIDER + "/" + TBL_CONTACTS);
 }

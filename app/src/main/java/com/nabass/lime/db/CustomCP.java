@@ -35,16 +35,15 @@ public class CustomCP extends ContentProvider {
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
         switch(DBConstants.sURIMatcher.match(uri)) {
-            case DBConstants.ALL_MSGS:
+            case DBConstants.MSG_URI:
                 qb.setTables(DBConstants.TBL_MSGS);
                 break;
-            case DBConstants.ALL_CONTACTS:
+            case DBConstants.CONTACTS_URI:
                 qb.setTables(DBConstants.TBL_CONTACTS);
                 break;
             default:
-                throw new IllegalArgumentException("Unsupported URI: " + uri);
+                break;
         }
-
         Cursor c = qb.query(db, projection, selection, selectionArgs, null, null, sortOrder);
         c.setNotificationUri(getContext().getContentResolver(), uri);
         return c;
@@ -56,16 +55,16 @@ public class CustomCP extends ContentProvider {
 
         long id;
         switch(DBConstants.sURIMatcher.match(uri)) {
-            case DBConstants.ALL_MSGS:
+            case DBConstants.MSG_URI:
                 id = db.insertOrThrow(DBConstants.TBL_MSGS, null, values);
                 break;
-            case DBConstants.ALL_CONTACTS:
+            case DBConstants.CONTACTS_URI:
                 id = db.insertOrThrow(DBConstants.TBL_CONTACTS, null, values);
                 break;
             default:
-                throw new IllegalArgumentException("Unsupported URI: " + uri);
+                id = -1;
+                break;
         }
-
         Uri insertUri = ContentUris.withAppendedId(uri, id);
         getContext().getContentResolver().notifyChange(insertUri, null);
         return insertUri;
@@ -77,16 +76,16 @@ public class CustomCP extends ContentProvider {
 
         int count;
         switch(DBConstants.sURIMatcher.match(uri)) {
-            case DBConstants.ALL_MSGS:
+            case DBConstants.MSG_URI:
                 count = db.update(DBConstants.TBL_MSGS, values, selection, selectionArgs);
                 break;
-            case DBConstants.ALL_CONTACTS:
+            case DBConstants.CONTACTS_URI:
                 count = db.update(DBConstants.TBL_CONTACTS, values, selection, selectionArgs);
                 break;
             default:
-                throw new IllegalArgumentException("Unsupported URI: " + uri);
+                count = 0;
+                break;
         }
-
         getContext().getContentResolver().notifyChange(uri, null);
         return count;
     }
@@ -97,16 +96,16 @@ public class CustomCP extends ContentProvider {
 
         int count;
         switch(DBConstants.sURIMatcher.match(uri)) {
-            case DBConstants.ALL_MSGS:
+            case DBConstants.MSG_URI:
                 count = db.delete(DBConstants.TBL_MSGS, selection, selectionArgs);
                 break;
-            case DBConstants.ALL_CONTACTS:
+            case DBConstants.CONTACTS_URI:
                 count = db.delete(DBConstants.TBL_CONTACTS, selection, selectionArgs);
                 break;
             default:
-                throw new IllegalArgumentException("Unsupported URI: " + uri);
+                count = 0;
+                break;
         }
-
         getContext().getContentResolver().notifyChange(uri, null);
         return count;
     }
