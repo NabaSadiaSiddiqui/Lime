@@ -41,11 +41,16 @@ public class Chat extends Fragment implements LoaderManager.LoaderCallbacks<Curs
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
-        // Set the adapter
-        ListView mListView = (ListView) view.findViewById(R.id.chatslist);
+        // Get the adapter for this fragment
         mAdapter = new ChatCursorAdapter(getActivity().getApplicationContext(), null);
-
+        // Get the listview
+        ListView mListView = (ListView) view.findViewById(R.id.chatslist);
+        // Set empty view
+        TextView emptyText = (TextView) view.findViewById(R.id.emptyChatList);
+        mListView.setEmptyView(emptyText);
+        // Set the adapter
         mListView.setAdapter(mAdapter);
+
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener((AdapterView.OnItemClickListener) this);
         mListView.setOnItemLongClickListener((AdapterView.OnItemLongClickListener) this);
