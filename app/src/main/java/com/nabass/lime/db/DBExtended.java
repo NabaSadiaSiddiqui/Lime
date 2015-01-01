@@ -4,10 +4,9 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.util.Log;
-import android.widget.Toast;
 
+import com.nabass.lime.Constants;
 import com.nabass.lime.Init;
 
 public class DBExtended {
@@ -23,6 +22,9 @@ public class DBExtended {
         String selection = DBConstants.COL_FROM + "=?";
         String[] selectionArgs = new String[] {email};
         cr.delete(DBConstants.DB_MSGS, selection, selectionArgs);
+
+        // Update recent message column in the contact database
+        unsetRecentMessage(cr, email);
     }
 
     public static void deleteChatByEmail(ContentResolver cr, String email) {
@@ -62,9 +64,7 @@ public class DBExtended {
 
     public static void addContactByEmail(ContentResolver cr, String email) {
         // return if user is already added
-        if(searchContactByEmail(cr, email)!=null) {
-            return;
-        } else {
+        if(searchContactByEmail(cr, email) == null) {
             ContentValues values = new ContentValues(1);
             values.put(DBConstants.COL_EMAIL, email);
             cr.insert(DBConstants.DB_CONTACTS, values);
@@ -84,6 +84,7 @@ public class DBExtended {
         values.put(DBConstants.COL_FROM, from);
 
         cr.insert(DBConstants.DB_MSGS, values);
+        updateRecentMessage(cr, from, message);
         incrTotalMsgCount(cr, email);
     }
 
@@ -102,14 +103,36 @@ public class DBExtended {
 
         cr.insert(DBConstants.DB_MSGS, values);
         incrFreshMsgCount(cr, from);
+        updateRecentMessage(cr, from, msg);
         incrTotalMsgCount(cr, from);
     }
 
     public static void resetFreshMsgCount(ContentResolver cr, String email) {
         ContentValues values = new ContentValues(1);
         values.put(DBConstants.COL_MSG_FRESH, 0);
+
         String selection = DBConstants.COL_EMAIL + " = ? ";
         String[] selectionArgs = new String[] {email};
+        cr.update(DBConstants.DB_CONTACTS, values, selection, selectionArgs);
+    }
+
+    private static void updateRecentMessage(ContentResolver cr, String email, String message) {
+        ContentValues values = new ContentValues(1);
+        values.put(DBConstants.COL_MSG_RECENT, message);
+
+        String selection = DBConstants.COL_EMAIL + " = ?";
+        String[] selectionArgs = new String[] {email};
+
+        cr.update(DBConstants.DB_CONTACTS, values, selection, selectionArgs);
+    }
+
+    private static void unsetRecentMessage(ContentResolver cr, String email) {
+        ContentValues values = new ContentValues(1);
+        values.put(DBConstants.COL_MSG_RECENT, Constants.STR_NULL);
+
+        String selection = DBConstants.COL_EMAIL + " = ?";
+        String[] selectionArgs = new String[] {email};
+
         cr.update(DBConstants.DB_CONTACTS, values, selection, selectionArgs);
     }
 

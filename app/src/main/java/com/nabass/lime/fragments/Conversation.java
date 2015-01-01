@@ -89,8 +89,6 @@ public class Conversation extends Fragment implements LoaderManager.LoaderCallba
     @Override
     public void onPause() {
         DBExtended.resetFreshMsgCount(MainActivity.contentResolver, contactsEmail);
-        TextView identifier = (TextView) getActivity().getActionBar().getCustomView().findViewById(R.id.identifier);
-        identifier.setText(Constants.STR_NULL);
         super.onPause();
     }
 

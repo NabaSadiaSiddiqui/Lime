@@ -13,10 +13,11 @@ public class DBConstants {
      */
     public static final String TBL_CONTACTS = "contacts";
     public static final String COL_NAME = "name";
-    public static final String COL_EMAIL = "email";     // primary id for now
-    public static final String COL_MSG_FRESH = "fresh"; // number of unread messages
-    public static final String COL_MSG_TOTAL = "total"; // total number of messages
-    public static final String COL_BLOCKED = "blocked"; // either of 1 (not blocked) or 0 (blocked)
+    public static final String COL_EMAIL = "email";         // primary id for now
+    public static final String COL_MSG_FRESH = "fresh";     // number of unread messages
+    public static final String COL_MSG_TOTAL = "total";     // total number of messages
+    public static final String COL_MSG_RECENT = "recent";   // last message exchanged between participants
+    public static final String COL_BLOCKED = "blocked";     // either of 1 (not blocked) or 0 (blocked)
 
     /*
      * Messages

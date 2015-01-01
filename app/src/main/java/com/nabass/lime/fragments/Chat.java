@@ -132,12 +132,11 @@ public class Chat extends Fragment implements LoaderManager.LoaderCallbacks<Curs
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String[] projection = new String[]{DBConstants.COL_ID, DBConstants.COL_NAME, DBConstants.COL_EMAIL, DBConstants.COL_MSG_FRESH};
         String selection = DBConstants.COL_MSG_TOTAL + " > ? and " + DBConstants.COL_BLOCKED + " = ?";
         String[] selectionArgs = new String[] {"0", "1"};
         CursorLoader loader = new CursorLoader(getActivity().getApplicationContext(),
                 DBConstants.DB_CONTACTS,
-                projection,
+                null,
                 selection,
                 selectionArgs,
                 DBConstants.COL_ID + " DESC");
