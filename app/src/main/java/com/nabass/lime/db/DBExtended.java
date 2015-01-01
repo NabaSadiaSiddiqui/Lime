@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.util.Log;
+import android.widget.Toast;
 
 public class DBExtended {
 
@@ -57,12 +58,13 @@ public class DBExtended {
     }
 
     public static void addContactByEmail(ContentResolver cr, String email) {
-        try {
+        // return if user is already added
+        if(searchContactByEmail(cr, email)!=null) {
+            return;
+        } else {
             ContentValues values = new ContentValues(1);
             values.put(DBConstants.COL_EMAIL, email);
             cr.insert(DBConstants.DB_CONTACTS, values);
-        } catch (SQLException e) {
-            throw new SQLException(TAG + " has an exception");
         }
     }
 
