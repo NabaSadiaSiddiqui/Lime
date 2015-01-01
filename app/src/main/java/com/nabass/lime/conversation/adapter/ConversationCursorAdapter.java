@@ -65,7 +65,7 @@ public class ConversationCursorAdapter extends CursorAdapter {
         ViewHolder holder = (ViewHolder) view.getTag();
         String email = cursor.getString(cursor.getColumnIndex(DBConstants.COL_FROM));
         holder.text1.setText(getTime(cursor.getString(cursor.getColumnIndex(DBConstants.COL_TIME))));
-        holder.text2.setText(cursor.getString(cursor.getColumnIndex(DBConstants.COL_MSG)));
+        holder.text2.setText(new String(cursor.getBlob(cursor.getColumnIndex(DBConstants.COL_MSG))));
     }
 
     private static class ViewHolder {

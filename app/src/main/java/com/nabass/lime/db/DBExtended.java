@@ -2,10 +2,13 @@ package com.nabass.lime.db;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.nabass.lime.Init;
 
 public class DBExtended {
 
@@ -68,15 +71,38 @@ public class DBExtended {
         }
     }
 
-    public static void insertOutgoingMsg(ContentResolver cr, ContentValues values, String email) {
+    public static void insertOutgoingMsg(ContentResolver cr, String message, String email) {
+        ContentValues values = new ContentValues(4);
+        int msgType = DBConstants.MsgDirection.DIRECTION_OUTGOING.ordinal();
+        byte[] msg = message.getBytes();
+        String to = Init.getClientEmail();
+        String from = email;
+
+        values.put(DBConstants.COL_MSG_TYPE, msgType);
+        values.put(DBConstants.COL_MSG, msg);
+        values.put(DBConstants.COL_TO, to);
+        values.put(DBConstants.COL_FROM, from);
+
         cr.insert(DBConstants.DB_MSGS, values);
         incrTotalMsgCount(cr, email);
     }
 
-    public static void insertIncomingMsg(ContentResolver cr, ContentValues values, String email) {
+    public static void insertIncomingMsg(ContentResolver cr, Intent intent){
+        ContentValues values = new ContentValues(4);
+        int msgType = DBConstants.MsgDirection.DIRECTION_INCOMING.ordinal();
+        String msg = intent.getStringExtra(DBConstants.COL_MSG);
+        byte[] msgByte = msg.getBytes();
+        String from = intent.getStringExtra(DBConstants.COL_FROM);
+        String to = intent.getStringExtra(DBConstants.COL_TO);
+
+        values.put(DBConstants.COL_MSG_TYPE, msgType);
+        values.put(DBConstants.COL_MSG, msgByte);
+        values.put(DBConstants.COL_FROM, from);
+        values.put(DBConstants.COL_TO, to);
+
         cr.insert(DBConstants.DB_MSGS, values);
-        incrFreshMsgCount(cr, email);
-        incrTotalMsgCount(cr, email);
+        incrFreshMsgCount(cr, from);
+        incrTotalMsgCount(cr, from);
     }
 
     public static void resetFreshMsgCount(ContentResolver cr, String email) {
