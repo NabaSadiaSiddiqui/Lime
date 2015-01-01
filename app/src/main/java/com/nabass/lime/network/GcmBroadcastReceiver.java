@@ -45,9 +45,10 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
 			}
             else {
                 Log.e(TAG, "Message received from GCM");
-                Log.e(TAG, "COL_FROM:"+intent.getStringExtra(DBConstants.COL_FROM));
-                Log.e(TAG, "COL_TO:"+intent.getStringExtra(DBConstants.COL_TO));
-                Log.e(TAG, "COL_MSG:"+intent.getStringExtra(DBConstants.COL_MSG));
+                String from = intent.getStringExtra(DBConstants.COL_FROM);
+                if(DBExtended.checkIsBlockedByEmail(ctx.getContentResolver(), from)) {
+                    return;
+                }
 				ContentValues values = new ContentValues(4);
 				values.put(DBConstants.COL_MSG_TYPE,  DBConstants.MsgDirection.DIRECTION_INCOMING.ordinal());
 				values.put(DBConstants.COL_MSG, intent.getStringExtra(DBConstants.COL_MSG));
