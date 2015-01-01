@@ -16,4 +16,12 @@
         android:onClick="showProfile"
         android:src="@drawable/olaf"/>
 
+    <TextView
+        android:id="@+id/identifier"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@id/profile_img"
+        android:gravity="center_vertical"
+        android:textColor="@android:color/white"/>
+
 </RelativeLayout>

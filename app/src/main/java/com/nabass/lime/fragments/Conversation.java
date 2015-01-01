@@ -4,16 +4,20 @@ import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Loader;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nabass.lime.Constants;
@@ -76,12 +80,17 @@ public class Conversation extends Fragment implements LoaderManager.LoaderCallba
         args.putString(DBConstants.COL_EMAIL, contactsEmail);
         getLoaderManager().initLoader(0, args, this);
 
+        TextView identifier = (TextView) getActivity().getActionBar().getCustomView().findViewById(R.id.identifier);
+        identifier.setText(contactsEmail);
+
         return view;
     }
 
     @Override
     public void onPause() {
         DBExtended.resetFreshMsgCount(MainActivity.contentResolver, contactsEmail);
+        TextView identifier = (TextView) getActivity().getActionBar().getCustomView().findViewById(R.id.identifier);
+        identifier.setText(Constants.STR_NULL);
         super.onPause();
     }
 
