@@ -29,7 +29,6 @@ import com.nabass.lime.fragments.Profile;
 import com.nabass.lime.fragments.Settings;
 import com.nabass.lime.nav.drawer.adapter.NavDrawerListAdapter;
 import com.nabass.lime.nav.drawer.model.NavDrawerItem;
-import com.nabass.lime.db.DBExtended;
 import com.nabass.lime.widgets.CircleImageView;
 
 import java.util.ArrayList;
@@ -113,8 +112,7 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
         View mCustomView = mInflater.inflate(R.layout.actionbar_custom, null);
         //TODO: if person's G+ has an image -> use that
         if(!getClientImg().equals(Constants.STR_NULL)) {        // If person's G+ profile had an image -> use that
-            Util.LoadProfileImage profileLoader = new Util.LoadProfileImage((CircleImageView) mCustomView.findViewById(R.id.profile_img));
-            profileLoader.execute(getClientImg());
+            Util.setClientPic((CircleImageView) mCustomView.findViewById(R.id.profile_img));
         }
         getActionBar().setCustomView(mCustomView);
         getActionBar().setDisplayShowCustomEnabled(true);

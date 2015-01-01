@@ -15,6 +15,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static com.nabass.lime.Init.getClientImg;
+
 public class Util {
 
     /**
@@ -59,5 +61,11 @@ public class Util {
         } catch (ParseException e) {
             return datetime;
         }
+    }
+
+    // Set the client's profile picture
+    public static void setClientPic(CircleImageView view){
+        Util.LoadProfileImage profileLoader = new Util.LoadProfileImage(view);
+        profileLoader.execute(getClientImg());
     }
 }
