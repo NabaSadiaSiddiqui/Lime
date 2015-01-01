@@ -45,15 +45,15 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
 			}
             else {
                 Log.e(TAG, "Message received from GCM");
-                Log.e(TAG, "COL_OTHER_ID:"+intent.getStringExtra(DBConstants.COL_OTHER_ID));
-                Log.e(TAG, "COL_SELF_ID:"+intent.getStringExtra(DBConstants.COL_SELF_ID));
+                Log.e(TAG, "COL_FROM:"+intent.getStringExtra(DBConstants.COL_FROM));
+                Log.e(TAG, "COL_TO:"+intent.getStringExtra(DBConstants.COL_TO));
                 Log.e(TAG, "COL_MSG:"+intent.getStringExtra(DBConstants.COL_MSG));
 				ContentValues values = new ContentValues(4);
 				values.put(DBConstants.COL_MSG_TYPE,  DBConstants.MsgDirection.DIRECTION_INCOMING.ordinal());
 				values.put(DBConstants.COL_MSG, intent.getStringExtra(DBConstants.COL_MSG));
-				values.put(DBConstants.COL_OTHER_ID, intent.getStringExtra(DBConstants.COL_OTHER_ID));
-				values.put(DBConstants.COL_SELF_ID, intent.getStringExtra(DBConstants.COL_SELF_ID));
-                DBExtended.insertIncomingMsg(context.getContentResolver(), values, intent.getStringExtra(DBConstants.COL_OTHER_ID));
+				values.put(DBConstants.COL_FROM, intent.getStringExtra(DBConstants.COL_FROM));
+				values.put(DBConstants.COL_TO, intent.getStringExtra(DBConstants.COL_TO));
+                DBExtended.insertIncomingMsg(context.getContentResolver(), values, intent.getStringExtra(DBConstants.COL_FROM));
 				
 				if (Init.isNotify()) {
 					sendNotification(Constants.NOTIFICAITON_NEW_MSG, true);
