@@ -21,6 +21,8 @@ public class ContactsActions extends DialogFragment {
     private static final String TAG = "ContactsAction";
 
     private static Bundle contactBundle;
+    private static String contactEmail;
+    private static boolean isBlocked = false;
 
     public ContactsActions() {
         // Required empty public constructor
@@ -28,6 +30,7 @@ public class ContactsActions extends DialogFragment {
 
     public static ContactsActions newInstance(Bundle bundle) {
         contactBundle = bundle;
+        contactEmail = contactBundle.getString(Constants.CONTACT_EMAIL);
         return new ContactsActions();
     }
 
@@ -38,7 +41,22 @@ public class ContactsActions extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        String actionView;
+        String actionBlockUnblock;
+        String actionDelete;
+
         int padding = getResources().getDimensionPixelSize(R.dimen.chat_actions_padding);
+
+        isBlocked = DBExtended.checkIsBlockedByEmail(MainActivity.contentResolver, contactEmail);
+        actionView = getResources().getString(R.string.contact_actions_view);
+
+        if(isBlocked) {
+            actionBlockUnblock = getResources().getString(R.string.contact_actions_unblock);
+        } else {
+            actionBlockUnblock = getResources().getString(R.string.contact_actions_block);
+        }
+        actionDelete = getResources().getString(R.string.contact_action_delete);
+
 
         View divider1 = new View(getActivity());
         divider1.setBackgroundColor(Color.BLACK);
@@ -47,14 +65,13 @@ public class ContactsActions extends DialogFragment {
         divider2.setBackgroundColor(Color.BLACK);
 
         TextView viewContact = new TextView(getActivity());
-        viewContact.setText("View contact");
+        viewContact.setText(actionView);
         viewContact.setPadding(padding, padding, padding, padding);
         viewContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //TODO: view contact
-                String contact_email = contactBundle.getString(Constants.CONTACT_EMAIL);
-                Toast.makeText(getActivity().getApplicationContext(), contact_email, Toast.LENGTH_LONG)
+                Toast.makeText(getActivity().getApplicationContext(), contactEmail, Toast.LENGTH_LONG)
                         .show();
                 refreshSearchView();
                 Contacts.contactsActionsDialog.dismiss();
@@ -62,30 +79,34 @@ public class ContactsActions extends DialogFragment {
         });
 
         TextView blockContact = new TextView(getActivity());
-        blockContact.setText("Block contact");
+        blockContact.setText(actionBlockUnblock);
         blockContact.setPadding(padding, padding, padding, padding);
         blockContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: block contact
-                String contact_email = contactBundle.getString(Constants.CONTACT_EMAIL);
-                Toast.makeText(getActivity().getApplicationContext(), contact_email + " blocked", Toast.LENGTH_LONG)
-                        .show();
+                if(isBlocked) {
+                    DBExtended.unblockContactByEmail(MainActivity.contentResolver, contactEmail);
+                    Toast.makeText(getActivity().getApplicationContext(), contactEmail + " unblocked", Toast.LENGTH_LONG)
+                            .show();
+                } else {
+                    DBExtended.blockContactByEmail(MainActivity.contentResolver, contactEmail);
+                    Toast.makeText(getActivity().getApplicationContext(), contactEmail + " blocked", Toast.LENGTH_LONG)
+                            .show();
+                }
                 refreshSearchView();
                 Contacts.contactsActionsDialog.dismiss();
             }
         });
 
         TextView deleteContact = new TextView(getActivity());
-        deleteContact.setText("Delete contact");
+        deleteContact.setText(actionDelete);
         deleteContact.setPadding(padding, padding, padding, padding);
         deleteContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //TODO: delete contact
-                String contact_email = contactBundle.getString(Constants.CONTACT_EMAIL);
-                DBExtended.deleteContactByEmail(MainActivity.contentResolver, contact_email);
-                Toast.makeText(getActivity().getApplicationContext(), contact_email + " deleted", Toast.LENGTH_LONG)
+                DBExtended.deleteContactByEmail(MainActivity.contentResolver, contactEmail);
+                Toast.makeText(getActivity().getApplicationContext(), contactEmail + " deleted", Toast.LENGTH_LONG)
                         .show();
                 refreshSearchView();
                 Contacts.contactsActionsDialog.dismiss();

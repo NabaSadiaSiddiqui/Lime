@@ -53,6 +53,7 @@ public class ContactsCursorAdapter extends CursorAdapter {
         ViewHolder holder = (ViewHolder) view.getTag();
 
         String email = cursor.getString(cursor.getColumnIndex(DBConstants.COL_EMAIL));
+        int blocked = cursor.getInt(cursor.getColumnIndex(DBConstants.COL_BLOCKED));
         String initial = getFirstToUpper(email);
         String[] colors = view.getResources().getStringArray(R.array.chat_img_view);
         int position = mapLetterInAlphabets(initial);
@@ -62,5 +63,11 @@ public class ContactsCursorAdapter extends CursorAdapter {
 
         holder.contact_img.setImageDrawable(drawable);
         holder.contact_id.setText(email);
+
+        if(blocked == 0) {  // Contact is blocked
+            view.setBackgroundColor(context.getResources().getColor(R.color.contact_blocked));
+        } else {
+            view.setBackgroundColor(context.getResources().getColor(R.color.contact_bg));
+        }
     }
 }

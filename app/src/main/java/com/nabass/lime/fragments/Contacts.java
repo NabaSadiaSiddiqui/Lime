@@ -102,37 +102,37 @@ public class Contacts extends Fragment implements LoaderManager.LoaderCallbacks<
         sv.setOnSearchClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // implementing the search view listener
+            // implementing the search view listener
 
-                if (!queryListener) {
-                    sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            if (!queryListener) {
+                sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
-                        @Override
-                        public boolean onQueryTextSubmit(String s) {
-                            Toast.makeText(getActivity().getApplicationContext(), s, Toast.LENGTH_SHORT)
-                                    .show();
-                            Cursor c = DBExtended.searchContactByEmail(MainActivity.contentResolver, s);
-                            if (c != null) {
-                                Log.e(TAG, "C IS NOT NULL");
-                                Log.e(TAG, c.toString());
-                            } else {
-                                Log.e(TAG, "YOU ARE SEARCHING FOR ALIENS");
-                            }
-                            // Return false to let the SearchView perform the default action.
-                            // Returning true indicates that the listener already performed teh default action
-                            return false;
+                    @Override
+                    public boolean onQueryTextSubmit(String s) {
+                        Toast.makeText(getActivity().getApplicationContext(), s, Toast.LENGTH_SHORT)
+                                .show();
+                        Cursor c = DBExtended.searchContactByEmail(MainActivity.contentResolver, s);
+                        if (c != null) {
+                            Log.e(TAG, "C IS NOT NULL");
+                            Log.e(TAG, c.toString());
+                        } else {
+                            Log.e(TAG, "YOU ARE SEARCHING FOR ALIENS");
                         }
+                        // Return false to let the SearchView perform the default action.
+                        // Returning true indicates that the listener already performed teh default action
+                        return false;
+                    }
 
-                        @Override
-                        public boolean onQueryTextChange(String newText) {
-                            //execute the adapter filter
-                            mAdapter.getFilter().filter(newText);
-                            return true;
-                        }
-                    });
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        //execute the adapter filter
+                        mAdapter.getFilter().filter(newText);
+                        return true;
+                    }
+                });
 
-                    queryListener = true;
-                }
+                queryListener = true;
+            }
             }
         });
     }
@@ -156,9 +156,12 @@ public class Contacts extends Fragment implements LoaderManager.LoaderCallbacks<
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        // Open conversation
+        // Open conversation if contact is not blocked
         TextView contactEmailView = (TextView) view.findViewById(R.id.contact_id);
         String contactEmail = contactEmailView.getText().toString();
+        if(DBExtended.checkIsBlockedByEmail(MainActivity.contentResolver, contactEmail)) {
+            return;
+        }
         Bundle bundle = new Bundle();
         bundle.putString(Constants.CONTACT_EMAIL, contactEmail);
         mListener.onFragmentInteraction(Constants.FRAG_CONTACTS, bundle);

@@ -113,4 +113,13 @@
     
     <!-- Empty view contacts list -->
     <string name="empty_view_no_contacts">You have no contacts.</string>
+
+    <!-- Contact actions -->
+    <string name="contact_actions_view">View contact</string>
+    <string name="contact_actions_block">Block contact</string>
+    <string name="contact_actions_unblock">Unblock contact</string>
+    <string name="contact_action_delete">Delete contact</string>
+
+    <!-- Contact view -->
+    <string name="contact_status_blocked">Blocked</string>
 </resources>

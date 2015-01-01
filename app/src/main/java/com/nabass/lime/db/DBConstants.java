@@ -16,7 +16,7 @@ public class DBConstants {
     public static final String COL_EMAIL = "email";     // primary id for now
     public static final String COL_MSG_FRESH = "fresh"; // number of unread messages
     public static final String COL_MSG_TOTAL = "total"; // total number of messages
-    public static final String COL_BLOCKED = "blocked"; // either of 1 or 0
+    public static final String COL_BLOCKED = "blocked"; // either of 1 (not blocked) or 0 (blocked)
 
     /*
      * Messages

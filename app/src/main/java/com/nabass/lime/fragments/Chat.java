@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -134,12 +133,13 @@ public class Chat extends Fragment implements LoaderManager.LoaderCallbacks<Curs
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String[] projection = new String[]{DBConstants.COL_ID, DBConstants.COL_NAME, DBConstants.COL_EMAIL, DBConstants.COL_MSG_FRESH};
-        String selection = DBConstants.COL_MSG_TOTAL + ">0";
+        String selection = DBConstants.COL_MSG_TOTAL + " > ? and " + DBConstants.COL_BLOCKED + " = ?";
+        String[] selectionArgs = new String[] {"0", "1"};
         CursorLoader loader = new CursorLoader(getActivity().getApplicationContext(),
                 DBConstants.DB_CONTACTS,
                 projection,
                 selection,
-                null,
+                selectionArgs,
                 DBConstants.COL_ID + " DESC");
         return loader;
     }

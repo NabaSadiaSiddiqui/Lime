@@ -31,7 +31,8 @@ public class DBManager extends SQLiteOpenHelper {
                 + DBConstants.COL_NAME 	  +" text, "
                 + DBConstants.COL_EMAIL   +" text unique, "
                 + DBConstants.COL_MSG_FRESH +" integer default 0, "
-                + DBConstants.COL_MSG_TOTAL + " integer default 0);");
+                + DBConstants.COL_MSG_TOTAL + " integer default 0, "
+                + DBConstants.COL_BLOCKED + " integer default 1);");
     }
 
     @Override

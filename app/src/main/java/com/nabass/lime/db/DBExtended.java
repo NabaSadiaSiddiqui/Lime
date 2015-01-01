@@ -122,4 +122,40 @@ public class DBExtended {
         }
     }
 
+    public static boolean checkIsBlockedByEmail(ContentResolver cr, String email) {
+        String[] projection = new String[] {DBConstants.COL_BLOCKED};
+        String selection = DBConstants.COL_EMAIL + " = ?";
+        String[] selectionArgs = new String[] {email};
+
+        Cursor c = cr.query(DBConstants.DB_CONTACTS, projection, selection, selectionArgs, null);
+        if(c!=null) {
+            if(c.moveToFirst()) {
+                int blocked = c.getInt(0);
+                if(blocked == 1) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static void blockContactByEmail(ContentResolver cr, String email) {
+        String selection = DBConstants.COL_EMAIL + " = ?";
+        String[] selectionArgs = new String[] {email};
+        ContentValues values = new ContentValues(1);
+        values.put(DBConstants.COL_BLOCKED, 0);
+
+        cr.update(DBConstants.DB_CONTACTS, values, selection, selectionArgs);
+    }
+
+    public static void unblockContactByEmail(ContentResolver cr, String email) {
+        String selection = DBConstants.COL_EMAIL + " = ?";
+        String[] selectionArgs = new String[] {email};
+        ContentValues values = new ContentValues(1);
+        values.put(DBConstants.COL_BLOCKED, 1);
+
+        cr.update(DBConstants.DB_CONTACTS, values, selection, selectionArgs);
+    }
 }
