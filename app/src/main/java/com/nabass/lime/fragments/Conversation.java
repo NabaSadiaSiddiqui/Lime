@@ -93,8 +93,8 @@ public class Conversation extends Fragment implements LoaderManager.LoaderCallba
                     ContentValues values = new ContentValues(2);
                     values.put(DBConstants.COL_MSG_TYPE,  DBConstants.MsgDirection.DIRECTION_OUTGOING.ordinal());
                     values.put(DBConstants.COL_MSG, message);
-                    values.put(DBConstants.COL_SELF_ID, contactsEmail);
-                    values.put(DBConstants.COL_OTHER_ID, Init.getClientEmail());
+                    values.put(DBConstants.COL_SELF_ID, Init.getClientEmail());
+                    values.put(DBConstants.COL_OTHER_ID, contactsEmail);
                     DBExtended.insertOutgoingMsg(MainActivity.contentResolver, values, contactsEmail);
                     //TODO: sleep process for 100 ms so that vertical orientation of messages view is fine
                     try {
