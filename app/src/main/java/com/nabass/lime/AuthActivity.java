@@ -8,8 +8,6 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.MediaController;
@@ -21,6 +19,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+import com.nabass.lime.db.Profile;
 
 public class AuthActivity extends Activity implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -115,7 +114,6 @@ public class AuthActivity extends Activity implements View.OnClickListener, Goog
     @Override
     public void onStart() {
         super.onStart();
-
         // Invoke GoogleApiClient.connect
         mGoogleApiClient.connect();
     }
@@ -123,7 +121,6 @@ public class AuthActivity extends Activity implements View.OnClickListener, Goog
     @Override
     public void onStop() {
         super.onStop();
-
         //Invoke GoogleApiClient.disconnect
         if (mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
@@ -150,7 +147,6 @@ public class AuthActivity extends Activity implements View.OnClickListener, Goog
     private void resolveSignInError() {
         if (mConnectionResult.hasResolution()) {
             try {
-                Log.e("AuthActivity", "resolving connection error");
                 mIntentInProgress = true;
                 startIntentSenderForResult(mConnectionResult.getResolution().getIntentSender(),
                         RC_SIGN_IN, null, 0, 0, 0);
@@ -212,11 +208,12 @@ public class AuthActivity extends Activity implements View.OnClickListener, Goog
                 String personName = currentPerson.getDisplayName();
                 String personPhotoUrl = currentPerson.getImage().getUrl();
                 String personEmail = Plus.AccountApi.getAccountName(mGoogleApiClient);
-
-                Init.setSharedPref(Constants.KEY_CLIENT_EMAIL, personEmail);
-                Init.setSharedPref(Constants.KEY_CLIENT_NAME, personName);
+                String personPIN = currentPerson.getId();
+                String personDeviceID = Util.getDeviceID();
+                String phoneNum = Util.getDevicePhoneNum();
+                // TODO: find a way to store image in the database as well
                 Init.setSharedPref(Constants.KEY_CLIENT_IMG, personPhotoUrl);
-
+                Profile.createProfileInAuthMode(MainActivity.contentResolver, personName, personEmail, phoneNum, personPIN, null, personDeviceID);
                 Init.setModeRemote();
                 setResult(RESULT_OK);
                 finish();
@@ -243,26 +240,10 @@ public class AuthActivity extends Activity implements View.OnClickListener, Goog
         if (view.getId() == R.id.sign_in_button && !mGoogleApiClient.isConnecting()) {
             mSignInClicked = true;
             resolveSignInError();
-            /*Init.setModeRemote();
-            setResult(RESULT_OK);
-            finish();*/
         } else if(view.getId() == R.id.local_mode_button) {
             Init.setModeLocal();
             setResult(RESULT_OK);
             finish();
         }
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // this activity has no menu
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // this activity has no menu
-        return super.onOptionsItemSelected(item);
     }
 }

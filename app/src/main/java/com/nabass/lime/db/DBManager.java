@@ -20,11 +20,11 @@ public class DBManager extends SQLiteOpenHelper {
          */
         db.execSQL("create table " + DBConstants.TBL_MSGS + " ("
                 + "_id integer primary key autoincrement, "
-                + DBConstants.COL_MSG_TYPE +" integer, "
-                + DBConstants.COL_MSG +" blob, "
-                + DBConstants.COL_FROM +" text, "
-                + DBConstants.COL_TO +" text, "
-                + DBConstants.COL_TIME 			  +" datetime default current_timestamp);");
+                + DBConstants.COL_MSG_TYPE + " integer, "
+                + DBConstants.COL_MSG + " blob, "
+                + DBConstants.COL_FROM + " text, "
+                + DBConstants.COL_TO + " text, "
+                + DBConstants.COL_TIME + " datetime default current_timestamp);");
 
         db.execSQL("create table " + DBConstants.TBL_CONTACTS + " ("
                 + "_id integer primary key autoincrement, "
@@ -34,6 +34,15 @@ public class DBManager extends SQLiteOpenHelper {
                 + DBConstants.COL_MSG_FRESH +" integer default 0, "
                 + DBConstants.COL_MSG_TOTAL + " integer default 0, "
                 + DBConstants.COL_BLOCKED + " integer default 1);");
+
+        db.execSQL("create table " + DBConstants.TBL_PROFILE + " ("
+                + "_id integer primary key autoincrement, "
+                + DBConstants.TBL_PROFILE_COLS.COL_NAME + " text, "
+                + DBConstants.TBL_PROFILE_COLS.COL_EMAIL + " text unique, "
+                + DBConstants.TBL_PROFILE_COLS.COL_PHONE + " integer, "
+                + DBConstants.TBL_PROFILE_COLS.COL_PIN + " text, "
+                + DBConstants.TBL_PROFILE_COLS.COL_DEVICE_ID + " text, "
+                + DBConstants.TBL_PROFILE_COLS.COL_STATUS + " text);");
     }
 
     @Override

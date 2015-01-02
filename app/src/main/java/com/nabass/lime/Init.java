@@ -9,14 +9,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.nabass.lime.network.GcmUtil;
+
+import static com.nabass.lime.db.Profile.setProfileStatus;
 
 public class Init extends Application {
     private static SharedPreferences prefs;
     private static GcmUtil gcm;
-    public static String REG_STATUS = "";
 
     @Override
     public void onCreate() {
@@ -49,16 +49,6 @@ public class Init extends Application {
         return prefs.getString(Constants.KEY_MODE_USER, null);
     }
 
-    private void setClientEmail() {
-        AccountManager accountManager = AccountManager.get(this);
-        Account account = getAccount(accountManager);
-        String email = "";
-        if(account != null) {
-            email = account.name;
-        }
-        setSharedPref(Constants.KEY_CLIENT_EMAIL, email);
-    }
-
     private static Account getAccount(AccountManager accountManager) {
         Account[] accounts = accountManager.getAccountsByType(Constants.AUTH_SERVICE);
         Account account;
@@ -72,18 +62,6 @@ public class Init extends Application {
 
     public static String getClientEmail() {
         return prefs.getString(Constants.KEY_CLIENT_EMAIL, Constants.STR_NULL);
-    }
-
-    public static void setClientName(String name) {
-        setSharedPref(Constants.KEY_CLIENT_NAME, name);
-    }
-
-    public static String getClientName() {
-        return prefs.getString(Constants.KEY_CLIENT_NAME, Constants.STR_NULL);
-    }
-
-    public static void setClientImg(String url) {
-        setSharedPref(Constants.KEY_CLIENT_IMG, url);
     }
 
     public static String getClientImg() {
@@ -208,10 +186,10 @@ public class Init extends Application {
             if (intent != null && Constants.ACTION_REGISTER.equals(intent.getAction())) {
                 switch (intent.getIntExtra(Constants.EXTRA_STATUS, 100)) {
                     case Constants.STATUS_SUCCESS:
-                        REG_STATUS = "ONLINE";
+                        setProfileStatus(getContentResolver(), "ONLINE");
                         break;
                     case Constants.STATUS_FAILED:
-                        REG_STATUS = "OFFLINE";
+                        setProfileStatus(getContentResolver(), "OFFLINE");
                         break;
                 }
             }

@@ -41,6 +41,9 @@ public class CustomCP extends ContentProvider {
             case DBConstants.CONTACTS_URI:
                 qb.setTables(DBConstants.TBL_CONTACTS);
                 break;
+            case DBConstants.PROFILE_URI:
+                qb.setTables(DBConstants.TBL_PROFILE);
+                break;
             default:
                 break;
         }
@@ -60,6 +63,9 @@ public class CustomCP extends ContentProvider {
                 break;
             case DBConstants.CONTACTS_URI:
                 id = db.insertOrThrow(DBConstants.TBL_CONTACTS, null, values);
+                break;
+            case DBConstants.PROFILE_URI:
+                id = db.insertOrThrow(DBConstants.TBL_PROFILE, null, values);
                 break;
             default:
                 id = -1;
@@ -82,6 +88,9 @@ public class CustomCP extends ContentProvider {
             case DBConstants.CONTACTS_URI:
                 count = db.update(DBConstants.TBL_CONTACTS, values, selection, selectionArgs);
                 break;
+            case DBConstants.PROFILE_URI:
+                count = db.update(DBConstants.TBL_PROFILE, values, selection, selectionArgs);
+                break;
             default:
                 count = 0;
                 break;
@@ -101,6 +110,9 @@ public class CustomCP extends ContentProvider {
                 break;
             case DBConstants.CONTACTS_URI:
                 count = db.delete(DBConstants.TBL_CONTACTS, selection, selectionArgs);
+                break;
+            case DBConstants.PROFILE_URI:
+                count = db.delete(DBConstants.TBL_PROFILE, selection, selectionArgs);
                 break;
             default:
                 count = 0;

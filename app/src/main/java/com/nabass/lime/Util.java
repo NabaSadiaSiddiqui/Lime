@@ -1,9 +1,12 @@
 package com.nabass.lime;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.nabass.lime.widgets.CircleImageView;
@@ -64,7 +67,7 @@ public class Util {
     }
 
     // Set the client's profile picture
-    public static void setClientPic(CircleImageView view){
+    public static void setUserPicFromURL(CircleImageView view){
         Util.LoadProfileImage profileLoader = new Util.LoadProfileImage(view);
         profileLoader.execute(getClientImg());
     }
@@ -77,5 +80,14 @@ public class Util {
     // Change profile picture of the user
     public static void changeUserPic(Uri uri) {
         MainActivity.clientImg.setImageURI(uri);
+    }
+
+    public static String getDeviceID() {
+        return Settings.Secure.getString(MainActivity.contentResolver, Settings.Secure.ANDROID_ID);
+    }
+
+    public static String getDevicePhoneNum() {
+        TelephonyManager tMgr = (TelephonyManager) MainActivity.ctx.getSystemService(Context.TELEPHONY_SERVICE);
+        return tMgr.getLine1Number();
     }
 }

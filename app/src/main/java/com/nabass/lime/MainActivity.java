@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
@@ -43,6 +44,8 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
 
     public static ContentResolver contentResolver;
     public static CircleImageView clientImg;
+    public static Context ctx;
+
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -69,6 +72,7 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
         setContentView(R.layout.activity_main);
 
         contentResolver = getContentResolver();
+        ctx = getApplicationContext();
 
         mTitle = mDrawerTitle = getTitle();
 
@@ -114,7 +118,7 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
         clientImg = (CircleImageView) mCustomView.findViewById(R.id.profile_img);
         //TODO: if person's G+ has an image -> use that
         if(!getClientImg().equals(Constants.STR_NULL)) {        // If person's G+ profile had an image -> use that
-            Util.setClientPic(clientImg);
+            Util.setUserPicFromURL(clientImg);
         }
         getActionBar().setCustomView(mCustomView);
         getActionBar().setDisplayShowCustomEnabled(true);

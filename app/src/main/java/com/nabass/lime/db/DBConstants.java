@@ -9,6 +9,19 @@ public class DBConstants {
     public static final String COL_ID = "_id";
 
     /*
+     * Profile
+     */
+    public static final String TBL_PROFILE = "profile";
+    public static class TBL_PROFILE_COLS {
+        public static final String COL_NAME = "name";
+        public static final String COL_EMAIL = "email";
+        public static final String COL_STATUS = "status";
+        public static final String COL_PHONE = "phone_number";
+        public static final String COL_PIN = "pin";
+        public static final String COL_DEVICE_ID = "device_id";
+    }
+
+    /*
      * Contacts
      */
     public static final String TBL_CONTACTS = "contacts";
@@ -34,12 +47,14 @@ public class DBConstants {
      */
     static final int MSG_URI = 1;
     static final int CONTACTS_URI = 2;
+    static final int PROFILE_URI = 3;
 
     static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
         DBConstants.sURIMatcher.addURI(DBConstants.CONTENT_PROVIDER, TBL_MSGS, DBConstants.MSG_URI);
         DBConstants.sURIMatcher.addURI(DBConstants.CONTENT_PROVIDER, TBL_CONTACTS, DBConstants.CONTACTS_URI);
+        DBConstants.sURIMatcher.addURI(DBConstants.CONTENT_PROVIDER, TBL_PROFILE, DBConstants.PROFILE_URI);
     }
 
     public enum MsgDirection {
@@ -48,4 +63,5 @@ public class DBConstants {
 
     public static final Uri DB_MSGS = Uri.parse("content://" + CONTENT_PROVIDER + "/" + TBL_MSGS);
     public static final Uri DB_CONTACTS = Uri.parse("content://" + CONTENT_PROVIDER + "/" + TBL_CONTACTS);
+    public static final Uri DB_PROFILE = Uri.parse("content://" + CONTENT_PROVIDER + "/" + TBL_PROFILE);
 }

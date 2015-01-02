@@ -17,15 +17,16 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.nabass.lime.MainActivity;
 import com.nabass.lime.R;
 import com.nabass.lime.Util;
 
 import java.io.File;
 
-import static com.nabass.lime.Init.REG_STATUS;
-import static com.nabass.lime.Init.getClientEmail;
-import static com.nabass.lime.Init.getClientName;
 import static com.nabass.lime.Init.getSenderId;
+import static com.nabass.lime.db.Profile.getProfileEmail;
+import static com.nabass.lime.db.Profile.getProfileName;
+import static com.nabass.lime.db.Profile.getProfileStatus;
 
 public class Profile extends DialogFragment {
 
@@ -69,9 +70,15 @@ public class Profile extends DialogFragment {
             }
         });
 
-        name.setText(getClientName());
-        email.setText(getClientEmail());
-        status.setText(REG_STATUS);
+
+        // Query database to get person's details
+        String personName = getProfileName(MainActivity.contentResolver);
+        String personEmail = getProfileEmail(MainActivity.contentResolver);
+        String personStatus = getProfileStatus(MainActivity.contentResolver);
+
+        name.setText(personName);
+        email.setText(personEmail);
+        status.setText(personStatus);
         senderID.setText(getSenderId());
 
         AlertDialog profileDialog = new AlertDialog.Builder(getActivity())
