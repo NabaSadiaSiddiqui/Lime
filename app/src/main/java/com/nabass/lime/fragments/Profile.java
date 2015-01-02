@@ -24,9 +24,9 @@ import com.nabass.lime.Util;
 import java.io.File;
 
 import static com.nabass.lime.Init.getSenderId;
-import static com.nabass.lime.db.Profile.getProfileEmail;
-import static com.nabass.lime.db.Profile.getProfileName;
-import static com.nabass.lime.db.Profile.getProfileStatus;
+import static com.nabass.lime.db.TBLProfile.getProfileEmail;
+import static com.nabass.lime.db.TBLProfile.getProfileName;
+import static com.nabass.lime.db.TBLProfile.getProfileStatus;
 
 public class Profile extends DialogFragment {
 

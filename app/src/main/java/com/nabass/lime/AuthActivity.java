@@ -19,7 +19,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
-import com.nabass.lime.db.Profile;
+import com.nabass.lime.db.TBLProfile;
 
 public class AuthActivity extends Activity implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -213,7 +213,7 @@ public class AuthActivity extends Activity implements View.OnClickListener, Goog
                 String phoneNum = Util.getDevicePhoneNum();
                 // TODO: find a way to store image in the database as well
                 Init.setSharedPref(Constants.KEY_CLIENT_IMG, personPhotoUrl);
-                Profile.createProfileInAuthMode(MainActivity.contentResolver, personName, personEmail, phoneNum, personPIN, null, personDeviceID);
+                TBLProfile.createProfileInAuthMode(MainActivity.contentResolver, personName, personEmail, phoneNum, personPIN, null, personDeviceID);
                 Init.setModeRemote();
                 setResult(RESULT_OK);
                 finish();

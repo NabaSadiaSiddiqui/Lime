@@ -12,7 +12,7 @@ import android.preference.PreferenceManager;
 
 import com.nabass.lime.network.GcmUtil;
 
-import static com.nabass.lime.db.Profile.setProfileStatus;
+import static com.nabass.lime.db.TBLProfile.setProfileStatus;
 
 public class Init extends Application {
     private static SharedPreferences prefs;

@@ -6,8 +6,8 @@ import android.database.Cursor;
 
 import com.nabass.lime.Constants;
 
-public class Profile {
-    public Profile() {
+public class TBLProfile {
+    public TBLProfile() {
         // Empty Constructor
     }
 
