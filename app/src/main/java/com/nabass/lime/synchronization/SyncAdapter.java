@@ -78,6 +78,8 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
     public void onPerformSync(Account account, Bundle extras, String authority,
                               ContentProviderClient provider, SyncResult syncResult) {
         Log.e(TAG, "Beginning network synchronization");
+        Log.e(TAG, "Account name that started this action is " + account.name);
+        Log.e(TAG, "Sync action triggered by authority: " + authority);
         Log.e(TAG, "Network synchronization complete");
     }
 }

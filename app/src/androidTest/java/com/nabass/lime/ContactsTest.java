@@ -39,9 +39,9 @@ public class ContactsTest extends ProviderTestCase2 {
         String count = "2";
 
         ContentValues values = new ContentValues(2);
-        values.put(DBConstants.COL_NAME, name);
-        values.put(DBConstants.COL_EMAIL, email);
-        values.put(DBConstants.COL_MSG_FRESH,count );
+        values.put(DBConstants.TBL_CONTACTS_COLS.COL_NAME, name);
+        values.put(DBConstants.TBL_CONTACTS_COLS.COL_EMAIL, email);
+        values.put(DBConstants.TBL_CONTACTS_COLS.COL_MSG_FRESH,count );
         Uri mUri = resolve.insert(DBConstants.DB_CONTACTS, values);
         assertNotNull(mUri);
     }
@@ -54,14 +54,14 @@ public class ContactsTest extends ProviderTestCase2 {
         String count = "2";
         // Insert
         ContentValues values = new ContentValues(2);
-        values.put(DBConstants.COL_NAME, name);
-        values.put(DBConstants.COL_EMAIL, email);
-        values.put(DBConstants.COL_MSG_FRESH,count );
+        values.put(DBConstants.TBL_CONTACTS_COLS.COL_NAME, name);
+        values.put(DBConstants.TBL_CONTACTS_COLS.COL_EMAIL, email);
+        values.put(DBConstants.TBL_CONTACTS_COLS.COL_MSG_FRESH,count );
         Uri mUri = resolve.insert(DBConstants.DB_CONTACTS, values);
         assertNotNull(mUri);
         // Query
-        String[] projection = {DBConstants.COL_MSG_FRESH};
-        String selection = DBConstants.COL_EMAIL + " = '" + email + "'";
+        String[] projection = {DBConstants.TBL_CONTACTS_COLS.COL_MSG_FRESH};
+        String selection = DBConstants.TBL_CONTACTS_COLS.COL_EMAIL + " = '" + email + "'";
         Cursor cursor = resolve.query(DBConstants.DB_CONTACTS, projection, selection, null, null);
         assertNotNull(cursor.moveToFirst());
         cursor.moveToFirst();
@@ -77,19 +77,19 @@ public class ContactsTest extends ProviderTestCase2 {
         String count = "2";
         // Insert
         ContentValues values = new ContentValues(2);
-        values.put(DBConstants.COL_NAME, name);
-        values.put(DBConstants.COL_EMAIL, email);
-        values.put(DBConstants.COL_MSG_FRESH,count );
+        values.put(DBConstants.TBL_CONTACTS_COLS.COL_NAME, name);
+        values.put(DBConstants.TBL_CONTACTS_COLS.COL_EMAIL, email);
+        values.put(DBConstants.TBL_CONTACTS_COLS.COL_MSG_FRESH,count );
         Uri mUri = resolve.insert(DBConstants.DB_CONTACTS, values);
         assertNotNull(mUri);
         // Delete
-        String where = DBConstants.COL_EMAIL + "=?";
+        String where = DBConstants.TBL_CONTACTS_COLS.COL_EMAIL + "=?";
         String[] whereArgs = {email};
         int res = resolve.delete(DBConstants.DB_CONTACTS, where,whereArgs);
         assertNotSame(0, res);
         // Query
-        String[] projection = {DBConstants.COL_MSG_FRESH};
-        String selection = DBConstants.COL_EMAIL + " = '" + email + "'";
+        String[] projection = {DBConstants.TBL_CONTACTS_COLS.COL_MSG_FRESH};
+        String selection = DBConstants.TBL_CONTACTS_COLS.COL_EMAIL + " = '" + email + "'";
         Cursor cursorQue = resolve.query(DBConstants.DB_CONTACTS, projection, selection, null, null);
         assertFalse(cursorQue.moveToFirst());
     }
@@ -102,23 +102,23 @@ public class ContactsTest extends ProviderTestCase2 {
         String count = "2";
         // Insert
         ContentValues values = new ContentValues(2);
-        values.put(DBConstants.COL_NAME, name);
-        values.put(DBConstants.COL_EMAIL, email);
-        values.put(DBConstants.COL_MSG_FRESH,count );
+        values.put(DBConstants.TBL_CONTACTS_COLS.COL_NAME, name);
+        values.put(DBConstants.TBL_CONTACTS_COLS.COL_EMAIL, email);
+        values.put(DBConstants.TBL_CONTACTS_COLS.COL_MSG_FRESH,count );
         Uri mUri = resolve.insert(DBConstants.DB_CONTACTS, values);
         assertNotNull(mUri);
         // Update
         String email_new = "test2@gmail.com";
         ContentValues valuesUp = new ContentValues(2);
-        valuesUp.put(DBConstants.COL_EMAIL, email_new);
-        String whereUp = DBConstants.COL_EMAIL + "=? AND " + DBConstants.COL_NAME + "=?";
+        valuesUp.put(DBConstants.TBL_CONTACTS_COLS.COL_EMAIL, email_new);
+        String whereUp = DBConstants.TBL_CONTACTS_COLS.COL_EMAIL + "=? AND " + DBConstants.TBL_CONTACTS_COLS.COL_NAME + "=?";
         String[] whereArgsUp = {email, name};
         int res = resolve.update(DBConstants.DB_CONTACTS, valuesUp, whereUp, whereArgsUp);
         assertNotSame(0, res);
 
         // Query
-        String[] projection = {DBConstants.COL_MSG_FRESH};
-        String selection = DBConstants.COL_EMAIL + " = '" + email + "'";
+        String[] projection = {DBConstants.TBL_CONTACTS_COLS.COL_MSG_FRESH};
+        String selection = DBConstants.TBL_CONTACTS_COLS.COL_EMAIL + " = '" + email + "'";
         Cursor cursorQue = resolve.query(DBConstants.DB_CONTACTS, projection, selection, null, null);
         assertFalse(cursorQue.moveToFirst());
 

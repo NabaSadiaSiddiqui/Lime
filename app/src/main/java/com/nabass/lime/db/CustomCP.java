@@ -124,6 +124,20 @@ public class CustomCP extends ContentProvider {
 
     @Override
     public String getType(Uri uri) {
-        return null;
+        String type = null;
+        switch(DBConstants.sURIMatcher.match(uri)) {
+            case DBConstants.MSG_URI:
+                type = DBConstants.DB_MSGS.toString();
+                break;
+            case DBConstants.CONTACTS_URI:
+                type = DBConstants.DB_CONTACTS.toString();
+                break;
+            case DBConstants.PROFILE_URI:
+                type = DBConstants.DB_PROFILE.toString();
+                break;
+            default:
+                break;
+        }
+        return type;
     }
 }

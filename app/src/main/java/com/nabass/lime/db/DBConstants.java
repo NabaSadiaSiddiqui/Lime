@@ -20,28 +20,37 @@ public class DBConstants {
         public static final String COL_PIN = "pin";
         public static final String COL_DEVICE_ID = "device_id";
         public static final String COL_IMG = "img";
+        public static final String COL_SYNCED = "synched";  // true or false
     }
 
     /*
      * Contacts
      */
     public static final String TBL_CONTACTS = "contacts";
-    public static final String COL_NAME = "name";
-    public static final String COL_EMAIL = "email";         // primary id for now
-    public static final String COL_MSG_FRESH = "fresh";     // number of unread messages
-    public static final String COL_MSG_TOTAL = "total";     // total number of messages
-    public static final String COL_MSG_RECENT = "recent";   // last message exchanged between participants
-    public static final String COL_BLOCKED = "blocked";     // either of 1 (not blocked) or 0 (blocked)
+
+    public static class TBL_CONTACTS_COLS {
+        public static final String COL_NAME = "name";
+        public static final String COL_EMAIL = "email";         // primary id for now
+        public static final String COL_MSG_FRESH = "fresh";     // number of unread messages
+        public static final String COL_MSG_TOTAL = "total";     // total number of messages
+        public static final String COL_MSG_RECENT = "recent";   // last message exchanged between participants
+        public static final String COL_BLOCKED = "blocked";     // either of 1 (not blocked) or 0 (blocked)
+        public static final String COL_SYNCHED = "synched";
+    }
 
     /*
      * Messages
      */
     public static final String TBL_MSGS = "messages";
-    public static final String COL_MSG_TYPE = "type";
-    public static final String COL_FROM = "senderEmail";
-    public static final String COL_TO = "receiverEmail";
-    public static final String COL_MSG = "message";
-    public static final String COL_TIME = "time";
+
+    public static class TBL_MSGS_COLS {
+        public static final String COL_MSG_TYPE = "type";
+        public static final String COL_FROM = "senderEmail";
+        public static final String COL_TO = "receiverEmail";
+        public static final String COL_MSG = "message";
+        public static final String COL_TIME = "time";
+        public static final String COL_SYNCED = "synched";
+    }
 
     /*
      * Build tree of Uri matcher objects

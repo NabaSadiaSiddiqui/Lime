@@ -132,7 +132,7 @@ public class Chat extends Fragment implements LoaderManager.LoaderCallbacks<Curs
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String selection = DBConstants.COL_MSG_TOTAL + " > ? and " + DBConstants.COL_BLOCKED + " = ?";
+        String selection = DBConstants.TBL_CONTACTS_COLS.COL_MSG_TOTAL + " > ? and " + DBConstants.TBL_CONTACTS_COLS.COL_BLOCKED + " = ?";
         String[] selectionArgs = new String[] {"0", "1"};
         CursorLoader loader = new CursorLoader(getActivity().getApplicationContext(),
                 DBConstants.DB_CONTACTS,

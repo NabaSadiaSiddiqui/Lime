@@ -3,7 +3,6 @@ package com.nabass.lime.chat.adapter;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,10 +55,10 @@ public class ChatCursorAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {   // Binds data to the view returned from newView
         ViewHolder holder = (ViewHolder) view.getTag();
 
-        String email = cursor.getString(cursor.getColumnIndex(DBConstants.COL_EMAIL));
+        String email = cursor.getString(cursor.getColumnIndex(DBConstants.TBL_CONTACTS_COLS.COL_EMAIL));
         String initial = getFirstToUpper(email);
-        int count = cursor.getInt(cursor.getColumnIndex(DBConstants.COL_MSG_FRESH));
-        String recent = cursor.getString(cursor.getColumnIndex(DBConstants.COL_MSG_RECENT));
+        int count = cursor.getInt(cursor.getColumnIndex(DBConstants.TBL_CONTACTS_COLS.COL_MSG_FRESH));
+        String recent = cursor.getString(cursor.getColumnIndex(DBConstants.TBL_CONTACTS_COLS.COL_MSG_RECENT));
         String[] colors = view.getResources().getStringArray(R.array.chat_img_view);
         int position = mapLetterInAlphabets(initial);
         int color = Color.parseColor(colors[position]);

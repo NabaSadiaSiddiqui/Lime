@@ -1,17 +1,13 @@
 package com.nabass.lime.fragments;
 
 import android.app.LoaderManager;
-import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Loader;
-import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -21,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nabass.lime.Constants;
-import com.nabass.lime.Init;
 import com.nabass.lime.MainActivity;
 import com.nabass.lime.R;
 import com.nabass.lime.conversation.adapter.ConversationCursorAdapter;
@@ -78,7 +73,7 @@ public class Conversation extends Fragment implements LoaderManager.LoaderCallba
         msgWidget = (EditText) view.findViewById(R.id.msg);
 
         Bundle args = new Bundle();
-        args.putString(DBConstants.COL_EMAIL, contactsEmail);
+        args.putString(DBConstants.TBL_CONTACTS_COLS.COL_EMAIL, contactsEmail);
         getLoaderManager().initLoader(0, args, this);
 
         TextView identifier = (TextView) getActivity().getActionBar().getCustomView().findViewById(R.id.identifier);
@@ -124,11 +119,11 @@ public class Conversation extends Fragment implements LoaderManager.LoaderCallba
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String senderEmail = args.getString(DBConstants.COL_EMAIL);
+        String senderEmail = args.getString(DBConstants.TBL_CONTACTS_COLS.COL_EMAIL);
         String receiverEmail = TBLProfile.getProfileEmail(MainActivity.contentResolver);
-        String selection = DBConstants.COL_FROM + " = ? and " + DBConstants.COL_TO + " = ? ";
+        String selection = DBConstants.TBL_MSGS_COLS.COL_FROM + " = ? and " + DBConstants.TBL_MSGS_COLS.COL_TO + " = ? ";
         String[] selectionArgs = new String[] {senderEmail, receiverEmail};
-        String sort = DBConstants.COL_TIME + " ASC";
+        String sort = DBConstants.TBL_MSGS_COLS.COL_TIME + " ASC";
         return new CursorLoader(getActivity(), DBConstants.DB_MSGS, null, selection, selectionArgs, sort);
     }
 

@@ -52,8 +52,8 @@ public class ContactsCursorAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         ViewHolder holder = (ViewHolder) view.getTag();
 
-        String email = cursor.getString(cursor.getColumnIndex(DBConstants.COL_EMAIL));
-        int blocked = cursor.getInt(cursor.getColumnIndex(DBConstants.COL_BLOCKED));
+        String email = cursor.getString(cursor.getColumnIndex(DBConstants.TBL_CONTACTS_COLS.COL_EMAIL));
+        int blocked = cursor.getInt(cursor.getColumnIndex(DBConstants.TBL_CONTACTS_COLS.COL_BLOCKED));
         String initial = getFirstToUpper(email);
         String[] colors = view.getResources().getStringArray(R.array.chat_img_view);
         int position = mapLetterInAlphabets(initial);

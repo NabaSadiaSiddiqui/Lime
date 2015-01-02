@@ -36,7 +36,7 @@ public class ConversationCursorAdapter extends CursorAdapter {
     }
 
     private int getItemViewType(Cursor _cursor) {
-        int typeIdx = _cursor.getColumnIndex(DBConstants.COL_MSG_TYPE);
+        int typeIdx = _cursor.getColumnIndex(DBConstants.TBL_MSGS_COLS.COL_MSG_TYPE);
         int type = _cursor.getInt(typeIdx);
         return type == 0 ? 0 : 1;
     }
@@ -63,9 +63,9 @@ public class ConversationCursorAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         ViewHolder holder = (ViewHolder) view.getTag();
-        String email = cursor.getString(cursor.getColumnIndex(DBConstants.COL_FROM));
-        holder.text1.setText(getTime(cursor.getString(cursor.getColumnIndex(DBConstants.COL_TIME))));
-        holder.text2.setText(new String(cursor.getBlob(cursor.getColumnIndex(DBConstants.COL_MSG))));
+        String email = cursor.getString(cursor.getColumnIndex(DBConstants.TBL_MSGS_COLS.COL_FROM));
+        holder.text1.setText(getTime(cursor.getString(cursor.getColumnIndex(DBConstants.TBL_MSGS_COLS.COL_TIME))));
+        holder.text2.setText(new String(cursor.getBlob(cursor.getColumnIndex(DBConstants.TBL_MSGS_COLS.COL_MSG))));
     }
 
     private static class ViewHolder {

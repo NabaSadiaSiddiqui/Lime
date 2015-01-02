@@ -42,10 +42,10 @@ public class MessagesTest extends ProviderTestCase2 {
         String email_from = "im220@gmail.com";
 
         ContentValues values = new ContentValues(2);
-        values.put(DBConstants.COL_MSG_TYPE, DBConstants.MsgDirection.DIRECTION_INCOMING.ordinal());
-        values.put(DBConstants.COL_MSG, msg);
-        values.put(DBConstants.COL_FROM, email_from);
-        values.put(DBConstants.COL_TO, email_to);
+        values.put(DBConstants.TBL_MSGS_COLS.COL_MSG_TYPE, DBConstants.MsgDirection.DIRECTION_INCOMING.ordinal());
+        values.put(DBConstants.TBL_MSGS_COLS.COL_MSG, msg);
+        values.put(DBConstants.TBL_MSGS_COLS.COL_FROM, email_from);
+        values.put(DBConstants.TBL_MSGS_COLS.COL_TO, email_to);
         Uri mUri = resolve.insert(DBConstants.DB_MSGS, values);
         assertNotNull(mUri);
     }
@@ -58,14 +58,14 @@ public class MessagesTest extends ProviderTestCase2 {
         String email_from = "im220@gmail.com";
         // Insert
         ContentValues values = new ContentValues(2);
-        values.put(DBConstants.COL_MSG_TYPE, DBConstants.MsgDirection.DIRECTION_INCOMING.ordinal());
-        values.put(DBConstants.COL_MSG, msg);
-        values.put(DBConstants.COL_FROM, email_from);
-        values.put(DBConstants.COL_TO, email_to);
+        values.put(DBConstants.TBL_MSGS_COLS.COL_MSG_TYPE, DBConstants.MsgDirection.DIRECTION_INCOMING.ordinal());
+        values.put(DBConstants.TBL_MSGS_COLS.COL_MSG, msg);
+        values.put(DBConstants.TBL_MSGS_COLS.COL_FROM, email_from);
+        values.put(DBConstants.TBL_MSGS_COLS.COL_TO, email_to);
         Uri mUri = resolve.insert(DBConstants.DB_MSGS, values);
         // Query
-        String[] projection = {DBConstants.COL_MSG};
-        String selection = DBConstants.COL_MSG + " = '" + msg + "'";
+        String[] projection = {DBConstants.TBL_MSGS_COLS.COL_MSG};
+        String selection = DBConstants.TBL_MSGS_COLS.COL_MSG + " = '" + msg + "'";
         Cursor cursor = resolve.query(DBConstants.DB_MSGS, projection, selection, null, null);
         assertNotNull(cursor.moveToFirst());
         cursor.moveToFirst();
@@ -81,19 +81,19 @@ public class MessagesTest extends ProviderTestCase2 {
         String email_from = "im220@gmail.com";
         // Insert
         ContentValues values = new ContentValues(2);
-        values.put(DBConstants.COL_MSG_TYPE, DBConstants.MsgDirection.DIRECTION_INCOMING.ordinal());
-        values.put(DBConstants.COL_MSG, msg);
-        values.put(DBConstants.COL_FROM, email_from);
-        values.put(DBConstants.COL_TO, email_to);
+        values.put(DBConstants.TBL_MSGS_COLS.COL_MSG_TYPE, DBConstants.MsgDirection.DIRECTION_INCOMING.ordinal());
+        values.put(DBConstants.TBL_MSGS_COLS.COL_MSG, msg);
+        values.put(DBConstants.TBL_MSGS_COLS.COL_FROM, email_from);
+        values.put(DBConstants.TBL_MSGS_COLS.COL_TO, email_to);
         Uri mUri = resolve.insert(DBConstants.DB_MSGS, values);
         // Delete
-        String where = DBConstants.COL_MSG + "=?";
+        String where = DBConstants.TBL_MSGS_COLS.COL_MSG + "=?";
         String[] whereArgs = {msg};
         int res = resolve.delete(DBConstants.DB_MSGS, where,whereArgs);
         assertNotSame(0, res);
         // Query
-        String[] projection = {DBConstants.COL_MSG};
-        String selection = DBConstants.COL_MSG + " = '" + msg + "'";
+        String[] projection = {DBConstants.TBL_MSGS_COLS.COL_MSG};
+        String selection = DBConstants.TBL_MSGS_COLS.COL_MSG + " = '" + msg + "'";
         Cursor cursorQue = resolve.query(DBConstants.DB_MSGS, projection, selection, null, null);
         // Check cursor is empty == false
         assertFalse(cursorQue.moveToFirst());
@@ -107,22 +107,22 @@ public class MessagesTest extends ProviderTestCase2 {
         String email_from = "im220@gmail.com";
         // Insert
         ContentValues values = new ContentValues(2);
-        values.put(DBConstants.COL_MSG_TYPE, DBConstants.MsgDirection.DIRECTION_INCOMING.ordinal());
-        values.put(DBConstants.COL_MSG, msg);
-        values.put(DBConstants.COL_FROM, email_from);
-        values.put(DBConstants.COL_TO, email_to);
+        values.put(DBConstants.TBL_MSGS_COLS.COL_MSG_TYPE, DBConstants.MsgDirection.DIRECTION_INCOMING.ordinal());
+        values.put(DBConstants.TBL_MSGS_COLS.COL_MSG, msg);
+        values.put(DBConstants.TBL_MSGS_COLS.COL_FROM, email_from);
+        values.put(DBConstants.TBL_MSGS_COLS.COL_TO, email_to);
         Uri mUri = resolve.insert(DBConstants.DB_MSGS, values);
         // Update
         String msg_new = "Hello World Again";
         ContentValues valuesUp = new ContentValues(2);
-        valuesUp.put(DBConstants.COL_MSG, msg_new);
-        String whereUp = DBConstants.COL_FROM + "=? AND " + DBConstants.COL_TO + "=?";
+        valuesUp.put(DBConstants.TBL_MSGS_COLS.COL_MSG, msg_new);
+        String whereUp = DBConstants.TBL_MSGS_COLS.COL_FROM + "=? AND " + DBConstants.TBL_MSGS_COLS.COL_TO + "=?";
         String[] whereArgsUp = {email_from, email_to};
         int res = resolve.update(DBConstants.DB_MSGS, valuesUp, whereUp, whereArgsUp);
         assertNotSame(0, res);
         // Query
-        String[] projection = {DBConstants.COL_MSG};
-        String selection = DBConstants.COL_MSG + " = '" + msg + "'";
+        String[] projection = {DBConstants.TBL_MSGS_COLS.COL_MSG};
+        String selection = DBConstants.TBL_MSGS_COLS.COL_MSG + " = '" + msg + "'";
         Cursor cursorQue = resolve.query(DBConstants.DB_MSGS, projection, selection, null, null);
         /*assertNotNull(cursorQue.moveToFirst());*/
         /*cursorQue.moveToFirst();

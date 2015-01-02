@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -45,7 +44,7 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
 			}
             else {
                 Log.e(TAG, "Message received from GCM");
-                String from = intent.getStringExtra(DBConstants.COL_FROM);
+                String from = intent.getStringExtra(DBConstants.TBL_MSGS_COLS.COL_FROM);
 
                 if(DBExtended.checkIsBlockedByEmail(ctx.getContentResolver(), from)) {
                     return;

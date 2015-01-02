@@ -20,20 +20,20 @@ public class DBManager extends SQLiteOpenHelper {
          */
         db.execSQL("create table " + DBConstants.TBL_MSGS + " ("
                 + "_id integer primary key autoincrement, "
-                + DBConstants.COL_MSG_TYPE + " integer, "
-                + DBConstants.COL_MSG + " blob, "
-                + DBConstants.COL_FROM + " text, "
-                + DBConstants.COL_TO + " text, "
-                + DBConstants.COL_TIME + " datetime default current_timestamp);");
+                + DBConstants.TBL_MSGS_COLS.COL_MSG_TYPE + " integer, "
+                + DBConstants.TBL_MSGS_COLS.COL_MSG + " blob, "
+                + DBConstants.TBL_MSGS_COLS.COL_FROM + " text, "
+                + DBConstants.TBL_MSGS_COLS.COL_TO + " text, "
+                + DBConstants.TBL_MSGS_COLS.COL_TIME + " datetime default current_timestamp);");
 
         db.execSQL("create table " + DBConstants.TBL_CONTACTS + " ("
                 + "_id integer primary key autoincrement, "
-                + DBConstants.COL_NAME 	  +" text, "
-                + DBConstants.COL_EMAIL   +" text unique, "
-                + DBConstants.COL_MSG_RECENT + " text, "
-                + DBConstants.COL_MSG_FRESH +" integer default 0, "
-                + DBConstants.COL_MSG_TOTAL + " integer default 0, "
-                + DBConstants.COL_BLOCKED + " integer default 1);");
+                + DBConstants.TBL_CONTACTS_COLS.COL_NAME 	  +" text, "
+                + DBConstants.TBL_CONTACTS_COLS.COL_EMAIL   +" text unique, "
+                + DBConstants.TBL_CONTACTS_COLS.COL_MSG_RECENT + " text, "
+                + DBConstants.TBL_CONTACTS_COLS.COL_MSG_FRESH +" integer default 0, "
+                + DBConstants.TBL_CONTACTS_COLS.COL_MSG_TOTAL + " integer default 0, "
+                + DBConstants.TBL_CONTACTS_COLS.COL_BLOCKED + " integer default 1);");
 
         db.execSQL("create table " + DBConstants.TBL_PROFILE + " ("
                 + "_id integer primary key autoincrement, "
