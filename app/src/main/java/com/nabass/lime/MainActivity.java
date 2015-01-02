@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.nabass.lime.db.TBLProfile;
 import com.nabass.lime.fragments.About;
 import com.nabass.lime.fragments.AddContact;
 import com.nabass.lime.fragments.Chat;
@@ -116,8 +117,10 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
         LayoutInflater mInflater = LayoutInflater.from(this);
         View mCustomView = mInflater.inflate(R.layout.actionbar_custom, null);
         clientImg = (CircleImageView) mCustomView.findViewById(R.id.profile_img);
-        //TODO: if person's G+ has an image -> use that
-        if(!getClientImg().equals(Constants.STR_NULL)) {        // If person's G+ profile had an image -> use that
+        //If user has previously selected an image then uplaod that
+        if(TBLProfile.getProfileImg(contentResolver)!=null) {
+            Util.updateUserImg();
+        } else if(!getClientImg().equals(Constants.STR_NULL)) {        // If person's G+ profile had an image -> use that
             Util.setUserPicFromURL(clientImg);
         }
         getActionBar().setCustomView(mCustomView);
