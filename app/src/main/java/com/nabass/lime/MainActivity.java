@@ -1,5 +1,6 @@
 package com.nabass.lime;
 
+import android.accounts.Account;
 import android.app.Activity;
 
 import android.app.Fragment;
@@ -10,7 +11,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.database.ContentObserver;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -21,6 +25,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.nabass.lime.db.DBConstants;
 import com.nabass.lime.db.TBLProfile;
 import com.nabass.lime.fragments.About;
 import com.nabass.lime.fragments.AddContact;
@@ -31,6 +36,7 @@ import com.nabass.lime.fragments.Profile;
 import com.nabass.lime.fragments.Settings;
 import com.nabass.lime.nav.drawer.adapter.NavDrawerListAdapter;
 import com.nabass.lime.nav.drawer.model.NavDrawerItem;
+import com.nabass.lime.synchronization.SyncUtils;
 import com.nabass.lime.widgets.CircleImageView;
 
 import java.util.ArrayList;
@@ -47,25 +53,25 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
     public static CircleImageView clientImg;
     public static Context ctx;
 
-
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
-
     // nav drawer title
     private CharSequence mDrawerTitle;
-
     // used to store app title
     private CharSequence mTitle;
-
     // slide menu items
     private String[] navMenuTitles;
     private TypedArray navMenuIcons;
-
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
 
     public static int AUTH_DONE = 1;
+
+    // Constants for sync adapter
+    // Instance fields
+    public static TableObserver mObserver;
+    private static Account mAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,20 +81,35 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
         contentResolver = getContentResolver();
         ctx = getApplicationContext();
 
-        mTitle = mDrawerTitle = getTitle();
+        // TODO: create dummy account
+        mAccount = SyncUtils.CreateSyncAccount(this);
+        // Turn on automatic syncing for the default account and authority
+        contentResolver.setSyncAutomatically(mAccount, SyncUtils.AUTHORITY, true);
 
+        // TODO
+        /*
+         * Create a content observer object.
+         * Its code does not mutate the provider, so set
+         * selfChange to "false"
+         */
+         mObserver = new TableObserver(null);
+        /*
+         * Register the observer for the data table. The table's path
+         * and any of its subpaths trigger the observer.
+         */
+        contentResolver.registerContentObserver(DBConstants.DB_CONTACTS, true, mObserver);
+        contentResolver.registerContentObserver(DBConstants.DB_MSGS, true, mObserver);
+        contentResolver.registerContentObserver(DBConstants.DB_PROFILE, true, mObserver);
+
+        mTitle = mDrawerTitle = getTitle();
         // load slide menu items from resources
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
-
         // nav drawer icons from resources
         navMenuIcons = getResources()
                 .obtainTypedArray(R.array.nav_drawer_icons);
-
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
-
         navDrawerItems = new ArrayList<NavDrawerItem>();
-
         // adding nav drawer items to array
         // Home -- 0
         // Add a contact -- 1
@@ -96,12 +117,9 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
         for (int i = 0; i < navMenuTitles.length; i++) {
             navDrawerItems.add(new NavDrawerItem(navMenuTitles[i], navMenuIcons.getResourceId(i, -1)));
         }
-
         // Recycle the typed array
         navMenuIcons.recycle();
-
         mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
-
         // setting the nav drawer list adapter
         adapter = new NavDrawerListAdapter(getApplicationContext(), navDrawerItems);
         mDrawerList.setAdapter(adapter);
@@ -156,6 +174,18 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        //contentResolver.unregisterContentObserver(mObserver);
+    }
+
     // Called when the person clicks on his photo
     public void showProfile(View view) {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -194,7 +224,6 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
         fragmentManager.beginTransaction()
                 .replace(R.id.frame_container, fragment).commit();
     }
-
 
     @Override
     public void onFragmentInteraction(String frag, Bundle bundle) {
@@ -331,7 +360,6 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
      * When using the ActionBarDrawerToggle, you must call it during
      * onPostCreate() and onConfigurationChanged()...
      */
-
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -344,5 +372,44 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggles
         mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+
+    public class TableObserver extends ContentObserver {
+
+        public TableObserver(Handler handler) {
+            super(handler);
+        }
+
+        /*
+         * Define a method that's called when data in the
+         * observed content provider changes.
+         * This method signature is provided for compatibility with
+         * older platforms.
+         */
+        @Override
+        public void onChange(boolean selfChange) {
+            /*
+             * Invoke the method signature available as of
+             * Android platform version 4.1, with a null URI.
+             */
+            Log.e(TAG, "In onChange");
+
+            onChange(selfChange, null);
+        }
+        /*
+         * Define a method that's called when data in the
+         * observed content provider changes.
+         */
+        @Override
+        public void onChange(boolean selfChange, Uri changeUri) {
+            Log.e(TAG, "In onChange 2");
+            /*
+             * Ask the framework to run your sync adapter.
+             * To maintain backward compatibility, assume that
+             * changeUri is null.
+             */
+            ContentResolver.requestSync(mAccount, SyncUtils.AUTHORITY, null);
+        }
     }
 }
