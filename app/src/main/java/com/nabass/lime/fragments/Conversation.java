@@ -21,7 +21,7 @@ import com.nabass.lime.MainActivity;
 import com.nabass.lime.R;
 import com.nabass.lime.conversation.adapter.ConversationCursorAdapter;
 import com.nabass.lime.db.DBConstants;
-import com.nabass.lime.db.DBExtended;
+import com.nabass.lime.db.TBLMsgs;
 import com.nabass.lime.db.TBLProfile;
 import com.nabass.lime.network.ServerUtilities;
 
@@ -84,7 +84,7 @@ public class Conversation extends Fragment implements LoaderManager.LoaderCallba
 
     @Override
     public void onPause() {
-        DBExtended.resetFreshMsgCount(MainActivity.contentResolver, contactsEmail);
+        TBLMsgs.resetFreshMsgCount(MainActivity.contentResolver, contactsEmail);
         super.onPause();
     }
 
@@ -93,7 +93,7 @@ public class Conversation extends Fragment implements LoaderManager.LoaderCallba
             @Override
             protected String doInBackground(Void... params) {
                 try {
-                    DBExtended.insertOutgoingMsg(MainActivity.contentResolver, message, contactsEmail);
+                    TBLMsgs.insertOutgoingMsg(MainActivity.contentResolver, message, contactsEmail);
                     //TODO: sleep process for 100 ms so that vertical orientation of messages view is fine
                     try {
                         Thread.sleep(3000);

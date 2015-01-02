@@ -20,6 +20,7 @@ import com.nabass.lime.MainActivity;
 import com.nabass.lime.R;
 import com.nabass.lime.db.DBConstants;
 import com.nabass.lime.db.DBExtended;
+import com.nabass.lime.db.TBLMsgs;
 
 public class GcmBroadcastReceiver extends BroadcastReceiver {
 	
@@ -50,7 +51,7 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
                     return;
                 }
 
-                DBExtended.insertIncomingMsg(context.getContentResolver(), intent);
+                TBLMsgs.insertIncomingMsg(context.getContentResolver(), intent);
 
                 if (Init.isNotify()) {
 					sendNotification(Constants.NOTIFICAITON_NEW_MSG, true);

@@ -97,9 +97,7 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
          * Register the observer for the data table. The table's path
          * and any of its subpaths trigger the observer.
          */
-        contentResolver.registerContentObserver(DBConstants.DB_CONTACTS, true, mObserver);
         contentResolver.registerContentObserver(DBConstants.DB_MSGS, true, mObserver);
-        contentResolver.registerContentObserver(DBConstants.DB_PROFILE, true, mObserver);
 
         mTitle = mDrawerTitle = getTitle();
         // load slide menu items from resources

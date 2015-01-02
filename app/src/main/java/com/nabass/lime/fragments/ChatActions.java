@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.nabass.lime.Constants;
 import com.nabass.lime.MainActivity;
 import com.nabass.lime.R;
-import com.nabass.lime.db.DBExtended;
+import com.nabass.lime.db.TBLMsgs;
 
 
 public class ChatActions extends DialogFragment {
@@ -50,7 +50,7 @@ public class ChatActions extends DialogFragment {
             public void onClick(View view) {
                 //TODO: clear conversation
                 String contact_email = contactBundle.getString(Constants.CONTACT_EMAIL);
-                DBExtended.clearChatByEmail(MainActivity.contentResolver, contact_email);
+                TBLMsgs.clearChatByEmail(MainActivity.contentResolver, contact_email);
                 Toast.makeText(getActivity().getApplicationContext(), "Chat with " + contact_email + " cleared", Toast.LENGTH_LONG)
                         .show();
                 Chat.chatActionsDialog.dismiss();
@@ -65,7 +65,7 @@ public class ChatActions extends DialogFragment {
             public void onClick(View view) {
                 //TODO: delete conversation
                 String contact_email = contactBundle.getString(Constants.CONTACT_EMAIL);
-                DBExtended.deleteChatByEmail(getActivity().getContentResolver(), contact_email);
+                TBLMsgs.deleteChatByEmail(getActivity().getContentResolver(), contact_email);
                 Toast.makeText(getActivity().getApplicationContext(), "Chat with " + contact_email + " deleted", Toast.LENGTH_LONG)
                         .show();
                 Chat.chatActionsDialog.dismiss();

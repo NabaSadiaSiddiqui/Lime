@@ -20,10 +20,16 @@ import android.accounts.Account;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SyncResult;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.util.Log;
+
+import com.nabass.lime.db.DBConstants;
+import com.nabass.lime.db.TBLMsgs;
 
 /**
  * Define a sync adapter for the app.
@@ -80,6 +86,31 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
         Log.e(TAG, "Beginning network synchronization");
         Log.e(TAG, "Account name that started this action is " + account.name);
         Log.e(TAG, "Sync action triggered by authority: " + authority);
+        Log.e(TAG, "Get all unsynced messages");
+        Cursor c=null;
+        String selection = DBConstants.TBL_MSGS_COLS.COL_SYNCED + "=0";
+        try {
+            c = provider.query(DBConstants.DB_MSGS, null, selection, null, null);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        if(c!=null) {
+            while(c.moveToNext()) {
+                Log.e(TAG, "From: " + c.getString(c.getColumnIndex(DBConstants.TBL_MSGS_COLS.COL_FROM)));
+                Log.e(TAG, "Msg: " + new String(c.getBlob(c.getColumnIndex(DBConstants.TBL_MSGS_COLS.COL_MSG))));
+                Log.e(TAG, "Msg type: " + c.getString(c.getColumnIndex(DBConstants.TBL_MSGS_COLS.COL_MSG_TYPE)));
+                Log.e(TAG, "Timestamp: " + c.getString(c.getColumnIndex(DBConstants.TBL_MSGS_COLS.COL_TIME)));
+            }
+        }
+        c.close();
+        Log.e(TAG, "Update msg statuses to synched");
+        ContentValues values = new ContentValues(1);
+        values.put(DBConstants.TBL_MSGS_COLS.COL_SYNCED, "1");
+        try {
+            provider.update(DBConstants.DB_MSGS, values, null, null);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
         Log.e(TAG, "Network synchronization complete");
     }
 }

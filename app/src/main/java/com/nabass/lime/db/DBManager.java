@@ -24,6 +24,7 @@ public class DBManager extends SQLiteOpenHelper {
                 + DBConstants.TBL_MSGS_COLS.COL_MSG + " blob, "
                 + DBConstants.TBL_MSGS_COLS.COL_FROM + " text, "
                 + DBConstants.TBL_MSGS_COLS.COL_TO + " text, "
+                + DBConstants.TBL_MSGS_COLS.COL_SYNCED + " integer default 0, "
                 + DBConstants.TBL_MSGS_COLS.COL_TIME + " datetime default current_timestamp);");
 
         db.execSQL("create table " + DBConstants.TBL_CONTACTS + " ("

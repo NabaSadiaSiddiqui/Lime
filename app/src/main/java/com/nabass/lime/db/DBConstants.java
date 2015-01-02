@@ -49,7 +49,7 @@ public class DBConstants {
         public static final String COL_TO = "receiverEmail";
         public static final String COL_MSG = "message";
         public static final String COL_TIME = "time";
-        public static final String COL_SYNCED = "synched";
+        public static final String COL_SYNCED = "synched";  // 0 means not synched, 1 means synched
     }
 
     /*
