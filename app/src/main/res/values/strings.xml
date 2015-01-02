@@ -75,6 +75,7 @@
     <string name="profile_email">Email:</string>
     <string name="profile_status">Status:</string>
     <string name="profile_sender_id">Sender ID:</string>
+    <string name="profile_img_desc">Change picture</string>
 
     <!-- Chat -->
     <string name="chat_img">Contact image</string>

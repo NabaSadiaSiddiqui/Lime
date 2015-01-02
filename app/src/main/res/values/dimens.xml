@@ -33,7 +33,7 @@
     <dimen name="profile_page_padding_bottom">15dip</dimen>
     <dimen name="profile_key_size">16sp</dimen>
     <dimen name="profile_value_size">18sp</dimen>
-    <dimen name="profile_vertical_padding_text">5dip</dimen>
+    <dimen name="profile_vertical_padding_text">10dip</dimen>
 
     <!-- Chat page -->
     <dimen name="chat_name_height">25dip</dimen>

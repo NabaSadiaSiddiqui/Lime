@@ -1,14 +1,14 @@
 package com.nabass.lime;
 
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.CursorAdapter;
 
 import com.nabass.lime.widgets.CircleImageView;
 
+import java.io.File;
 import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -67,5 +67,15 @@ public class Util {
     public static void setClientPic(CircleImageView view){
         Util.LoadProfileImage profileLoader = new Util.LoadProfileImage(view);
         profileLoader.execute(getClientImg());
+    }
+
+    // Get unique file name
+    public static String getUniqueImageFileName() {
+        return "img"+ System.currentTimeMillis() + ".jpg";
+    }
+
+    // Change profile picture of the user
+    public static void changeUserPic(Uri uri) {
+        MainActivity.clientImg.setImageURI(uri);
     }
 }

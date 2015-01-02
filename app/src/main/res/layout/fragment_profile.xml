@@ -20,17 +20,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:text="@string/profile_name"
-            android:textSize="@dimen/profile_key_size"
-            android:gravity="center" />
+            android:textSize="@dimen/profile_key_size" />
         <TextView
             android:id="@+id/profile_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_toRightOf="@id/profile_name_text"
             android:paddingLeft="@dimen/profile_vertical_padding_text"
-            android:textSize="@dimen/profile_value_size"
-            android:gravity="center"/>
+            android:textSize="@dimen/profile_value_size" />
     </RelativeLayout>
 
 
@@ -44,17 +45,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:text="@string/profile_email"
-            android:textSize="@dimen/profile_key_size"
-            android:gravity="center" />
+            android:textSize="@dimen/profile_key_size" />
         <TextView
             android:id="@+id/profile_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
             android:layout_toRightOf="@id/profile_email_text"
             android:paddingLeft="@dimen/profile_vertical_padding_text"
-            android:textSize="@dimen/profile_value_size"
-            android:gravity="center"/>
+            android:textSize="@dimen/profile_value_size" />
     </RelativeLayout>
 
     <View style="@style/ViewDivider"/>
@@ -67,17 +69,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:text="@string/profile_status"
-            android:textSize="@dimen/profile_key_size"
-            android:gravity="center" />
+            android:textSize="@dimen/profile_key_size" />
         <TextView
             android:id="@+id/profile_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_toRightOf="@id/profile_status_text"
             android:paddingLeft="@dimen/profile_vertical_padding_text"
             android:textSize="@dimen/profile_value_size"
-            android:gravity="center" />
+            android:layout_centerVertical="true" />
     </RelativeLayout>
 
     <View style="@style/ViewDivider"/>
@@ -91,21 +94,46 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:text="@string/profile_sender_id"
-            android:textSize="@dimen/profile_key_size"
-            android:gravity="center" />
+            android:textSize="@dimen/profile_key_size" />
         <TextView
             android:id="@+id/profile_sender_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_toRightOf="@id/profile_sender_id_text"
             android:paddingLeft="@dimen/profile_vertical_padding_text"
-            android:textSize="@dimen/profile_value_size"
-            android:gravity="center" />
+            android:textSize="@dimen/profile_value_size" />
     </RelativeLayout>
 
     <View
         style="@style/ViewDivider"
         android:visibility="gone"/>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/profile_edit_img_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="@string/profile_img_desc"
+            android:textSize="@dimen/profile_key_size" />
+        <ImageButton
+            android:id="@+id/profile_edit_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/profile_value_size"
+            android:src="@drawable/ic_action_edit"
+            android:contentDescription="@string/profile_img_desc" />
+    </RelativeLayout>
+
+    <View style="@style/ViewDivider"/>
 
 </LinearLayout>

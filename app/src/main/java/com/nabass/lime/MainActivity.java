@@ -42,6 +42,7 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
     private static final String TAG = "MainActivity";
 
     public static ContentResolver contentResolver;
+    public static CircleImageView clientImg;
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -110,9 +111,10 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
         getActionBar().setDisplayShowTitleEnabled(false);
         LayoutInflater mInflater = LayoutInflater.from(this);
         View mCustomView = mInflater.inflate(R.layout.actionbar_custom, null);
+        clientImg = (CircleImageView) mCustomView.findViewById(R.id.profile_img);
         //TODO: if person's G+ has an image -> use that
         if(!getClientImg().equals(Constants.STR_NULL)) {        // If person's G+ profile had an image -> use that
-            Util.setClientPic((CircleImageView) mCustomView.findViewById(R.id.profile_img));
+            Util.setClientPic(clientImg);
         }
         getActionBar().setCustomView(mCustomView);
         getActionBar().setDisplayShowCustomEnabled(true);
@@ -163,6 +165,11 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        /*
+         * IMPORTANT: call super.onActivityResult() so fragments'
+         * onActivityResult get a chance to be run as well
+         */
+        super.onActivityResult(requestCode, resultCode, data);
         // Check which request we're responding to
         if (requestCode == AUTH_DONE) {
             // Make sure the request was successful
