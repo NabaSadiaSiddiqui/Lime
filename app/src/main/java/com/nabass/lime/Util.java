@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.text.format.Time;
 import android.util.Log;
 
 import com.nabass.lime.db.TBLProfile;
@@ -17,6 +18,7 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import static com.nabass.lime.Init.getClientImg;
@@ -52,19 +54,10 @@ public class Util {
     }
 
     public static String getTime(String datetime) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        DateFormat[] df = new DateFormat[] { DateFormat.getDateInstance(), DateFormat.getTimeInstance()};
-        Date now = new Date();
-
-        try {
-            Date dt = sdf.parse(datetime);
-            if (now.getYear()==dt.getYear() && now.getMonth()==dt.getMonth() && now.getDate()==dt.getDate()) {
-                return df[1].format(dt);
-            }
-            return df[0].format(dt);
-        } catch (ParseException e) {
-            return datetime;
-        }
+        Date date = new Date();
+        date.setTime(Long.parseLong(datetime));
+        String formattedDate=new SimpleDateFormat("MMM d, yyyy").format(date);
+        return formattedDate;
     }
 
     // Set the client's profile picture

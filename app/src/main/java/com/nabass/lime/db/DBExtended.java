@@ -82,6 +82,7 @@ public class DBExtended {
         values.put(DBConstants.COL_MSG, msg);
         values.put(DBConstants.COL_TO, to);
         values.put(DBConstants.COL_FROM, from);
+        values.put(DBConstants.COL_TIME, System.currentTimeMillis());
 
         cr.insert(DBConstants.DB_MSGS, values);
         updateRecentMessage(cr, from, message);
@@ -100,6 +101,7 @@ public class DBExtended {
         values.put(DBConstants.COL_MSG, msgByte);
         values.put(DBConstants.COL_FROM, from);
         values.put(DBConstants.COL_TO, to);
+        values.put(DBConstants.COL_TIME, System.currentTimeMillis());
 
         cr.insert(DBConstants.DB_MSGS, values);
         incrFreshMsgCount(cr, from);

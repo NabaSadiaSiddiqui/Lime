@@ -90,7 +90,10 @@ public class TBLProfile {
             if(c.moveToFirst()) {
                 imgByte = c.getBlob(0);
             }
-            return BitmapFactory.decodeByteArray(imgByte, 0, imgByte.length);
+            if(imgByte!=null) {
+                return BitmapFactory.decodeByteArray(imgByte, 0, imgByte.length);
+            }
+            return null;
         }
         else {
             return null;
