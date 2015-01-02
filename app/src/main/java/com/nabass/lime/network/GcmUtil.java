@@ -11,6 +11,8 @@ import android.preference.PreferenceManager;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.nabass.lime.Constants;
 import com.nabass.lime.Init;
+import com.nabass.lime.MainActivity;
+import com.nabass.lime.db.TBLProfile;
 
 import java.io.IOException;
 import java.util.Random;
@@ -143,7 +145,7 @@ public class GcmUtil {
 	
 		                // You should send the registration ID to your server over HTTP,
 		                // so it can use GCM/HTTP or CCS to send messages to your app.
-		                ServerUtilities.register(Init.getClientEmail(), regid);
+		                ServerUtilities.register(TBLProfile.getProfileEmail(ctx.getContentResolver()), regid);
 	
 		                // Save the regid - no need to register again.
 		                setRegistrationId(regid);

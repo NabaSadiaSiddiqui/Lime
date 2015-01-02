@@ -27,6 +27,7 @@ import com.nabass.lime.R;
 import com.nabass.lime.conversation.adapter.ConversationCursorAdapter;
 import com.nabass.lime.db.DBConstants;
 import com.nabass.lime.db.DBExtended;
+import com.nabass.lime.db.TBLProfile;
 import com.nabass.lime.network.ServerUtilities;
 
 import java.io.IOException;
@@ -124,7 +125,7 @@ public class Conversation extends Fragment implements LoaderManager.LoaderCallba
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String senderEmail = args.getString(DBConstants.COL_EMAIL);
-        String receiverEmail = Init.getClientEmail();
+        String receiverEmail = TBLProfile.getProfileEmail(MainActivity.contentResolver);
         String selection = DBConstants.COL_FROM + " = ? and " + DBConstants.COL_TO + " = ? ";
         String[] selectionArgs = new String[] {senderEmail, receiverEmail};
         String sort = DBConstants.COL_TIME + " ASC";

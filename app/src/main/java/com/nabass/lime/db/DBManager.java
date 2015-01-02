@@ -42,6 +42,7 @@ public class DBManager extends SQLiteOpenHelper {
                 + DBConstants.TBL_PROFILE_COLS.COL_PHONE + " integer, "
                 + DBConstants.TBL_PROFILE_COLS.COL_PIN + " text, "
                 + DBConstants.TBL_PROFILE_COLS.COL_DEVICE_ID + " text, "
+                + DBConstants.TBL_PROFILE_COLS.COL_IMG + " blob, "
                 + DBConstants.TBL_PROFILE_COLS.COL_STATUS + " text);");
     }
 

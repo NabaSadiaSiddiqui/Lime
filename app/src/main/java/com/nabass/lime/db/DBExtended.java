@@ -75,7 +75,7 @@ public class DBExtended {
         ContentValues values = new ContentValues(4);
         int msgType = DBConstants.MsgDirection.DIRECTION_OUTGOING.ordinal();
         byte[] msg = message.getBytes();
-        String to = Init.getClientEmail();
+        String to = TBLProfile.getProfileEmail(cr);
         String from = email;
 
         values.put(DBConstants.COL_MSG_TYPE, msgType);

@@ -17,6 +17,8 @@ package com.nabass.lime.network;
 
 import com.nabass.lime.Constants;
 import com.nabass.lime.Init;
+import com.nabass.lime.MainActivity;
+import com.nabass.lime.db.TBLProfile;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -85,7 +87,7 @@ public final class ServerUtilities {
 		String serverUrl = Init.getServerUrl() + "/send";
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(Constants.MESSAGE, msg);
-		params.put(Constants.SENDER_EMAIL, Init.getClientEmail());
+		params.put(Constants.SENDER_EMAIL, TBLProfile.getProfileEmail(MainActivity.contentResolver));
 		params.put(Constants.RECEIVER_EMAIL, to);
 		post(serverUrl, params, MAX_ATTEMPTS);
 	}

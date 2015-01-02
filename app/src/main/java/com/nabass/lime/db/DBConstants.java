@@ -19,6 +19,7 @@ public class DBConstants {
         public static final String COL_PHONE = "phone_number";
         public static final String COL_PIN = "pin";
         public static final String COL_DEVICE_ID = "device_id";
+        public static final String COL_IMG = "img";
     }
 
     /*

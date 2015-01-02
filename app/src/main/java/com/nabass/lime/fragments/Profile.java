@@ -20,6 +20,8 @@ import android.widget.TextView;
 import com.nabass.lime.MainActivity;
 import com.nabass.lime.R;
 import com.nabass.lime.Util;
+import com.nabass.lime.db.DBExtended;
+import com.nabass.lime.db.TBLProfile;
 
 import java.io.File;
 
@@ -69,7 +71,6 @@ public class Profile extends DialogFragment {
                 startActivityForResult(chooserIntent, SELECT_PICTURE);
             }
         });
-
 
         // Query database to get person's details
         String personName = getProfileName(MainActivity.contentResolver);
@@ -130,7 +131,8 @@ public class Profile extends DialogFragment {
             } else {
                 selectedImageUri = data == null ? null : data.getData();
             }
-            Util.changeUserPic(selectedImageUri);
+            TBLProfile.updateProfileImg(MainActivity.contentResolver, selectedImageUri);
+            Util.updateUserImg();
         }
     }
 }

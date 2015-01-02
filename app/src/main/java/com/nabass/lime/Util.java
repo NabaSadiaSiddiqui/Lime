@@ -9,6 +9,7 @@ import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
+import com.nabass.lime.db.TBLProfile;
 import com.nabass.lime.widgets.CircleImageView;
 
 import java.io.File;
@@ -89,5 +90,9 @@ public class Util {
     public static String getDevicePhoneNum() {
         TelephonyManager tMgr = (TelephonyManager) MainActivity.ctx.getSystemService(Context.TELEPHONY_SERVICE);
         return tMgr.getLine1Number();
+    }
+
+    public static void updateUserImg() {
+        MainActivity.clientImg.setImageBitmap(TBLProfile.getProfileImg(MainActivity.contentResolver));
     }
 }

@@ -12,7 +12,7 @@ import android.preference.PreferenceManager;
 
 import com.nabass.lime.network.GcmUtil;
 
-import static com.nabass.lime.db.TBLProfile.setProfileStatus;
+import static com.nabass.lime.db.TBLProfile.updateProfileStatus;
 
 public class Init extends Application {
     private static SharedPreferences prefs;
@@ -58,10 +58,6 @@ public class Init extends Application {
             account = null;
         }
         return account;
-    }
-
-    public static String getClientEmail() {
-        return prefs.getString(Constants.KEY_CLIENT_EMAIL, Constants.STR_NULL);
     }
 
     public static String getClientImg() {
@@ -186,10 +182,10 @@ public class Init extends Application {
             if (intent != null && Constants.ACTION_REGISTER.equals(intent.getAction())) {
                 switch (intent.getIntExtra(Constants.EXTRA_STATUS, 100)) {
                     case Constants.STATUS_SUCCESS:
-                        setProfileStatus(getContentResolver(), "ONLINE");
+                        updateProfileStatus(getContentResolver(), "ONLINE");
                         break;
                     case Constants.STATUS_FAILED:
-                        setProfileStatus(getContentResolver(), "OFFLINE");
+                        updateProfileStatus(getContentResolver(), "OFFLINE");
                         break;
                 }
             }
