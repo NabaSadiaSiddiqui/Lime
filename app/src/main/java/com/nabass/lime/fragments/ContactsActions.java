@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -31,6 +32,7 @@ public class ContactsActions extends DialogFragment {
     public static ContactsActions newInstance(Bundle bundle) {
         contactBundle = bundle;
         contactEmail = contactBundle.getString(Constants.CONTACT_EMAIL);
+
         return new ContactsActions();
     }
 

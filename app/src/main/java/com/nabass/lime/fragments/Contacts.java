@@ -7,6 +7,7 @@ import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
+import android.media.Image;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.FilterQueryProvider;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -162,6 +164,7 @@ public class Contacts extends Fragment implements LoaderManager.LoaderCallbacks<
         if(DBExtended.checkIsBlockedByEmail(MainActivity.contentResolver, contactEmail)) {
             return;
         }
+
         Bundle bundle = new Bundle();
         bundle.putString(Constants.CONTACT_EMAIL, contactEmail);
         mListener.onFragmentInteraction(Constants.FRAG_CONTACTS, bundle);

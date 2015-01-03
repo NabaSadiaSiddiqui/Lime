@@ -15,16 +15,32 @@
         android:contentDescription="@string/chat_img"
         android:scaleType="fitStart" />
 
-    <TextView
-        android:id="@+id/contact_id"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentRight="true"
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:layout_toRightOf="@id/contact_img"
         android:paddingLeft="@dimen/contact_text_padding"
-        android:ellipsize="marquee"
-        android:singleLine="true"
-        android:gravity="center_vertical"
-        android:textColor="@color/contact_text" />
+        android:paddingRight="@dimen/contact_text_padding" >
+
+        <TextView
+            android:id="@+id/contact_id"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:gravity="center_vertical"
+            android:textColor="@color/contact_text" />
+
+        <ImageView
+            android:id="@+id/contact_type"
+            android:layout_width="10dip"
+            android:layout_height="10dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:src="@drawable/ic_launcher"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>

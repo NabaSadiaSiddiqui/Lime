@@ -20,7 +20,6 @@ public class DBConstants {
         public static final String COL_PIN = "pin";
         public static final String COL_DEVICE_ID = "device_id";
         public static final String COL_IMG = "img";
-        public static final String COL_SYNCED = "synched";  // true or false
     }
 
     /*
@@ -35,7 +34,9 @@ public class DBConstants {
         public static final String COL_MSG_TOTAL = "total";     // total number of messages
         public static final String COL_MSG_RECENT = "recent";   // last message exchanged between participants
         public static final String COL_BLOCKED = "blocked";     // either of 1 (not blocked) or 0 (blocked)
-        public static final String COL_SYNCHED = "synched";
+        public static final String COL_LOCAL = "local";         // either of 1 (local) or 0 (server)
+        public static final String COL_ANDROID_ID = "android_id";
+        public static final String COL_PHONE = "phone";
     }
 
     /*

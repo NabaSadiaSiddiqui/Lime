@@ -39,6 +39,7 @@ public interface Constants {
     // Content provider fields
     public static String CONTACT_ID = "contact_id";
     public static String CONTACT_EMAIL = "contact_email";
+    public static String CONTACT_LOCAL = "contact_local";
 
     // GCM constants/parameters
     public static String SERVER_URL = "http://1-dot-bold-flash-798.appspot.com";

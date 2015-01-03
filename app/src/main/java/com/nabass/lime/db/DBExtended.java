@@ -16,6 +16,27 @@ public class DBExtended {
 
     }
 
+    public static void addLocalContact(ContentResolver cr, String name, String phone, String id) {
+       if(searchLocalContactByAndroidId(cr, id)==null) {
+           ContentValues values = new ContentValues(4);
+           values.put(DBConstants.TBL_CONTACTS_COLS.COL_NAME, name);
+           values.put(DBConstants.TBL_CONTACTS_COLS.COL_PHONE, phone);
+           values.put(DBConstants.TBL_CONTACTS_COLS.COL_ANDROID_ID, id);
+           values.put(DBConstants.TBL_CONTACTS_COLS.COL_LOCAL, "1");
+           cr.insert(DBConstants.DB_CONTACTS, values);
+       }
+    }
+
+    public static Cursor searchLocalContactByAndroidId(ContentResolver cr, String id) {
+        String selection = DBConstants.TBL_CONTACTS_COLS.COL_ANDROID_ID + "=?";
+        String[] selectionArgs = new String[] {id};
+        Cursor c = cr.query(DBConstants.DB_CONTACTS, null, selection, selectionArgs, null);
+        if(c.moveToFirst()) {
+            return c;
+        }
+        return null;
+    }
+
     public static void deleteContactByEmail(ContentResolver cr, String email) {
         // Delete this contact
         String selection = DBConstants.TBL_CONTACTS_COLS.COL_EMAIL + "=?";
