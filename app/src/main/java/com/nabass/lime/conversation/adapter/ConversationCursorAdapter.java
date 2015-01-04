@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nabass.lime.R;
@@ -54,24 +53,20 @@ public class ConversationCursorAdapter extends CursorAdapter {
             break;
         }
         itemLayout.setTag(holder);
-        holder.avatar = (ImageView) itemLayout.findViewById(R.id.avatar);
-        holder.text1 = (TextView) itemLayout.findViewById(R.id.text1);
-        holder.text2 = (TextView) itemLayout.findViewById(R.id.text2);
+        holder.msg = (TextView) itemLayout.findViewById(R.id.im_msg);
+        holder.time = (TextView) itemLayout.findViewById(R.id.im_time);
         return itemLayout;
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         ViewHolder holder = (ViewHolder) view.getTag();
-        String email = cursor.getString(cursor.getColumnIndex(DBConstants.TBL_MSGS_COLS.COL_FROM));
-        holder.text1.setText(getTime(cursor.getString(cursor.getColumnIndex(DBConstants.TBL_MSGS_COLS.COL_TIME))));
-        holder.text2.setText(new String(cursor.getBlob(cursor.getColumnIndex(DBConstants.TBL_MSGS_COLS.COL_MSG))));
+        holder.msg.setText(new String(cursor.getBlob(cursor.getColumnIndex(DBConstants.TBL_MSGS_COLS.COL_MSG))));
+        holder.time.setText(getTime(cursor.getString(cursor.getColumnIndex(DBConstants.TBL_MSGS_COLS.COL_TIME))));
     }
 
     private static class ViewHolder {
-        TextView text1;
-        TextView text2;
-        ImageView avatar;
+        TextView time;
+        TextView msg;
     }
 }
-

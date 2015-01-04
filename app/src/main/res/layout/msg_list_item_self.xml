@@ -5,37 +5,28 @@
     android:layout_alignParentRight="true"
     android:background="@android:color/holo_red_dark">
 
-    <ImageView
-        android:id="@+id/avatar"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+    <TextView
+        android:id="@+id/im_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="5dip"
-        android:adjustViewBounds="true"
-        android:gravity="center_vertical" 
-        android:scaleType="centerInside"/>
+        android:layout_marginRight="10dip"
+        android:paddingBottom="10dip"
+        android:ellipsize="marquee"
+        android:gravity="center"
+        android:textSize="20sp"/>
 
     <TextView
-        android:id="@+id/text1"
+        android:id="@+id/im_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/avatar"
-        android:layout_marginRight="5dip"
-        android:layout_marginTop="2dp"
+        android:layout_below="@id/im_msg"
+        android:layout_marginRight="10dip"
         android:ellipsize="marquee"
         android:singleLine="true"
-        android:textSize="10sp" />
-
-    <TextView
-        android:id="@+id/text2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="20dip"
-        android:layout_toLeftOf="@+id/avatar"
-        android:ellipsize="marquee"
-        android:gravity="center" />
+        android:textSize="12sp" />
 
 </RelativeLayout>

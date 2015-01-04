@@ -68,7 +68,7 @@ public class ContactsCursorAdapter extends CursorAdapter {
 
             holder.contact_img.setImageDrawable(drawable);
             holder.contact_id.setText(email);
-            holder.contact_type.setVisibility(View.VISIBLE);
+            holder.contact_type.setVisibility(View.GONE);
 
             if(blocked == 0) {  // Contact is blocked
                 view.setBackgroundColor(context.getResources().getColor(R.color.contact_blocked));
