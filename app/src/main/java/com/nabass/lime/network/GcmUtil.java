@@ -11,7 +11,6 @@ import android.preference.PreferenceManager;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.nabass.lime.Constants;
 import com.nabass.lime.Init;
-import com.nabass.lime.MainActivity;
 import com.nabass.lime.db.TBLProfile;
 
 import java.io.IOException;
@@ -63,7 +62,6 @@ public class GcmUtil {
 	private String getRegistrationId() {
 	    String registrationId = prefs.getString(Constants.KEY_REG_ID, "");
 	    if (registrationId.length() == 0) {
-	        //Log.v(TAG, "Registration not found.");
 	        return "";
 	    }
 	    // check if app was updated; if so, it must clear registration id to
@@ -71,7 +69,6 @@ public class GcmUtil {
 	    int registeredVersion = prefs.getInt(KEY_APP_VERSION, Integer.MIN_VALUE);
 	    int currentVersion = getAppVersion();
 	    if (registeredVersion != currentVersion || isRegistrationExpired()) {
-	        //Log.v(TAG, "App version changed or registration expired.");
 	        return "";
 	    }
 	    return registrationId;
@@ -85,13 +82,11 @@ public class GcmUtil {
 	 */
 	private void setRegistrationId(String regId) {
 	    int appVersion = getAppVersion();
-	    //Log.v(TAG, "Saving regId on app version " + appVersion);
 	    SharedPreferences.Editor editor = prefs.edit();
 	    editor.putString(Constants.KEY_REG_ID, regId);
 	    editor.putInt(KEY_APP_VERSION, appVersion);
 	    long expirationTime = System.currentTimeMillis() + REGISTRATION_EXPIRY_TIME_MS;
 
-	    //Log.v(TAG, "Setting registration expiry time to " + new Timestamp(expirationTime));
 	    editor.putLong(PROPERTY_ON_SERVER_EXPIRATION_TIME, expirationTime);
 	    editor.commit();
 	}	
@@ -104,7 +99,6 @@ public class GcmUtil {
 	        PackageInfo packageInfo = ctx.getPackageManager().getPackageInfo(ctx.getPackageName(), 0);
 	        return packageInfo.versionCode;
 	    } catch (NameNotFoundException e) {
-	        // should never happen
 	        throw new RuntimeException("Could not get package name: " + e);
 	    }
 	}
@@ -136,7 +130,6 @@ public class GcmUtil {
 	        protected Boolean doInBackground(Void... params) {
 	            long backoff = BACKOFF_MILLI_SECONDS + random.nextInt(1000);
 	            for (int i = 1; i <= MAX_ATTEMPTS; i++) {
-	            	//Log.d(TAG, "Attempt #" + i + " to register");
 		            try {
 		                if (gcm == null) {
 		                    gcm = GoogleCloudMessaging.getInstance(ctx);
@@ -152,16 +145,13 @@ public class GcmUtil {
 		                return Boolean.TRUE;
 		                
 		            } catch (IOException ex) {
-		                //Log.e(TAG, "Failed to register on attempt " + i + ":" + ex);
 		                if (i == MAX_ATTEMPTS) {
 		                    break;
 		                }
 		                try {
-		                    //Log.d(TAG, "Sleeping for " + backoff + " ms before retry");
 		                    Thread.sleep(backoff);
 		                } catch (InterruptedException e1) {
 		                    // Activity finished before we complete - exit.
-		                    //Log.d(TAG, "Thread interrupted: abort remaining retries!");
 		                    Thread.currentThread().interrupt();
 		                }
 		                // increase backoff exponentially

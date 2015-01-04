@@ -133,17 +133,4 @@ public class TBLMsgs {
             }
         }
     }
-
-    public static Cursor getUnSycnchedMsgs(ContentResolver cr) {
-        String selection = DBConstants.TBL_MSGS_COLS.COL_SYNCED + " = ?";
-        String[] selectionArgs = new String[] {"0"};
-
-        return cr.query(DBConstants.DB_MSGS, null, selection, selectionArgs, null);
-    }
-
-    public static void updateMsgsStatusSynched(ContentResolver cr) {
-        ContentValues values = new ContentValues(1);
-        values.put(DBConstants.TBL_MSGS_COLS.COL_SYNCED, "1");
-        cr.update(DBConstants.DB_MSGS, values, null, null);
-    }
 }

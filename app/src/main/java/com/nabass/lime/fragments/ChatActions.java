@@ -48,7 +48,6 @@ public class ChatActions extends DialogFragment {
         clearChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: clear conversation
                 String contact_email = contactBundle.getString(Constants.CONTACT_EMAIL);
                 TBLMsgs.clearChatByEmail(MainActivity.contentResolver, contact_email);
                 Toast.makeText(getActivity().getApplicationContext(), "Chat with " + contact_email + " cleared", Toast.LENGTH_LONG)
@@ -63,7 +62,6 @@ public class ChatActions extends DialogFragment {
         deleteChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: delete conversation
                 String contact_email = contactBundle.getString(Constants.CONTACT_EMAIL);
                 TBLMsgs.deleteChatByEmail(getActivity().getContentResolver(), contact_email);
                 Toast.makeText(getActivity().getApplicationContext(), "Chat with " + contact_email + " deleted", Toast.LENGTH_LONG)

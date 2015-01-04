@@ -7,18 +7,11 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
-import android.text.format.Time;
 import android.util.Log;
-
 import com.nabass.lime.db.TBLProfile;
 import com.nabass.lime.widgets.CircleImageView;
-
-import java.io.File;
 import java.io.InputStream;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import static com.nabass.lime.Init.getClientImg;

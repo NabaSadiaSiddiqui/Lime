@@ -3,21 +3,15 @@ package com.nabass.lime.fragments;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.nabass.lime.R;
 import com.nabass.lime.nav.drawer.adapter.ImageAdapter;
 
-/**
- * A simple {@link Fragment} subclass.
- *
- */
 public class About extends Fragment {
 
     // Images to display
@@ -30,7 +24,6 @@ public class About extends Fragment {
     };
 
     static String[] tags;
-
 
     public About() {
         // Required empty public constructor
@@ -66,4 +59,3 @@ public class About extends Fragment {
         return view;
     }
 }
-

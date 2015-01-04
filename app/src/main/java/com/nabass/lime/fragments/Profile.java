@@ -20,7 +20,6 @@ import android.widget.TextView;
 import com.nabass.lime.MainActivity;
 import com.nabass.lime.R;
 import com.nabass.lime.Util;
-import com.nabass.lime.db.DBExtended;
 import com.nabass.lime.db.TBLProfile;
 
 import java.io.File;

@@ -89,7 +89,6 @@ public class Chat extends Fragment implements LoaderManager.LoaderCallbacks<Curs
 
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-        //TODO: open dialog with option to view contact or delete chat
         // DialogFragment.show() will take care of adding the fragment
         // in a transaction.  We also want to remove any currently showing
         // dialog, so make our own transaction and take care of that here.
@@ -126,7 +125,6 @@ public class Chat extends Fragment implements LoaderManager.LoaderCallbacks<Curs
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Implement this in the main activity
         public void onFragmentInteraction(String frag, Bundle bundle);
     }
 

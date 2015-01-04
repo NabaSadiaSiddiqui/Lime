@@ -230,11 +230,6 @@ public class AuthActivity extends Activity implements View.OnClickListener, Goog
         mGoogleApiClient.connect();
     }
 
-    // Try to reconnect to service if disconnected
-    public void onDisconnected() {
-        //TODO: what to do if disconnected!
-    }
-
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.sign_in_button && !mGoogleApiClient.isConnecting()) {

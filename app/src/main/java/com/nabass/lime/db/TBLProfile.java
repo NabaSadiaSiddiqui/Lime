@@ -6,12 +6,13 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import com.nabass.lime.Constants;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class TBLProfile {
@@ -163,5 +164,40 @@ public class TBLProfile {
             }
         }
         return pin;
+    }
+
+    // Retrieve contact row for user's profile
+    public static void getUserProfileLocal(ContentResolver cr) {
+        // Sets the columns to retrieve for the user profile
+        String[] mProjection = new String[] {
+            ContactsContract.Profile._ID,
+            ContactsContract.Profile.DISPLAY_NAME_PRIMARY,
+            ContactsContract.Profile.LOOKUP_KEY,
+            ContactsContract.Profile.PHOTO_THUMBNAIL_URI,
+            ContactsContract.Profile.IS_USER_PROFILE
+        };
+
+        // Retrieves the profile from the Contacts Provider
+        Cursor mProfileCursor = cr.query(
+                        ContactsContract.Profile.CONTENT_URI,
+                        mProjection,
+                        null,
+                        null,
+                        null);
+
+        if(mProfileCursor!=null) {
+            while(mProfileCursor.moveToNext()) {
+                if(mProfileCursor.getInt(mProfileCursor.getColumnIndex(ContactsContract.Profile.IS_USER_PROFILE))==1) {
+                    String _id = mProfileCursor.getString(mProfileCursor.getColumnIndex(ContactsContract.Profile._ID));
+                    String name = mProfileCursor.getString(mProfileCursor.getColumnIndex(ContactsContract.Profile.DISPLAY_NAME_PRIMARY));
+                    String lookup_key = mProfileCursor.getString(mProfileCursor.getColumnIndex(ContactsContract.Profile.LOOKUP_KEY));
+                    String uri = mProfileCursor.getString(mProfileCursor.getColumnIndex(ContactsContract.Profile.PHOTO_THUMBNAIL_URI));
+
+                    Log.e(TAG, _id);
+                    Log.e(TAG, name);
+                    Log.e(TAG, lookup_key);
+                }
+            }
+        }
     }
 }

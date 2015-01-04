@@ -71,7 +71,6 @@ public class Contacts extends Fragment implements LoaderManager.LoaderCallbacks<
         mAdapter.setFilterQueryProvider(new FilterQueryProvider() {
             @Override
             public Cursor runQuery(CharSequence charSequence) {
-                Log.e(TAG, "Calling runQuery");
                 Cursor c = DBExtended.dynamicSearchContactByEmail(MainActivity.contentResolver, charSequence);
                 if (c.moveToFirst()) {
                     return c;
@@ -115,7 +114,6 @@ public class Contacts extends Fragment implements LoaderManager.LoaderCallbacks<
                                 .show();
                         Cursor c = DBExtended.searchContactByEmail(MainActivity.contentResolver, s);
                         if (c != null) {
-                            Log.e(TAG, "C IS NOT NULL");
                             Log.e(TAG, c.toString());
                         } else {
                             Log.e(TAG, "YOU ARE SEARCHING FOR ALIENS");

@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -72,7 +71,6 @@ public class ContactsActions extends DialogFragment {
         viewContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: view contact
                 Toast.makeText(getActivity().getApplicationContext(), contactEmail, Toast.LENGTH_LONG)
                         .show();
                 refreshSearchView();
@@ -106,7 +104,6 @@ public class ContactsActions extends DialogFragment {
         deleteContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: delete contact
                 DBExtended.deleteContactByEmail(MainActivity.contentResolver, contactEmail);
                 Toast.makeText(getActivity().getApplicationContext(), contactEmail + " deleted", Toast.LENGTH_LONG)
                         .show();

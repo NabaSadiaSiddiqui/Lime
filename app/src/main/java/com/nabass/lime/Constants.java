@@ -6,8 +6,6 @@ public interface Constants {
 
     // Preference manager keys
     public static final String KEY_MODE_USER = "mode_user";
-    public static final String KEY_CLIENT_EMAIL = "client_email";
-    public static final String KEY_CLIENT_NAME = "client_name";
     public static final String KEY_CLIENT_IMG = "client_img";
     public static final String KEY_NEW_MSG = "notifications_msg";
     public static final String KEY_RINGTONE = "notifications_ringtone";
@@ -37,9 +35,7 @@ public interface Constants {
     public static final String TAG_DIALOG = "dialog";
 
     // Content provider fields
-    public static String CONTACT_ID = "contact_id";
     public static String CONTACT_EMAIL = "contact_email";
-    public static String CONTACT_LOCAL = "contact_local";
 
     // GCM constants/parameters
     public static String SERVER_URL = "http://1-dot-bold-flash-798.appspot.com";

@@ -15,6 +15,8 @@
  */
 package com.nabass.lime.network;
 
+import android.util.Log;
+
 import com.nabass.lime.Constants;
 import com.nabass.lime.Init;
 import com.nabass.lime.MainActivity;
@@ -31,9 +33,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 
-/**
- * Helper class used to communicate with the demo server.
- */
 public final class ServerUtilities {
 
 	private static final String TAG = "ServerUtilities";
@@ -46,7 +45,6 @@ public final class ServerUtilities {
 	 * Register this account/device pair within the server.
 	 */
 	public static void register(final String email, final String regId) {
-		//Log.i(TAG, "registering device (regId = " + regId + ")");
 		String serverUrl = Init.getServerUrl() + "/register";
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(Constants.SENDER_EMAIL, email);
@@ -57,6 +55,7 @@ public final class ServerUtilities {
 		try {
 			post(serverUrl, params, MAX_ATTEMPTS);
 		} catch (IOException e) {
+            e.printStackTrace();
 		}
 	}
 
@@ -64,7 +63,6 @@ public final class ServerUtilities {
 	 * Unregister this account/device pair within the server.
 	 */
 	public static void unregister(final String email) {
-		//Log.i(TAG, "unregistering device (email = " + email + ")");
 		String serverUrl = Init.getServerUrl() + "/unregister";
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(Constants.SENDER_EMAIL, email);
@@ -83,7 +81,6 @@ public final class ServerUtilities {
 	 * Send a message.
 	 */
 	public static void send(String msg, String to) throws IOException {
-		//Log.i(TAG, "sending message (msg = " + msg + ")");
 		String serverUrl = Init.getServerUrl() + "/send";
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(Constants.MESSAGE, msg);
@@ -97,12 +94,10 @@ public final class ServerUtilities {
 	private static void post(String endpoint, Map<String, String> params, int maxAttempts) throws IOException {
 		long backoff = BACKOFF_MILLI_SECONDS + random.nextInt(1000);
 		for (int i = 1; i <= maxAttempts; i++) {
-			//Log.d(TAG, "Attempt #" + i);
 			try {
 				post(endpoint, params);
 				return;
 			} catch (IOException e) {
-				//Log.e(TAG, "Failed on attempt " + i + ":" + e);
 				if (i == maxAttempts) {
 					throw e;
 				}
@@ -145,7 +140,6 @@ public final class ServerUtilities {
 			}
 		}
 		String body = bodyBuilder.toString();
-		//Log.v(TAG, "Posting '" + body + "' to " + url);
 		byte[] bytes = body.getBytes();
 		HttpURLConnection conn = null;
 		try {
@@ -155,11 +149,11 @@ public final class ServerUtilities {
 			conn.setFixedLengthStreamingMode(bytes.length);
 			conn.setRequestMethod("POST");
 			conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
-			// post the request
+
 			OutputStream out = conn.getOutputStream();
 			out.write(bytes);
 			out.close();
-			// handle the response
+
 			int status = conn.getResponseCode();
 			if (status != 200) {
 				throw new IOException("Post failed with error code " + status);

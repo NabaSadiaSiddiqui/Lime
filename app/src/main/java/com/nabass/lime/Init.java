@@ -4,25 +4,19 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Application;
 import android.content.BroadcastReceiver;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.preference.PreferenceManager;
-import android.provider.ContactsContract;
-import android.text.TextUtils;
-import android.util.Log;
-
-import com.nabass.lime.db.DBExtended;
+import com.nabass.lime.db.Misc;
+import com.nabass.lime.db.TBLProfile;
 import com.nabass.lime.network.GcmUtil;
-
-import java.util.ArrayList;
-
 import static com.nabass.lime.db.TBLProfile.updateProfileStatus;
 
 public class Init extends Application {
+    private static final String TAG = "Init";
+
     private static SharedPreferences prefs;
     private static GcmUtil gcm;
 
@@ -31,41 +25,14 @@ public class Init extends Application {
         super.onCreate();
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        // Set client email (from accounts)
-        //TODO: use this when removing Google+ sign in
-        //setClientEmail();
-
         registerReceiver(gcmRegStatus, new IntentFilter(Constants.ACTION_REGISTER));
         gcm = new GcmUtil(getApplicationContext());
 
-        //syncLocalContacts(getContentResolver());
-    }
+        //User's data profile
+        TBLProfile.getUserProfileLocal(getContentResolver());
 
-    private static void syncLocalContacts(ContentResolver cr) {
-        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null,
-                null, null, null);
-        if (cur.getCount() > 0) {
-            while (cur.moveToNext()) {
-                String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
-                String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                String phoneNumber = Constants.STR_NULL;
-                if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0)
-                {
-                    // Query phone here. Covered next
-                    Cursor phones = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + id, null, null);
-                    while (phones.moveToNext()) {
-                        phoneNumber += phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)) + ",";
-                    }
-                    phones.close();
-
-                    if (!TextUtils.isEmpty(phoneNumber)) {
-                        phoneNumber = phoneNumber.substring(0,phoneNumber.length()-1);
-                    }
-                    //TODO: add local contacts
-                    DBExtended.addLocalContact(cr, name, phoneNumber, id);
-                }
-            }
-        }
+        //Local contacts on the phone
+        Misc.syncLocalContacts(getContentResolver());
     }
 
 
