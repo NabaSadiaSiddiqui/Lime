@@ -1,6 +1,7 @@
 package com.nabass.lime;
 
 import android.accounts.Account;
+import android.app.ActionBar;
 import android.app.Activity;
 
 import android.app.Fragment;
@@ -141,7 +142,7 @@ public class MainActivity extends Activity implements Chat.OnFragmentInteraction
         }
         getActionBar().setCustomView(mCustomView);
         getActionBar().setDisplayShowCustomEnabled(true);
-
+        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_HOME_AS_UP);
 
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
