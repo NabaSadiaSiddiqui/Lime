@@ -38,7 +38,7 @@ public class Init extends Application {
         registerReceiver(gcmRegStatus, new IntentFilter(Constants.ACTION_REGISTER));
         gcm = new GcmUtil(getApplicationContext());
 
-        syncLocalContacts(getContentResolver());
+        //syncLocalContacts(getContentResolver());
     }
 
     private static void syncLocalContacts(ContentResolver cr) {
