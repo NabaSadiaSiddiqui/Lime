@@ -25,4 +25,6 @@
     <color name="add_contact_desc">#ffffff</color>
     <color name="add_contact_title">#ffffff</color>
 
+    <color name="white">#FFFFFF</color>
+
 </resources>
